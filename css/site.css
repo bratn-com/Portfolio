@@ -89,21 +89,31 @@ a { color: inherit; }
 }
 
 .close {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 32px;
   height: 32px;
   flex: none;
+  overflow: visible;
 }
 
-.close img {
+.close svg {
   display: block;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+  width: 32px;
+  height: 32px;
+  overflow: visible;
 }
 
-.close:hover img { transform: scale(1.416); }
-.close:active img { transform: none; }
+/* Figma Close: SMART_ANIMATE to hover — paths scale ~√2; stroke stays hairline */
+.close-mark {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0, 0, 0, 1);
+}
+
+.close:hover .close-mark { transform: scale(1.4142135624); }
+.close:active .close-mark { transform: scale(1); }
 
 .home { position: relative; height: 100dvh; min-height: 640px; }
 
@@ -568,7 +578,7 @@ a { color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   .shape,
-  .close img,
+  .close .close-mark,
   .side-arrow,
   .say,
   .gem-links a,
