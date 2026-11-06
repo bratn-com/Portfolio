@@ -105,7 +105,11 @@ a { color: inherit; }
   overflow: visible;
 }
 
-/* Figma Close: SMART_ANIMATE to hover — paths scale ~√2; stroke stays hairline */
+/*
+ * Close (Figma component 58:1679): hover swaps to Close2 (√2 scale), click runs Smart
+ * Animate to Close3 (same geometry as default) then NAVIGATE "/". We approximate the
+ * click-out by shrinking for 300ms before following the link when the control was hovered.
+ */
 .close-mark {
   transform-box: fill-box;
   transform-origin: center;
@@ -113,7 +117,12 @@ a { color: inherit; }
 }
 
 .close:hover .close-mark { transform: scale(1.4142135624); }
-.close:active .close-mark { transform: scale(1); }
+
+.close.close--leaving .close-mark,
+.close.close--leaving:hover .close-mark {
+  transform: scale(1);
+  transition: transform 0.3s cubic-bezier(0, 0, 0, 1);
+}
 
 .home { position: relative; height: 100dvh; min-height: 640px; }
 
@@ -579,6 +588,7 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .shape,
   .close .close-mark,
+  .close.close--leaving .close-mark,
   .side-arrow,
   .say,
   .gem-links a,
