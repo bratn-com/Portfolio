@@ -236,7 +236,12 @@ a { color: inherit; }
 .say { cursor: url("../assets/ui/cursor-contact.png") 0 0, pointer; }
 .shape-portfolio { cursor: url("../assets/ui/cursor-portfolio.png") 0 0, pointer; }
 
-.shape img { width: 100%; height: 100%; display: block; }
+.shape img,
+.shape .shape-magnet-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 
 .shape-about { left: 0; top: 0; width: 47.01%; height: 67.22%; z-index: 1; }
 .shape-work { left: 33.34%; top: 0.19%; width: 30.51%; height: 99.45%; z-index: 2; }
