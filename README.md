@@ -35,7 +35,7 @@ node scripts/portfolio.mjs list
 node scripts/portfolio.mjs add \
   --category desktop \
   --title "Nazwa\nDruga linia" \
-  --label "Desktop wesite" \
+  --label "Desktop website" \
   --color "#0f5d4f" \
   --image ./sciezka/do-ujecia.jpg
 

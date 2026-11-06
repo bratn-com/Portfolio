@@ -4,7 +4,7 @@
       "id": "transimeksa",
       "category": "desktop",
       "title": "Transimeksa\nLogistic\nSolutions",
-      "label": "Desktop wesite",
+      "label": "Desktop website",
       "color": "#0f5d4f",
       "image": "images/transimeksa.jpg"
     },
@@ -12,7 +12,7 @@
       "id": "irshad",
       "category": "desktop",
       "title": "Irshad\nPetroleum",
-      "label": "Desktop wesite",
+      "label": "Desktop website",
       "color": "#1f4e88",
       "image": "images/irshad.jpg"
     },
@@ -20,7 +20,7 @@
       "id": "dynamite",
       "category": "desktop",
       "title": "Dynamite\nStudio",
-      "label": "Desktop wesite",
+      "label": "Desktop website",
       "color": "#ec413a",
       "image": "images/dynamite.jpg"
     },
@@ -28,7 +28,7 @@
       "id": "alior",
       "category": "desktop",
       "title": "Alior\nSync\nBanking",
-      "label": "Desktop wesite",
+      "label": "Desktop website",
       "color": "#fe9400",
       "image": "images/alior.jpg"
     },
@@ -36,7 +36,7 @@
       "id": "utilimarc",
       "category": "desktop",
       "title": "Utilimarc\nTelematics",
-      "label": "Dekstop Dashboard",
+      "label": "Desktop Dashboard",
       "color": "#566167",
       "image": "images/utilimarc.jpg"
     },
@@ -44,7 +44,7 @@
       "id": "hello",
       "category": "desktop",
       "title": "Hello",
-      "label": "Dekstop Dashboard",
+      "label": "Desktop Dashboard",
       "color": "#b62b88",
       "image": "images/hello.jpg"
     },

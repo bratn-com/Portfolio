@@ -96,7 +96,7 @@ const { cmd, positionals, opts } = parseArgs(process.argv);
 if (!cmd || cmd === "help") {
   console.log(`Użycie:
   node scripts/portfolio.mjs list
-  node scripts/portfolio.mjs add --category desktop --title "Nazwa\\nDruga linia" --label "Desktop wesite" --color "#0f5d4f" --image ./plik.jpg
+  node scripts/portfolio.mjs add --category desktop --title "Nazwa\\nDruga linia" --label "Desktop website" --color "#0f5d4f" --image ./plik.jpg
   node scripts/portfolio.mjs update <id> [--title] [--label] [--color] [--category] [--image]
   node scripts/portfolio.mjs remove <id>
 
