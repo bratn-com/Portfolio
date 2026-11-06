@@ -291,6 +291,21 @@ a { color: inherit; }
 .shape-work { left: 33.34%; top: 0.19%; width: 30.51%; height: 99.45%; z-index: 2; }
 .shape-portfolio { left: 59.52%; top: 31.9%; width: 40.48%; height: 68.12%; z-index: 1; }
 
+/* FLIP: polygon → full-width purple panel (about/contact) — see js/shape-nav-transition.js */
+.shape-nav-flip-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+.shape-nav-flip {
+  position: absolute;
+  transform-origin: 0 0;
+  will-change: transform;
+  transition: transform 0.52s cubic-bezier(0, 0, 0, 1);
+}
+
 .foot {
   display: flex;
   align-items: center;
@@ -705,6 +720,7 @@ a { color: inherit; }
     transform: translate3d(-50%, 0, 0);
     transition: opacity 0.2s;
   }
+  .shape-nav-flip { transition: none; }
   .home .hint,
   .land-rise,
   .card-visual { animation: none; }
