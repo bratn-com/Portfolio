@@ -9,7 +9,8 @@ Wizualna kopia [bratn.com](https://www.bratn.com/): strona główna, about, cont
    Jeśli wcześniej było „None” lub „Deploy from a branch”, GitHub musi to zapisać zanim zadziała `actions/deploy-pages` — inaczej w logu zobaczysz **404** przy `Failed to create deployment` i komunikat „Ensure GitHub Pages has been enabled”.  
    Po pierwszym zielonym workflowzie „Deploy GitHub Pages” adres będzie miał postać  
    `https://<organizacja-lub-user>.github.io/Portfolio/` (dokładny URL jest w zakładce **Actions** przy deployu albo ponownie w **Settings → Pages**).  
-   **Repozytorium prywatne:** publiczne GitHub Pages z Actions wymaga planu płatnego (Team/Enterprise); przy darmowym koncie ustaw repo na **public** albo zostań przy podglądzie lokalnym (`git pull` + `http.server`).
+   **Repozytorium prywatne:** publiczne GitHub Pages z Actions wymaga planu płatnego (Team/Enterprise); przy darmowym koncie ustaw repo na **public** albo zostań przy podglądzie lokalnym (`git pull` + `http.server`).  
+   Jeśli w logu widzisz **„Branch … is not allowed to deploy to github-pages”**, to ktoś ustawił **ochronę środowiska** `github-pages` (Settings → Environments). Workflow w repo jest bez tego bloku; jeśli nadal używasz własnej wersji z `environment: github-pages`, dopisz branch albo wyłącz reguły dla tego środowiska.
 
 2. **Lokalnie z gitem (najszybszy podgląd u siebie)**  
    ```bash
