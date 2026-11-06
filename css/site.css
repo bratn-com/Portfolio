@@ -502,6 +502,13 @@ a { color: inherit; }
   transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
+/* Keep the bottom of screenshots visible: cover crops from the top when aspect ratios differ */
+.portfolio-page .card-visual img,
+.portfolio-page .card-visual video {
+  object-position: center bottom;
+  transform-origin: center bottom;
+}
+
 .card-visual video {
   pointer-events: none;
 }
