@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio — Jarek Nowakowski</title>
+    <meta name="theme-color" content="#181818" />
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/site.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="bar portfolio-bar">
+        <a class="name" href="index.html">Jarek Nowakowski</a>
+        <nav class="tabs" aria-label="Portfolio">
+          <a href="portfolio.html?category=desktop" data-category="desktop">desktop</a>
+          <a href="portfolio.html?category=mobile" data-category="mobile">mobile</a>
+          <a href="portfolio.html?category=motion" data-category="motion">motion</a>
+        </nav>
+        <a class="close" href="index.html" aria-label="Close">
+          <img src="assets/ui/close.svg" alt="" />
+        </a>
+      </header>
+      <div class="work">
+        <div id="grid" class="grid"></div>
+        <nav class="pager" aria-label="Pages">
+          <a class="arrow" id="prev" href="portfolio.html" aria-label="Previous page">
+            <img src="assets/ui/arrow-left.svg" alt="" />
+          </a>
+          <span class="count" id="count"></span>
+          <a class="arrow right" id="next" href="portfolio.html" aria-label="Next page">
+            <img src="assets/ui/arrow-right.svg" alt="" />
+          </a>
+        </nav>
+      </div>
+    </div>
+    <script src="js/portfolio.js"></script>
+  </body>
+</html>

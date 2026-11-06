@@ -1,14 +1,26 @@
 # Portfolio
 
-Strona Jarka Nowakowskiego — Senior UI/UX Designer, bratn, Warszawa.
+Wizualna kopia [bratn.com](https://www.bratn.com/): strona główna, about, contact i portfolio. Projekty nie są wpisane w HTML. Czyta je `content/portfolio.json`.
 
-Statyczny serwis: `index.html`, `css/site.css`, `js/site.js`. Język ustawia się przełącznikiem EN / PL i zapamiętuje w przeglądarce. Przy pierwszej wizycie bierze język przeglądarki, jeśli zaczyna się od `pl`.
+## Dodawanie i aktualizacja
 
-Teksty biorą się z publicznych źródeł, bez dopisywania case studies:
+Z katalogu repozytorium:
 
-- opis praktyki i lista klientów: meta description na [bratn.com](https://www.bratn.com)
-- role: publiczny profil LinkedIn
-- indeks prac: projekty z profili [Behance](https://www.behance.net/bratn) i [Dribbble](https://dribbble.com/bratn)
-- Aneta Ludwig Photography: opis projektu z LinkedIn (portfolio www, 2013)
+```bash
+node scripts/portfolio.mjs list
 
-Nowy wiersz pracy to kolejny blok `article.work-row` w `index.html`.
+node scripts/portfolio.mjs add \
+  --category desktop \
+  --title "Nazwa\nDruga linia" \
+  --label "Desktop wesite" \
+  --color "#0f5d4f" \
+  --image ./sciezka/do-ujecia.jpg
+
+node scripts/portfolio.mjs update transimeksa --title "Nowa nazwa" --image ./nowe.jpg
+
+node scripts/portfolio.mjs remove transimeksa
+```
+
+Kategorie: `desktop`, `mobile`, `motion`. `\n` w tytule łamie linię tak jak na planszy. Id powstaje z pierwszej linii tytułu; inne id podajesz przez `--id`. Kolejność na stronie jest kolejnością wpisów w `content/portfolio.json`. Na jednej planszy mieszczą się cztery prace; kolejna czwórka jest następną stroną.
+
+Obraz trafia do `content/images/`. Usunięcie projektu zostawia plik obrazu.
