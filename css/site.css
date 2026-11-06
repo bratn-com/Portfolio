@@ -231,38 +231,11 @@ a { color: inherit; }
   display: block;
 }
 
-/* Hover / focus tooltip under each hero polygon */
-.shape-tooltip {
-  position: absolute;
-  left: 50%;
-  bottom: -2.35rem;
-  z-index: 2;
-  margin: 0;
-  padding: 0;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.2;
-  color: #dbdbdb;
-  text-transform: lowercase;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate3d(-50%, 10px, 0);
-  transition:
-    opacity 0.32s cubic-bezier(0, 0, 0, 1),
-    transform 0.32s cubic-bezier(0, 0, 0, 1);
-}
-
-.home .shape:hover,
-.home .shape:focus-visible {
-  z-index: 16;
-}
-
-.home .shape:hover .shape-tooltip,
-.home .shape:focus-visible .shape-tooltip {
-  opacity: 1;
-  transform: translate3d(-50%, 0, 0);
+/* Custom pointer + animated label (see js/shape-cursor.js); hide OS cursor on shapes */
+@media (pointer: fine) {
+  .home .shape {
+    cursor: none;
+  }
 }
 
 .shape-about,
@@ -274,10 +247,81 @@ a { color: inherit; }
 
 .shape:hover { opacity: 0.9; }
 
-.shape-about { cursor: url("../assets/ui/cursor-about.png") 0 0, pointer; }
 .shape-work,
 .say { cursor: url("../assets/ui/cursor-contact.png") 0 0, pointer; }
-.shape-portfolio { cursor: url("../assets/ui/cursor-portfolio.png") 0 0, pointer; }
+
+/* Floating cursor → section label (top-left hotspot matches PNG cursor hotspot) */
+.shape-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.shape-cursor-inner {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 6px;
+  background: transparent;
+  transition:
+    background 0.28s cubic-bezier(0, 0, 0, 1),
+    padding 0.28s cubic-bezier(0, 0, 0, 1),
+    box-shadow 0.28s cubic-bezier(0, 0, 0, 1);
+}
+
+.shape-cursor-icon {
+  display: block;
+  flex: 0 0 auto;
+  width: 51px;
+  height: 26px;
+  transition:
+    opacity 0.26s cubic-bezier(0, 0, 0, 1),
+    transform 0.26s cubic-bezier(0, 0, 0, 1);
+}
+
+.shape-cursor-label {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  max-width: 0;
+  opacity: 0;
+  transform: translate3d(-6px, 0, 0);
+  overflow: hidden;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #fff;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transition:
+    max-width 0.32s cubic-bezier(0, 0, 0, 1),
+    opacity 0.26s cubic-bezier(0, 0, 0, 1),
+    transform 0.32s cubic-bezier(0, 0, 0, 1);
+}
+
+.shape-cursor--label .shape-cursor-inner {
+  padding: 6px 12px;
+  background: rgba(24, 24, 24, 0.9);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.shape-cursor--label .shape-cursor-icon {
+  opacity: 0;
+  transform: scale(0.88);
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.shape-cursor--label .shape-cursor-label {
+  max-width: 160px;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
 
 .shape img,
 .shape .shape-magnet-svg {
@@ -701,10 +745,9 @@ a { color: inherit; }
   .gem-links a,
   .tabs a,
   .pager .arrow { transition: none; }
-  .home .shape .shape-tooltip {
-    transform: translate3d(-50%, 0, 0);
-    transition: opacity 0.2s;
-  }
+  .shape-cursor-inner,
+  .shape-cursor-icon,
+  .shape-cursor-label { transition: none; }
   .home .hint,
   .land-rise,
   .card-visual { animation: none; }
