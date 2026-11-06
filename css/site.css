@@ -322,7 +322,7 @@ a { color: inherit; }
 .bio p:last-child { margin-bottom: 0; }
 
 .where {
-  margin: 18px 0 0 30px;
+  margin: 0 0 0 30px;
   font-size: 28px;
   font-weight: 200;
   line-height: 37px;
