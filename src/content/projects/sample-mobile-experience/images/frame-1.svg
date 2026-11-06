@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="720" viewBox="0 0 400 720" role="img" aria-labelledby="t">
+  <title id="t">Mobile frame placeholder</title>
+  <rect width="100%" height="100%" fill="#e2e8f0"/>
+  <text x="200" y="360" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" fill="#475569">Screen</text>
+</svg>

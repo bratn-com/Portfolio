@@ -1,0 +1,230 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import { resolveProjectImage, type ImageGlobMap } from '../../lib/paths';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+	return projects.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+
+const galleryGlob = import.meta.glob('../../content/projects/**/images/*.{png,jpg,jpeg,gif,webp,svg}', {
+	eager: true,
+}) as ImageGlobMap;
+
+const { Content } = await render(entry);
+
+const heroMeta = resolveProjectImage(galleryGlob, entry.id, entry.data.hero);
+
+const galleryImages = entry.data.gallery.map((rel) => ({
+	rel,
+	meta: resolveProjectImage(galleryGlob, entry.id, rel),
+}));
+
+const pageTitle = entry.data.title;
+---
+
+<Base title={pageTitle} description={entry.data.summary}>
+	<article class="project">
+		<header>
+			<p class="crumb">
+				<a href="/">Work</a>
+				<span aria-hidden="true"> / </span>
+				<span>{entry.data.title}</span>
+			</p>
+			<h1>{entry.data.title}</h1>
+			<p class="meta">
+				<span class="badge">{entry.data.platform}</span>
+				{
+					entry.data.date && (
+						<time datetime={entry.data.date.toISOString()}>
+							{entry.data.date.toLocaleDateString('en-GB', {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric',
+							})}
+						</time>
+					)
+				}
+			</p>
+			<p class="summary">{entry.data.summary}</p>
+		</header>
+
+		{
+			heroMeta && (
+				<figure class="hero">
+					<Image
+						src={heroMeta}
+						alt=""
+						width={Math.min(heroMeta.width, 960)}
+						height={Math.round((heroMeta.height * Math.min(heroMeta.width, 960)) / heroMeta.width)}
+					/>
+				</figure>
+			)
+		}
+
+		<div class="prose">
+			<Content />
+		</div>
+
+		{
+			entry.data.videoUrl && (
+				<section class="video-section" aria-labelledby={`video-${entry.id}`}>
+					<h2 id={`video-${entry.id}`} class="visually-hidden">
+						Video
+					</h2>
+					<VideoEmbed url={entry.data.videoUrl} title={`Video: ${entry.data.title}`} />
+				</section>
+			)
+		}
+
+		{
+			entry.data.videoFile && (
+				<section class="video-section" aria-labelledby={`videofile-${entry.id}`}>
+					<h2 id={`videofile-${entry.id}`} class="visually-hidden">
+						Video file
+					</h2>
+					<video class="local-video" controls preload="metadata">
+						<source src={entry.data.videoFile} />
+						Your browser does not support the video tag.
+					</video>
+				</section>
+			)
+		}
+
+		{
+			galleryImages.length > 0 && (
+				<section class="gallery" aria-labelledby={`gallery-${entry.id}`}>
+					<h2 id={`gallery-${entry.id}`}>Gallery</h2>
+					<ul class="gallery-grid">
+						{galleryImages.map((item) => (
+							<li>
+								{item.meta ? (
+									<figure>
+										<Image
+											src={item.meta}
+											alt=""
+											width={Math.min(item.meta.width, 720)}
+											height={Math.round(
+												(item.meta.height * Math.min(item.meta.width, 720)) / item.meta.width,
+											)}
+										/>
+									</figure>
+								) : (
+									<p class="missing">Missing image: {item.rel}</p>
+								)}
+							</li>
+						))}
+					</ul>
+				</section>
+			)
+		}
+	</article>
+</Base>
+
+<style>
+	.project {
+		padding-bottom: 2rem;
+	}
+	.crumb {
+		font-size: 0.875rem;
+		margin: 0 0 0.5rem;
+	}
+	.crumb a {
+		color: #555;
+	}
+	h1 {
+		font-size: 1.75rem;
+		margin: 0 0 0.35rem;
+		line-height: 1.2;
+	}
+	.meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		align-items: center;
+		font-size: 0.875rem;
+		color: #555;
+		margin: 0 0 0.75rem;
+	}
+	.badge {
+		text-transform: capitalize;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		padding: 0.1rem 0.4rem;
+		font-size: 0.75rem;
+		background: #fff;
+	}
+	.summary {
+		margin: 0 0 1.25rem;
+		font-size: 1.05rem;
+		color: #333;
+	}
+	.hero {
+		margin: 0 0 1.5rem;
+	}
+	.hero :global(img) {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 8px;
+	}
+	.prose :global(h2) {
+		font-size: 1.2rem;
+		margin-top: 1.5rem;
+	}
+	.prose :global(p),
+	.prose :global(li) {
+		max-width: 40rem;
+	}
+	.prose :global(a) {
+		word-break: break-word;
+	}
+	.video-section {
+		margin: 1.5rem 0;
+	}
+	.local-video {
+		width: 100%;
+		border-radius: 8px;
+		background: #000;
+	}
+	.gallery h2 {
+		font-size: 1.15rem;
+		margin: 1.5rem 0 0.75rem;
+	}
+	.gallery-grid {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.75rem;
+	}
+	.gallery-grid figure {
+		margin: 0;
+	}
+	.gallery-grid :global(img) {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 6px;
+		border: 1px solid #e8e8e8;
+	}
+	.missing {
+		color: #a00;
+		font-size: 0.875rem;
+		margin: 0;
+	}
+	@media (min-width: 36rem) {
+		.gallery-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+</style>
