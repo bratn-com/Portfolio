@@ -451,6 +451,8 @@ a { color: inherit; }
   flex: 1 1 auto;
   min-height: 8rem;
   overflow: hidden;
+  /* Entrance animation lives here so img transform is free for hover zoom */
+  animation: card-in 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
 }
 
 .card-visual img {
@@ -568,7 +570,6 @@ a { color: inherit; }
 
 .home .hint { animation: hint-in 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) both; }
 .land-rise { animation: land-rise 0.9s cubic-bezier(0.16, 1.25, 0.3, 1) both; }
-.card-visual img { animation: card-in 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) both; }
 
 @keyframes hint-in {
   from { opacity: 0; }
@@ -596,7 +597,7 @@ a { color: inherit; }
   .pager .arrow { transition: none; }
   .home .hint,
   .land-rise,
-  .card-visual img { animation: none; }
+  .card-visual { animation: none; }
   .card-visual img { transition: none; }
   .card:hover .card-visual img { transform: none; }
 }
