@@ -67,8 +67,28 @@ a { color: inherit; }
   padding-bottom: 40px;
 }
 
-.portfolio-page .card-copy h2 {
+.portfolio-page .card-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
   min-height: 0;
+}
+
+.portfolio-page .card-copy h2 {
+  margin: 0;
+  min-height: 0;
+  font-size: clamp(22px, 2.1vw, 30px);
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+.portfolio-page .card-copy p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .bar {
@@ -503,9 +523,9 @@ a { color: inherit; }
 .portfolio-page .card {
   min-height: 0;
   overflow: hidden;
-  /* Reference layout: ~top half = mockup, middle = air, bottom quarter = titles */
+  /* Reference: upper ~half = mockup on dark, lower ~half = project color + title stack */
   display: grid;
-  grid-template-rows: minmax(0, 0.55fr) minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
   align-content: stretch;
 }
 
@@ -522,9 +542,10 @@ a { color: inherit; }
   min-height: 0;
   align-self: stretch;
   display: grid;
-  place-items: start center;
-  padding: 6% 8% 0;
-  overflow: visible;
+  place-items: center center;
+  padding: 10% 6% 8%;
+  overflow: hidden;
+  background: var(--bg);
 }
 
 .card-visual img,
@@ -539,23 +560,23 @@ a { color: inherit; }
   transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-/* Mockup band: slight 3D tilt like reference; keep bottom of UI in frame */
+/* Mockup: perspective like Figma card; sits in upper band */
 .portfolio-page .card-visual img,
 .portfolio-page .card-visual video {
-  width: 118%;
+  width: 108%;
   max-width: none;
   height: auto;
-  max-height: 92%;
+  max-height: 95%;
   object-fit: contain;
   object-position: center bottom;
-  transform: perspective(520px) rotateX(8deg) rotateZ(-6deg) translateY(-4%);
+  transform: perspective(720px) rotateX(14deg) rotateY(-4deg) rotateZ(-5deg) translateY(2%);
   transform-origin: center bottom;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.42);
 }
 
 .portfolio-page .card-copy {
-  grid-row: 3;
-  padding: 0 32px 28px;
+  grid-row: 2;
+  padding: 20px 28px 24px;
   align-self: stretch;
 }
 
@@ -575,7 +596,7 @@ a { color: inherit; }
 
 .portfolio-page .card:hover .card-visual img.card-visual-skew,
 .portfolio-page .card:hover .card-visual video.card-visual-skew {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
 .card-visual video {
@@ -584,7 +605,7 @@ a { color: inherit; }
 
 .portfolio-page .card:hover .card-visual img,
 .portfolio-page .card:hover .card-visual video {
-  transform: perspective(520px) rotateX(8deg) rotateZ(-6deg) translateY(-4%) scale(1.06);
+  transform: perspective(720px) rotateX(14deg) rotateY(-4deg) rotateZ(-5deg) translateY(2%) scale(1.045);
 }
 
 .card-copy {
@@ -679,6 +700,10 @@ a { color: inherit; }
   .about-grid { width: calc(100% - 48px); margin-top: 48px; }
   .card-copy { padding: 0 24px 20px; }
   .card-copy h2 { font-size: 26px; line-height: 32px; min-height: 96px; }
+  .portfolio-page .card-copy {
+    padding: 16px 20px 20px;
+    gap: 8px;
+  }
   .foot { padding-bottom: 24px; }
 }
 
