@@ -68,11 +68,13 @@ a { color: inherit; }
 }
 
 .portfolio-page .card-copy {
-  padding-bottom: 16px;
+  padding-top: 4px;
+  padding-bottom: 20px;
+  flex: 0 0 auto;
 }
 
 .portfolio-page .card-copy h2 {
-  min-height: min(111px, 22vh);
+  min-height: min(96px, 18vh);
 }
 
 .bar {
@@ -507,7 +509,9 @@ a { color: inherit; }
 .portfolio-page .card {
   min-height: 0;
   overflow: hidden;
-  justify-content: space-between;
+  /* Stack visual + copy with a fixed gap so copy is not pinned to the card bottom */
+  justify-content: flex-start;
+  gap: clamp(12px, 1.8vh, 22px);
 }
 
 .card-visual {
@@ -518,11 +522,11 @@ a { color: inherit; }
   animation: card-in 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
 }
 
-/* Cap screenshot height so titles get more room (Figma-scale hero shots, not full-viewport) */
+/* Smaller preview band: keeps titles higher and avoids giant crops */
 .portfolio-page .card-visual {
-  flex: 0 0 min(240px, 28vh);
-  height: min(240px, 28vh);
-  max-height: min(240px, 28vh);
+  flex: 0 0 min(188px, 21vh);
+  height: min(188px, 21vh);
+  max-height: min(188px, 21vh);
   min-height: 0;
 }
 
