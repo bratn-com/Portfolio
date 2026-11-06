@@ -440,11 +440,22 @@ a { color: inherit; }
   min-height: 0;
 }
 
+/* One viewport-tall row: cards shrink to free space so the pager never paints over card copy */
+.portfolio-page .grid {
+  grid-template-rows: minmax(0, 1fr);
+  align-content: stretch;
+}
+
 .card {
   min-width: 0;
   display: flex;
   flex-direction: column;
   color: #fff;
+}
+
+.portfolio-page .card {
+  min-height: 0;
+  overflow: hidden;
 }
 
 .card-visual {
@@ -453,6 +464,11 @@ a { color: inherit; }
   overflow: hidden;
   /* Entrance animation lives here so img transform is free for hover zoom */
   animation: card-in 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
+}
+
+.portfolio-page .card-visual {
+  flex: 1 1 0;
+  min-height: 0;
 }
 
 .card-visual img,
