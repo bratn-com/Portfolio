@@ -10,6 +10,8 @@
   var label = el && el.querySelector(".shape-cursor-label");
   if (!el || !img || !label) return;
 
+  document.documentElement.classList.add("shape-cursor-ready");
+
   var ICON = {
     about: "assets/ui/cursor-about.png",
     work: "assets/ui/cursor-contact.png",
@@ -24,7 +26,9 @@
 
   var currentKey = null;
   var expandTimer = 0;
-  var EXPAND_MS = reduced ? 0 : 180;
+  var EXPAND_MS = reduced ? 0 : 150;
+  var lastX = NaN;
+  var lastY = NaN;
 
   function clearExpandTimer() {
     if (expandTimer) {
@@ -36,7 +40,7 @@
   function hide() {
     clearExpandTimer();
     currentKey = null;
-    el.classList.remove("shape-cursor--label");
+    el.classList.remove("shape-cursor--label", "shape-cursor--shown");
     el.hidden = true;
     el.style.left = "";
     el.style.top = "";
@@ -52,6 +56,13 @@
     var s = target.closest("a.shape[data-shape-magnet]");
     if (!s || !land.contains(s)) return null;
     return s;
+  }
+
+  /** Hit-test uses the top element under the pointer so SVG/path nodes still resolve to `.shape`. */
+  function shapeAtPoint(clientX, clientY) {
+    if (typeof document.elementFromPoint !== "function") return null;
+    var node = document.elementFromPoint(clientX, clientY);
+    return shapeFromTarget(node);
   }
 
   function activate(shape, clientX, clientY) {
@@ -72,31 +83,46 @@
     }
 
     el.hidden = false;
+    el.classList.add("shape-cursor--shown");
     position(clientX, clientY);
+  }
+
+  function refreshUnderPointer() {
+    if (lastX !== lastX || lastY !== lastY) return;
+    var shape = shapeAtPoint(lastX, lastY);
+    if (!shape) {
+      hide();
+      return;
+    }
+    activate(shape, lastX, lastY);
   }
 
   document.addEventListener(
     "pointermove",
     function (e) {
-      var shape = shapeFromTarget(e.target);
+      lastX = e.clientX;
+      lastY = e.clientY;
+
+      if (e.pointerType && e.pointerType !== "mouse") {
+        return;
+      }
+
+      var shape = shapeAtPoint(lastX, lastY);
       if (!shape) {
         hide();
         return;
       }
-      if (e.pointerType && e.pointerType !== "mouse") {
-        return;
-      }
-      activate(shape, e.clientX, e.clientY);
+
+      activate(shape, lastX, lastY);
     },
     { passive: true }
   );
 
-  document.addEventListener(
-    "pointerdown",
+  land.addEventListener(
+    "pointerleave",
     function (e) {
-      var shape = shapeFromTarget(e.target);
-      if (shape && (!e.pointerType || e.pointerType === "mouse")) {
-        activate(shape, e.clientX, e.clientY);
+      if (!e.relatedTarget || !land.contains(e.relatedTarget)) {
+        hide();
       }
     },
     { passive: true }
@@ -108,7 +134,9 @@
       var shape = shapeFromTarget(e.target);
       if (!shape) return;
       var r = shape.getBoundingClientRect();
-      activate(shape, r.left + r.width / 2, r.top + r.height / 2);
+      lastX = r.left + r.width / 2;
+      lastY = r.top + r.height / 2;
+      activate(shape, lastX, lastY);
     },
     true
   );
@@ -126,11 +154,11 @@
   window.addEventListener(
     "scroll",
     function () {
-      if (el.hidden) return;
-      hide();
+      refreshUnderPointer();
     },
     { passive: true, capture: true }
   );
 
+  window.addEventListener("resize", refreshUnderPointer);
   window.addEventListener("blur", hide);
 })();

@@ -231,9 +231,18 @@ a { color: inherit; }
   display: block;
 }
 
-/* Custom pointer + animated label (see js/shape-cursor.js); hide OS cursor on shapes */
+/* Fallback cursors until shape-cursor.js enables cursor:none (avoids invisible pointer if JS fails) */
+.home .shape {
+  text-decoration: none;
+}
+
+.shape-about { cursor: url("../assets/ui/cursor-about.png") 0 0, pointer; }
+.home .shape-work { cursor: url("../assets/ui/cursor-contact.png") 0 0, pointer; }
+.shape-portfolio { cursor: url("../assets/ui/cursor-portfolio.png") 0 0, pointer; }
+
+/* Custom overlay active: hide OS cursor on shapes (class set by js/shape-cursor.js) */
 @media (pointer: fine) {
-  .home .shape {
+  html.shape-cursor-ready .home .shape {
     cursor: none;
   }
 }
@@ -247,7 +256,6 @@ a { color: inherit; }
 
 .shape:hover { opacity: 0.9; }
 
-.shape-work,
 .say { cursor: url("../assets/ui/cursor-contact.png") 0 0, pointer; }
 
 /* Floating cursor → section label (top-left hotspot matches PNG cursor hotspot) */
@@ -257,6 +265,7 @@ a { color: inherit; }
   top: 0;
   z-index: 9999;
   pointer-events: none;
+  will-change: transform, opacity;
 }
 
 .shape-cursor-inner {
@@ -265,10 +274,23 @@ a { color: inherit; }
   overflow: hidden;
   border-radius: 6px;
   background: transparent;
+  opacity: 0;
+  transform: scale(0.92);
   transition:
     background 0.28s cubic-bezier(0, 0, 0, 1),
     padding 0.28s cubic-bezier(0, 0, 0, 1),
-    box-shadow 0.28s cubic-bezier(0, 0, 0, 1);
+    box-shadow 0.28s cubic-bezier(0, 0, 0, 1),
+    opacity 0.22s cubic-bezier(0, 0, 0, 1),
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.shape-cursor--shown .shape-cursor-inner {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.shape-cursor--label.shape-cursor--shown .shape-cursor-inner {
+  animation: shape-cursor-breathe 1.6s cubic-bezier(0.37, 0, 0.63, 1) infinite;
 }
 
 .shape-cursor-icon {
@@ -321,6 +343,16 @@ a { color: inherit; }
   max-width: 160px;
   opacity: 1;
   transform: translate3d(0, 0, 0);
+}
+
+@keyframes shape-cursor-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
 }
 
 .shape img,
@@ -748,6 +780,9 @@ a { color: inherit; }
   .shape-cursor-inner,
   .shape-cursor-icon,
   .shape-cursor-label { transition: none; }
+  .shape-cursor--label.shape-cursor--shown .shape-cursor-inner {
+    animation: none;
+  }
   .home .hint,
   .land-rise,
   .card-visual { animation: none; }
