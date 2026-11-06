@@ -17,7 +17,7 @@
       var href = link.getAttribute("href");
       if (!href) return;
 
-      // Figma Close: from hover state (Close2) the click animates back to default (Close3)
+      // Figma Close: from hover state (Close2, rotated “+”) the click animates back to default (Close3)
       // before NAVIGATE "/". Approximate only when the control is hovered.
       if (!link.matches(":hover")) return;
 
