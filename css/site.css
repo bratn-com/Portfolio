@@ -176,6 +176,15 @@ a { color: inherit; }
   transform: translateX(-50%);
 }
 
+/* Let hero polygons draw past their layout boxes / SVG viewBox when magnet-deformed */
+.home,
+.home .stage,
+.home .land,
+.home .land-rise,
+.home .shape {
+  overflow: visible;
+}
+
 .hint .follow {
   position: absolute;
   inset: 0;
@@ -241,6 +250,7 @@ a { color: inherit; }
   width: 100%;
   height: 100%;
   display: block;
+  overflow: visible;
 }
 
 .shape-about { left: 0; top: 0; width: 47.01%; height: 67.22%; z-index: 1; }
