@@ -5,9 +5,11 @@ Wizualna kopia [bratn.com](https://www.bratn.com/): strona główna, about, cont
 ## Podgląd na żywo (bez zip)
 
 1. **GitHub Pages (po każdym pushu)**  
-   W repozytorium: **Settings → Pages → Build and deployment → Source: GitHub Actions**.  
+   W repozytorium: **Settings → Pages → Build and deployment → Source: GitHub Actions** i zapisz.  
+   Jeśli wcześniej było „None” lub „Deploy from a branch”, GitHub musi to zapisać zanim zadziała `actions/deploy-pages` — inaczej w logu zobaczysz **404** przy `Failed to create deployment` i komunikat „Ensure GitHub Pages has been enabled”.  
    Po pierwszym zielonym workflowzie „Deploy GitHub Pages” adres będzie miał postać  
-   `https://<organizacja-lub-user>.github.io/Portfolio/` (dokładny URL jest w zakładce **Actions** przy deployu).
+   `https://<organizacja-lub-user>.github.io/Portfolio/` (dokładny URL jest w zakładce **Actions** przy deployu albo ponownie w **Settings → Pages**).  
+   **Repozytorium prywatne:** publiczne GitHub Pages z Actions wymaga planu płatnego (Team/Enterprise); przy darmowym koncie ustaw repo na **public** albo zostań przy podglądzie lokalnym (`git pull` + `http.server`).
 
 2. **Lokalnie z gitem (najszybszy podgląd u siebie)**  
    ```bash
