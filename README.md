@@ -2,7 +2,25 @@
 
 Wizualna kopia [bratn.com](https://www.bratn.com/): strona główna, about, contact i portfolio. Projekty nie są wpisane w HTML. Czyta je `content/portfolio.json`.
 
-Żeby przeklikać stronę, rozpakuj branch i otwórz `index.html` w przeglądarce. Serwer nie jest potrzebny.
+## Podgląd na żywo (bez zip)
+
+1. **GitHub Pages (po każdym pushu)**  
+   W repozytorium: **Settings → Pages → Build and deployment → Source: GitHub Actions**.  
+   Po pierwszym zielonym workflowzie „Deploy GitHub Pages” adres będzie miał postać  
+   `https://<organizacja-lub-user>.github.io/Portfolio/` (dokładny URL jest w zakładce **Actions** przy deployu).
+
+2. **Lokalnie z gitem (najszybszy podgląd u siebie)**  
+   ```bash
+   git clone https://github.com/bratn-com/Portfolio.git
+   cd Portfolio
+   git checkout cursor/portfolio-site-a410   # lub main po mergu
+   git pull
+   python3 -m http.server 8080 --bind 127.0.0.1
+   ```  
+   Otwórz: `http://127.0.0.1:8080/index.html`
+
+3. **Bez serwera**  
+   Możesz też otworzyć `index.html` z dysku — portfolio załaduje dane z `content/portfolio.js`.
 
 ## Dodawanie i aktualizacja
 
