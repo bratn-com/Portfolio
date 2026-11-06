@@ -43,6 +43,30 @@ a { color: inherit; }
   flex-direction: column;
 }
 
+.shell.shell-viewport {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.portfolio-page .work {
+  padding-top: 24px;
+  padding-bottom: 12px;
+}
+
+.portfolio-page .card-copy {
+  padding-bottom: 16px;
+}
+
+.portfolio-page .card-copy h2 {
+  min-height: min(111px, 22vh);
+}
+
+.portfolio-page .pager {
+  margin-top: 6px;
+  flex: none;
+}
+
 .bar {
   display: flex;
   align-items: center;
