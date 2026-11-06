@@ -58,6 +58,9 @@
     var image = document.createElement("img");
     image.src = url;
     image.alt = "";
+    if (m.base.toLowerCase().indexOf("skew") !== -1) {
+      image.className = "card-visual-skew";
+    }
     visual.appendChild(image);
   }
 

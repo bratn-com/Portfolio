@@ -559,6 +559,25 @@ a { color: inherit; }
   align-self: stretch;
 }
 
+/* Pre-skewed mockup PNGs (filename contains "skew") — no extra 3D transform */
+.portfolio-page .card-visual img.card-visual-skew,
+.portfolio-page .card-visual video.card-visual-skew {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform: none;
+  transform-origin: center bottom;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
+}
+
+.portfolio-page .card:hover .card-visual img.card-visual-skew,
+.portfolio-page .card:hover .card-visual video.card-visual-skew {
+  transform: scale(1.04);
+}
+
 .card-visual video {
   pointer-events: none;
 }
@@ -708,6 +727,10 @@ a { color: inherit; }
   .portfolio-page .card-visual img,
   .portfolio-page .card-visual video {
     transform: none;
+    box-shadow: none;
+  }
+  .portfolio-page .card-visual img.card-visual-skew,
+  .portfolio-page .card-visual video.card-visual-skew {
     box-shadow: none;
   }
 }
