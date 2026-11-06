@@ -75,7 +75,15 @@ a { color: inherit; }
   flex: none;
 }
 
-.close img { display: block; width: 100%; height: 100%; }
+.close img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.close:hover img { transform: scale(1.416); }
+.close:active img { transform: none; }
 
 .home { position: relative; height: 100dvh; min-height: 640px; }
 
@@ -116,6 +124,13 @@ a { color: inherit; }
   transform: translateX(-50%);
 }
 
+.hint .follow {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
 .hint img {
   position: absolute;
   inset: 0;
@@ -148,13 +163,26 @@ a { color: inherit; }
   transform: translateX(-50%);
 }
 
+.land-rise { position: absolute; inset: 0; }
+
 .shape {
   position: absolute;
   display: block;
-  transition: opacity 0.2s cubic-bezier(0.65, 0.05, 0.35, 1);
 }
 
+.shape-about,
+.shape-portfolio {
+  transition: opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.shape-work { transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1); }
+
 .shape:hover { opacity: 0.9; }
+
+.shape-about { cursor: url("../assets/ui/cursor-about.png") 0 0, pointer; }
+.shape-work,
+.say { cursor: url("../assets/ui/cursor-contact.png") 0 0, pointer; }
+.shape-portfolio { cursor: url("../assets/ui/cursor-portfolio.png") 0 0, pointer; }
 
 .shape img { width: 100%; height: 100%; display: block; }
 
@@ -210,6 +238,9 @@ a { color: inherit; }
 .side-arrow.right { right: 45px; }
 .side-arrow img { width: 89px; height: 33px; display: block; }
 .side-arrow.right img { transform: scaleX(-1); }
+.side-arrow { transition: transform 0.3s cubic-bezier(0, 0, 0, 1); }
+.side-arrow.left:hover { transform: translateY(-50%) translateX(-18px); }
+.side-arrow.right:hover { transform: translateY(-50%) translateX(21px); }
 
 .about-grid {
   width: min(716px, calc(100% - 220px));
@@ -252,7 +283,10 @@ a { color: inherit; }
   height: 191px;
   margin: 70px 0 0 30px;
   text-decoration: none;
+  transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
+
+.say:hover { opacity: 0.9; }
 
 .say img { width: 165px; height: 191px; display: block; }
 
@@ -307,7 +341,11 @@ a { color: inherit; }
   justify-content: space-between;
 }
 
-.gem-links a { display: block; }
+.gem-links a {
+  display: block;
+  transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.gem-links a:hover { opacity: 0.8; }
 .gem-links .behance { width: 30.2%; }
 .gem-links .behance img { width: 100%; height: auto; display: block; }
 .gem-links .linkedin { width: 25.4%; }
@@ -348,9 +386,12 @@ a { color: inherit; }
   font-weight: 500;
   line-height: 25px;
   text-decoration: none;
+  transition: color 0.3s cubic-bezier(0, 0, 0, 1);
 }
 
-.tabs a[aria-current="true"] { color: #fff; }
+.tabs a:hover { color: #dbdbdb; }
+.tabs a[aria-current="true"],
+.tabs a[aria-current="true"]:hover { color: #fff; }
 
 .grid {
   flex: 1;
@@ -410,8 +451,11 @@ a { color: inherit; }
 }
 
 .pager .arrow { width: 89px; height: 33px; }
+.pager .arrow { transition: transform 0.3s cubic-bezier(0, 0, 0, 1); }
+.pager .arrow:hover { transform: translateX(-18px); }
 .pager .arrow img { width: 89px; height: 33px; display: block; }
 .pager .right { justify-self: end; }
+.pager .right:hover { transform: translateX(21px); }
 .pager .right img { transform: scaleX(-1); }
 .pager .arrow[aria-disabled="true"] { pointer-events: none; }
 
@@ -471,6 +515,34 @@ a { color: inherit; }
   .say span { font-size: 32px; line-height: 34px; left: 40px; top: 28px; }
 }
 
+.home .hint { animation: hint-in 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) both; }
+.land-rise { animation: land-rise 0.9s cubic-bezier(0.16, 1.25, 0.3, 1) both; }
+.card-visual img { animation: card-in 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) both; }
+
+@keyframes hint-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes land-rise {
+  from { opacity: 0; transform: translateY(150px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateX(-150px); }
+  to { opacity: 1; transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .shape { transition: none; }
+  .shape,
+  .close img,
+  .side-arrow,
+  .say,
+  .gem-links a,
+  .tabs a,
+  .pager .arrow { transition: none; }
+  .home .hint,
+  .land-rise,
+  .card-visual img { animation: none; }
 }
