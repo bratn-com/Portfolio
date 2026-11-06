@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      try {
+        var stored = localStorage.getItem("bratn-lang");
+        if (stored === "pl" || stored === "en") {
+          document.documentElement.lang = stored;
+        } else if (navigator.language && navigator.language.toLowerCase().indexOf("pl") === 0) {
+          document.documentElement.lang = "pl";
+        }
+      } catch (e) {}
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jarek Nowakowski — Senior UI/UX Designer</title>
+    <meta
+      name="description"
+      content="Senior UI/UX designer in Warsaw. Art direction, branding, interface design, design systems and complex SaaS products."
+    />
+    <meta name="theme-color" content="#f3f2ef" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/site.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main"><span class="en">Skip to content</span><span class="pl">Przejdź do treści</span></a>
+    <p class="rail mono">Jarek Nowakowski · <span class="en">Warsaw</span><span class="pl">Warszawa</span></p>
+
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="#top">
+          <span class="mark" aria-hidden="true"></span>
+          bratn
+        </a>
+        <nav id="site-nav" class="site-nav" aria-label="Primary">
+          <a href="#about"><span class="en">About</span><span class="pl">O mnie</span></a>
+          <a href="#work"><span class="en">Work</span><span class="pl">Prace</span></a>
+          <a href="#contact"><span class="en">Contact</span><span class="pl">Kontakt</span></a>
+        </nav>
+        <div class="langs" role="group" aria-label="Language">
+          <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-set-lang="pl" aria-pressed="false">PL</button>
+        </div>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero wrap" id="top" tabindex="-1">
+        <p class="kicker mono">Senior UI/UX Designer</p>
+        <h1>Jarek<br />Nowakowski</h1>
+        <dl class="specs">
+          <div>
+            <dt class="mono"><span class="en">Based</span><span class="pl">Miejsce</span></dt>
+            <dd><span class="en">Warsaw</span><span class="pl">Warszawa</span></dd>
+          </div>
+          <div>
+            <dt class="mono"><span class="en">Practice</span><span class="pl">Praktyka</span></dt>
+            <dd><span class="en">Since 2008</span><span class="pl">Od 2008</span></dd>
+          </div>
+          <div>
+            <dt class="mono"><span class="en">Now</span><span class="pl">Teraz</span></dt>
+            <dd>Coldrun</dd>
+          </div>
+        </dl>
+        <p class="lede">
+          <span class="en">With over fifteen years of experience collaborating with clients around the world, I specialize in art direction, print design, branding, interface design, mobile and app design, and in design systems for complex SaaS products.</span>
+          <span class="pl">Od ponad piętnastu lat współpracuję z klientami na całym świecie. Specjalizuję się w art direction, projektowaniu do druku, brandingu, projektowaniu interfejsów, aplikacjach mobilnych oraz w design systemach dla złożonych produktów SaaS.</span>
+        </p>
+        <p class="lede">
+          <span class="en">The range built over recent years lets me adapt and work across very different creative styles and approaches.</span>
+          <span class="pl">Ten zakres, budowany przez ostatnie lata, pozwala mi pracować w bardzo różnych stylach i podejściach.</span>
+        </p>
+        <p class="hero-links">
+          <a href="#work"><span class="en">Selected work</span><span class="pl">Wybrane prace</span></a>
+          <a href="#contact"><span class="en">Open to part-time support</span><span class="pl">Otwarty na wsparcie w niepełnym wymiarze</span></a>
+        </p>
+      </section>
+
+      <section id="about" tabindex="-1">
+        <div class="wrap">
+          <p class="section-label mono">01</p>
+          <h2><span class="en">About</span><span class="pl">O mnie</span></h2>
+          <div class="split">
+            <div>
+              <ol class="timeline">
+                <li>
+                  <span class="mono">2022—</span>
+                  <span><span class="role">Coldrun</span><br /><span class="en">Senior UI/UX Designer</span><span class="pl">Senior UI/UX Designer</span></span>
+                  <span class="place"><span class="en">Warsaw</span><span class="pl">Warszawa</span></span>
+                </li>
+                <li>
+                  <span class="mono">2016—2022</span>
+                  <span><span class="role">Demant Polska</span><br />UI Designer</span>
+                  <span class="place"><span class="en">Warsaw</span><span class="pl">Warszawa</span></span>
+                </li>
+                <li>
+                  <span class="mono">2008—</span>
+                  <span><span class="role">bratn.com</span><br />Digital Visual Designer</span>
+                  <span class="place"><span class="en">Warsaw</span><span class="pl">Warszawa</span></span>
+                </li>
+              </ol>
+              <p class="note">
+                <span class="en">Where the dates overlap, the roles run in parallel. bratn has stayed active alongside employment.</span>
+                <span class="pl">Tam, gdzie daty się pokrywają, role trwają równolegle. bratn działa obok etatu.</span>
+              </p>
+            </div>
+            <div>
+              <p class="section-label mono"><span class="en">Practice</span><span class="pl">Zakres</span></p>
+              <ul class="practice">
+                <li><span class="mono">01</span><span>Art direction</span></li>
+                <li><span class="mono">02</span><span><span class="en">Print design</span><span class="pl">Projektowanie do druku</span></span></li>
+                <li><span class="mono">03</span><span>Branding</span></li>
+                <li><span class="mono">04</span><span><span class="en">Interface design</span><span class="pl">Interfejsy</span></span></li>
+                <li><span class="mono">05</span><span><span class="en">Mobile and app design</span><span class="pl">Aplikacje mobilne</span></span></li>
+                <li><span class="mono">06</span><span><span class="en">Design systems</span><span class="pl">Design systemy</span></span></li>
+                <li><span class="mono">07</span><span><span class="en">Complex SaaS</span><span class="pl">Złożone produkty SaaS</span></span></li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="section-label mono clients-label"><span class="en">Selected clients</span><span class="pl">Wybrani klienci</span></p>
+          <ul class="clients">
+            <li>Samsung</li>
+            <li>P&amp;G</li>
+            <li>Disney</li>
+            <li>Sony</li>
+            <li>Santander Bank</li>
+            <li>ING</li>
+            <li>Reebok</li>
+            <li>Microsoft</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="work" tabindex="-1">
+        <div class="wrap">
+          <p class="section-label mono">02</p>
+          <h2><span class="en">Work</span><span class="pl">Prace</span></h2>
+          <p class="work-intro">
+            <span class="en">Selected public projects. The Behance set comes first, then shots that are only on Dribbble. Case studies live on those profiles.</span>
+            <span class="pl">Wybrane prace publiczne. Najpierw zestaw z Behance, potem kadry, które są tylko na Dribbble. Opracowania są na tych profilach.</span>
+          </p>
+
+          <p class="group-label mono">Behance</p>
+          <div class="work-head mono" aria-hidden="true">
+            <span>Nr</span>
+            <span><span class="en">Project</span><span class="pl">Projekt</span></span>
+            <span><span class="en">Profile</span><span class="pl">Profil</span></span>
+          </div>
+          <article class="work-row">
+            <span class="mono">01</span>
+            <span>
+              <span class="work-title">Aneta Ludwig Photography</span>
+              <span class="year">2013</span>
+              <span class="work-note"><span class="en">Web portfolio for a children and family photographer.</span><span class="pl">Portfolio www dla fotografki dzieci i rodzin.</span></span>
+            </span>
+            <span class="work-links"><a href="https://www.behance.net/bratn" rel="me noreferrer">Behance</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">02</span>
+            <span class="work-title">Tony Resort</span>
+            <span class="work-links">
+              <a href="https://www.behance.net/bratn" rel="me noreferrer">Behance</a>
+              <a href="https://dribbble.com/bratn" rel="me noreferrer">Dribbble</a>
+            </span>
+          </article>
+          <article class="work-row">
+            <span class="mono">03</span>
+            <span class="work-title">infookno</span>
+            <span class="work-links"><a href="https://www.behance.net/bratn" rel="me noreferrer">Behance</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">04</span>
+            <span class="work-title">PoloniaLondyn2012.pl</span>
+            <span class="work-links"><a href="https://www.behance.net/bratn" rel="me noreferrer">Behance</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">05</span>
+            <span class="work-title">vektorsoftware</span>
+            <span class="work-links"><a href="https://www.behance.net/bratn" rel="me noreferrer">Behance</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">06</span>
+            <span class="work-title">Web8.pl</span>
+            <span class="work-links"><a href="https://www.behance.net/bratn" rel="me noreferrer">Behance</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">07</span>
+            <span class="work-title">domenomania.pl</span>
+            <span class="work-links">
+              <a href="https://www.behance.net/bratn" rel="me noreferrer">Behance</a>
+              <a href="https://dribbble.com/bratn" rel="me noreferrer">Dribbble</a>
+            </span>
+          </article>
+          <article class="work-row">
+            <span class="mono">08</span>
+            <span class="work-title">Gerlach</span>
+            <span class="work-links"><a href="https://www.behance.net/bratn" rel="me noreferrer">Behance</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">09</span>
+            <span class="work-title">stefczyk.tv</span>
+            <span class="work-links"><a href="https://www.behance.net/bratn" rel="me noreferrer">Behance</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">10</span>
+            <span class="work-title">Santander Consumer Bank</span>
+            <span class="work-links"><a href="https://www.behance.net/bratn" rel="me noreferrer">Behance</a></span>
+          </article>
+
+          <p class="group-label mono">Dribbble</p>
+          <article class="work-row">
+            <span class="mono">11</span>
+            <span class="work-title">Tallinder</span>
+            <span class="work-links"><a href="https://dribbble.com/bratn" rel="me noreferrer">Dribbble</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">12</span>
+            <span class="work-title">Sportland</span>
+            <span class="work-links"><a href="https://dribbble.com/bratn" rel="me noreferrer">Dribbble</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">13</span>
+            <span class="work-title">Reebok — Pupkultura</span>
+            <span class="work-links"><a href="https://dribbble.com/bratn" rel="me noreferrer">Dribbble</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">14</span>
+            <span class="work-title">MS Dare your browser</span>
+            <span class="work-links"><a href="https://dribbble.com/bratn" rel="me noreferrer">Dribbble</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">15</span>
+            <span class="work-title">Limousine Service</span>
+            <span class="work-links"><a href="https://dribbble.com/bratn" rel="me noreferrer">Dribbble</a></span>
+          </article>
+          <article class="work-row">
+            <span class="mono">16</span>
+            <span class="work-title">london 2012</span>
+            <span class="work-links"><a href="https://dribbble.com/bratn" rel="me noreferrer">Dribbble</a></span>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" tabindex="-1">
+        <div class="wrap">
+          <p class="section-label mono">03</p>
+          <h2><span class="en">Contact</span><span class="pl">Kontakt</span></h2>
+          <p class="work-intro">
+            <span class="en">I can support a design team part-time.</span>
+            <span class="pl">Mogę wesprzeć zespół projektowy w niepełnym wymiarze.</span>
+          </p>
+          <a class="contact-email" href="mailto:contact@bratn.com">contact@bratn.com</a>
+          <ul class="profiles">
+            <li><a href="https://www.linkedin.com/in/jarek-nowakowski" rel="me noreferrer">LinkedIn</a></li>
+            <li><a href="https://www.behance.net/bratn" rel="me noreferrer">Behance</a></li>
+            <li><a href="https://dribbble.com/bratn" rel="me noreferrer">Dribbble</a></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <span class="mono">© 2026 Jarek Nowakowski</span>
+        <span class="mono">bratn</span>
+      </div>
+    </footer>
+    <script src="/js/site.js"></script>
+  </body>
+</html>
