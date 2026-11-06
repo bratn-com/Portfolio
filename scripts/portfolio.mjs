@@ -66,14 +66,18 @@ function requireCategory(value) {
   return value;
 }
 
-function copyImage(id, source) {
+const imageExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif"]);
+const videoExtensions = new Set([".mp4", ".webm", ".ogv"]);
+const vectorExtensions = new Set([".svg"]);
+
+function copyMedia(id, source) {
   if (!source) return null;
   const from = resolve(source);
-  if (!existsSync(from)) fail(`Nie ma pliku obrazu: ${from}`);
+  if (!existsSync(from)) fail(`Nie ma pliku: ${from}`);
   mkdirSync(imageDir, { recursive: true });
   const ext = extname(from).toLowerCase() || ".jpg";
-  if (![".jpg", ".jpeg", ".png", ".webp", ".gif"].includes(ext)) {
-    fail("Obraz może być jpg, png, webp albo gif.");
+  if (!imageExtensions.has(ext) && !videoExtensions.has(ext) && !vectorExtensions.has(ext)) {
+    fail("Plik może być: jpg, png, webp, gif, mp4, webm, ogv albo svg.");
   }
   const filename = `${id}${ext}`;
   copyFileSync(from, join(imageDir, filename));
@@ -96,9 +100,13 @@ const { cmd, positionals, opts } = parseArgs(process.argv);
 if (!cmd || cmd === "help") {
   console.log(`Użycie:
   node scripts/portfolio.mjs list
-  node scripts/portfolio.mjs add --category desktop --title "Nazwa\\nDruga linia" --label "Desktop website" --color "#0f5d4f" --image ./plik.jpg
-  node scripts/portfolio.mjs update <id> [--title] [--label] [--color] [--category] [--image]
+  node scripts/portfolio.mjs add --category desktop --title "Nazwa\\nDruga linia" --label "Desktop website" --color "#0f5d4f" --media ./zrzut.jpg
+  node scripts/portfolio.mjs add --category motion --title "Spot\\nReklamowy" --label "Motion" --color "#222" --media ./spot.mp4
+  node scripts/portfolio.mjs update <id> [--title] [--label] [--color] [--category] [--media]
   node scripts/portfolio.mjs remove <id>
+
+Kategorie: desktop, mobile, motion (animacje / motion graphics — wideo mp4/webm lub statyczny/animowany SVG).
+--media: jpg, png, webp, gif, mp4, webm, ogv, svg (alias: --image).
 
 Kolejność na stronie jest kolejnością w content/portfolio.json.
 Tytuł z \\n łamie się na kolejne linie, tak jak na planszy.`);
@@ -114,13 +122,14 @@ if (cmd === "list") {
   if (!opts.title) fail("Podaj --title.");
   if (!opts.label) fail("Podaj --label.");
   if (!opts.color) fail("Podaj --color.");
-  if (!opts.image) fail("Podaj --image.");
+  const mediaSource = opts.media || opts.image;
+  if (!mediaSource) fail("Podaj --media (lub --image).");
   const title = titleOf(opts.title);
   const color = requireColor(opts.color);
   const id = opts.id ? slug(opts.id) : slug(title.split("\n")[0]);
   if (!id) fail("Nie da się zrobić id z tytułu. Podaj --id.");
   if (data.projects.some((project) => project.id === id)) fail(`Projekt „${id}” już jest. Użyj update.`);
-  const image = copyImage(id, opts.image);
+  const image = copyMedia(id, mediaSource);
   data.projects.push({
     id,
     category,
@@ -140,7 +149,8 @@ if (cmd === "list") {
   if (opts.title) project.title = titleOf(opts.title);
   if (opts.label) project.label = opts.label;
   if (opts.color) project.color = requireColor(opts.color);
-  if (opts.image) project.image = copyImage(id, opts.image);
+  const mediaSource = opts.media || opts.image;
+  if (mediaSource) project.image = copyMedia(id, mediaSource);
   save(data);
   console.log(`Zaktualizowano ${id}.`);
 } else if (cmd === "remove") {

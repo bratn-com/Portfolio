@@ -30,6 +30,37 @@
     }
   }
 
+  function mediaPath(project) {
+    var path = project.image || "";
+    var i = path.lastIndexOf(".");
+    return { base: path, ext: i >= 0 ? path.slice(i + 1).toLowerCase() : "" };
+  }
+
+  function appendVisual(visual, project) {
+    var m = mediaPath(project);
+    var url = "content/" + m.base;
+    var v = ["mp4", "webm", "ogv"];
+    if (v.indexOf(m.ext) >= 0) {
+      var video = document.createElement("video");
+      video.src = url;
+      video.setAttribute("playsinline", "");
+      video.muted = true;
+      video.loop = true;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        video.removeAttribute("autoplay");
+        video.controls = true;
+      } else {
+        video.autoplay = true;
+      }
+      visual.appendChild(video);
+      return;
+    }
+    var image = document.createElement("img");
+    image.src = url;
+    image.alt = "";
+    visual.appendChild(image);
+  }
+
   function show(data) {
       var projects = (data.projects || []).filter(function (project) {
         return project.category === category;
@@ -45,10 +76,7 @@
         card.style.background = project.color;
         var visual = document.createElement("div");
         visual.className = "card-visual";
-        var image = document.createElement("img");
-        image.src = "content/" + project.image;
-        image.alt = "";
-        visual.appendChild(image);
+        appendVisual(visual, project);
         var copy = document.createElement("div");
         copy.className = "card-copy";
         var title = document.createElement("h2");

@@ -37,13 +37,22 @@ node scripts/portfolio.mjs add \
   --title "Nazwa\nDruga linia" \
   --label "Desktop website" \
   --color "#0f5d4f" \
-  --image ./sciezka/do-ujecia.jpg
+  --media ./sciezka/do-ujecia.jpg
 
-node scripts/portfolio.mjs update transimeksa --title "Nowa nazwa" --image ./nowe.jpg
+node scripts/portfolio.mjs add \
+  --category motion \
+  --title "Tytuł\nDruga linia" \
+  --label "Motion" \
+  --color "#222222" \
+  --media ./spot.mp4
+
+node scripts/portfolio.mjs update transimeksa --title "Nowa nazwa" --media ./nowe.jpg
 
 node scripts/portfolio.mjs remove transimeksa
 ```
 
 Kategorie: `desktop`, `mobile`, `motion`. `\n` w tytule łamie linię tak jak na planszy. Id powstaje z pierwszej linii tytułu; inne id podajesz przez `--id`. Kolejność na stronie jest kolejnością wpisów w `content/portfolio.json`. Na jednej planszy mieszczą się cztery prace; kolejna czwórka jest następną stroną.
 
-Obraz trafia do `content/images/`. Usunięcie projektu zostawia plik obrazu.
+**Plik w karcie (`--media`, alias `--image`):** jpg, png, webp, gif, **mp4 / webm / ogv** (odtwarzanie w pętli, bez dźwięku, z lekkim zoomem przy hoverze jak na zrzutach) albo **svg** (także animowany SMIL/CSS w pliku). Duże wideo trzymaj pod kontrolą rozmiaru — GitHub i Pages mają limity rozmiaru repozytorium.
+
+Plik trafia do `content/images/`. Usunięcie projektu zostawia plik na dysku.
