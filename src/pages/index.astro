@@ -1,0 +1,213 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { resolveProjectImage, type ImageGlobMap } from '../lib/paths';
+
+const projectsGlob = import.meta.glob('../../content/projects/**/images/*.{png,jpg,jpeg,gif,webp,svg}', {
+	eager: true,
+}) as ImageGlobMap;
+
+const search = Astro.url.searchParams;
+const platformFilter = search.get('platform');
+
+const allProjects = await getCollection('projects');
+
+const filtered = allProjects.filter((entry) => {
+	if (!platformFilter) return true;
+	return entry.data.platform === platformFilter;
+});
+
+const sorted = [...filtered].sort((a, b) => {
+	const da = a.data.date?.getTime() ?? 0;
+	const db = b.data.date?.getTime() ?? 0;
+	return db - da;
+});
+
+const pageTitle = 'Portfolio';
+const pageDesc = 'Selected desktop and mobile work.';
+---
+
+<Base title={pageTitle} description={pageDesc}>
+	<h1>Work</h1>
+	<p class="lede">{pageDesc}</p>
+
+	<form class="filters" method="get" action="/">
+		<fieldset>
+			<legend class="visually-hidden">Filter by platform</legend>
+			<label class={`pill ${!platformFilter ? 'active' : ''}`}>
+				<input type="radio" name="platform" value="" checked={!platformFilter} />
+				<span>All</span>
+			</label>
+			<label class={`pill ${platformFilter === 'desktop' ? 'active' : ''}`}>
+				<input type="radio" name="platform" value="desktop" checked={platformFilter === 'desktop'} />
+				<span>Desktop</span>
+			</label>
+			<label class={`pill ${platformFilter === 'mobile' ? 'active' : ''}`}>
+				<input type="radio" name="platform" value="mobile" checked={platformFilter === 'mobile'} />
+				<span>Mobile</span>
+			</label>
+		</fieldset>
+	</form>
+
+	<ul class="project-list">
+		{
+			sorted.map((entry) => {
+				const heroMeta = resolveProjectImage(projectsGlob, entry.id, entry.data.hero);
+				return (
+					<li class="project-card">
+						<a class="card-link" href={`/projects/${entry.id}/`}>
+							{heroMeta ? (
+								<div class="thumb-wrap">
+									<Image src={heroMeta} alt="" width={heroMeta.width} height={heroMeta.height} />
+								</div>
+							) : (
+								<div class="thumb-placeholder" aria-hidden="true" />
+							)}
+							<div class="card-body">
+								<h2>{entry.data.title}</h2>
+								<p class="meta">
+									<span class="badge">{entry.data.platform}</span>
+									{entry.data.date && (
+										<time datetime={entry.data.date.toISOString()}>
+											{entry.data.date.toLocaleDateString('en-GB', {
+												year: 'numeric',
+												month: 'short',
+											})}
+										</time>
+									)}
+								</p>
+								<p class="summary">{entry.data.summary}</p>
+							</div>
+						</a>
+					</li>
+				);
+			})
+		}
+	</ul>
+
+	{sorted.length === 0 && <p class="empty">No projects match this filter.</p>}
+</Base>
+
+<script>
+	const form = document.querySelector<HTMLFormElement>('.filters');
+	form?.addEventListener('change', () => {
+		const data = new FormData(form);
+		const platform = data.get('platform') as string;
+		const url = new URL(window.location.href);
+		if (platform) {
+			url.searchParams.set('platform', platform);
+		} else {
+			url.searchParams.delete('platform');
+		}
+		window.location.assign(url.pathname + url.search);
+	});
+</script>
+
+<style>
+	.lede {
+		margin-top: 0;
+		color: #444;
+	}
+	fieldset {
+		border: none;
+		padding: 0;
+		margin: 0 0 1.25rem;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.pill {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.35rem 0.75rem;
+		border: 1px solid #ccc;
+		border-radius: 999px;
+		font-size: 0.875rem;
+		cursor: pointer;
+		background: #fff;
+	}
+	.pill input {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+	.pill.active {
+		border-color: #1a1a1a;
+		background: #1a1a1a;
+		color: #fff;
+	}
+	.pill.active span {
+		color: #fff;
+	}
+	.project-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	.project-card {
+		border: 1px solid #e0e0e0;
+		border-radius: 8px;
+		background: #fff;
+		overflow: hidden;
+	}
+	.card-link {
+		display: block;
+		color: inherit;
+		text-decoration: none;
+	}
+	.card-link:hover h2 {
+		text-decoration: underline;
+	}
+	.thumb-wrap {
+		background: #eee;
+		aspect-ratio: 16 / 9;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.thumb-wrap :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+	.thumb-placeholder {
+		aspect-ratio: 16 / 9;
+		background: linear-gradient(135deg, #e8e8e8, #f2f2f2);
+	}
+	.card-body {
+		padding: 1rem 1rem 1.1rem;
+	}
+	.card-body h2 {
+		margin: 0 0 0.35rem;
+		font-size: 1.125rem;
+	}
+	.meta {
+		margin: 0 0 0.5rem;
+		font-size: 0.8rem;
+		color: #555;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		align-items: center;
+	}
+	.badge {
+		text-transform: capitalize;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		padding: 0.1rem 0.35rem;
+		font-size: 0.75rem;
+	}
+	.summary {
+		margin: 0;
+		font-size: 0.95rem;
+		color: #333;
+	}
+	.empty {
+		color: #666;
+	}
+</style>
