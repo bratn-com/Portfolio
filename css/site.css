@@ -49,7 +49,19 @@ a { color: inherit; }
   overflow: hidden;
 }
 
+.portfolio-page > .bar {
+  flex-shrink: 0;
+}
+
 .portfolio-page .work {
+  /* Two-row layout: cards take all remaining height; pager is never painted on top of cards */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-content: stretch;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
   /* Figma portfolio-desktop: 32px under the header row, 32px above the pager, 40px under the pager */
   padding-top: 32px;
   padding-bottom: 40px;
@@ -442,6 +454,12 @@ a { color: inherit; }
 
 /* One viewport-tall row: cards shrink to free space so the pager never paints over card copy */
 .portfolio-page .grid {
+  flex: none;
+  grid-row: 1;
+  align-self: stretch;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
   grid-template-rows: minmax(0, 1fr);
   align-content: stretch;
 }
@@ -521,8 +539,13 @@ a { color: inherit; }
 }
 
 .portfolio-page .pager {
+  grid-row: 2;
+  align-self: end;
   margin: 32px var(--pad) 0;
   flex: none;
+  position: relative;
+  z-index: 1;
+  background: var(--bg);
 }
 
 .pager .arrow { width: 89px; height: 33px; }
