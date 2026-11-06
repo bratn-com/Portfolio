@@ -56,3 +56,16 @@ Kategorie: `desktop`, `mobile`, `motion`. `\n` w tytule łamie linię tak jak na
 **Plik w karcie (`--media`, alias `--image`):** jpg, png, webp, gif, **mp4 / webm / ogv** (odtwarzanie w pętli, bez dźwięku, z lekkim zoomem przy hoverze jak na zrzutach) albo **svg** (także animowany SMIL/CSS w pliku). Duże wideo trzymaj pod kontrolą rozmiaru — GitHub i Pages mają limity rozmiaru repozytorium.
 
 Plik trafia do `content/images/`. Usunięcie projektu zostawia plik na dysku.
+
+### Mockup „skew” z zrzutu ekranu (PNG na tle koloru projektu)
+
+Dla kart na stronie portfolio zapis obrazka z `skew` w nazwie dostaje klasę `card-visual-skew` i **bez** dodatkowego CSS-owego 3D (żeby nie dublować przechyłu). Generator:
+
+```bash
+python3 scripts/skew_cover.py content/images/Twój-zrzut.png \
+  -o content/images/projekt-skew.png \
+  --bg "#ec413a" \
+  --shadow
+```
+
+`--bg` ustaw na `color` projektu z `content/portfolio.json`. Potem ustaw `image` na wygenerowany plik w `content/portfolio.json` **i** w `content/portfolio.js` (`window.PORTFOLIO` musi być zgodny z JSON — przy edycji przez `portfolio.mjs add/update` plik `.js` jest generowany automatycznie).
