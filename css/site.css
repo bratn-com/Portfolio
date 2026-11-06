@@ -440,6 +440,13 @@ a { color: inherit; }
   object-fit: cover;
   object-position: center center;
   display: block;
+  transform-origin: center center;
+  /* Figma portfolio cards: hover scale 1.1, OUT_CUBIC 300ms */
+  transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.card:hover .card-visual img {
+  transform: scale(1.1);
 }
 
 .card-copy {
@@ -570,4 +577,6 @@ a { color: inherit; }
   .home .hint,
   .land-rise,
   .card-visual img { animation: none; }
+  .card-visual img { transition: none; }
+  .card:hover .card-visual img { transform: none; }
 }
