@@ -50,8 +50,9 @@ a { color: inherit; }
 }
 
 .portfolio-page .work {
-  padding-top: 24px;
-  padding-bottom: 12px;
+  /* Figma portfolio-desktop: 32px under the header row, 32px above the pager, 40px under the pager */
+  padding-top: 32px;
+  padding-bottom: 40px;
 }
 
 .portfolio-page .card-copy {
@@ -60,11 +61,6 @@ a { color: inherit; }
 
 .portfolio-page .card-copy h2 {
   min-height: min(111px, 22vh);
-}
-
-.portfolio-page .pager {
-  margin-top: 6px;
-  flex: none;
 }
 
 .bar {
@@ -472,6 +468,11 @@ a { color: inherit; }
   align-items: center;
   min-height: 39px;
   margin: 12px var(--pad) 0;
+}
+
+.portfolio-page .pager {
+  margin: 32px var(--pad) 0;
+  flex: none;
 }
 
 .pager .arrow { width: 89px; height: 33px; }
