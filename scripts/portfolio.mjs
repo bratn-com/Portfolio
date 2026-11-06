@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const dataPath = join(root, "content/portfolio.json");
+const dataScriptPath = join(root, "content/portfolio.js");
 const imageDir = join(root, "content/images");
 const categories = new Set(["desktop", "mobile", "motion"]);
 
@@ -14,6 +15,7 @@ function load() {
 
 function save(data) {
   writeFileSync(dataPath, JSON.stringify(data, null, 2) + "\n");
+  writeFileSync(dataScriptPath, "window.PORTFOLIO = " + JSON.stringify(data) + ";\n");
 }
 
 function fail(message) {

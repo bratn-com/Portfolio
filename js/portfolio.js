@@ -30,12 +30,7 @@
     }
   }
 
-  fetch("content/portfolio.json")
-    .then(function (response) {
-      if (!response.ok) throw new Error("portfolio");
-      return response.json();
-    })
-    .then(function (data) {
+  function show(data) {
       var projects = (data.projects || []).filter(function (project) {
         return project.category === category;
       });
@@ -69,7 +64,19 @@
       count.textContent = projects.length ? page + "/" + pages : "";
       setArrow(prev, page - 1, page > 1);
       setArrow(next, page + 1, page < pages);
+  }
+
+  if (window.PORTFOLIO) {
+    show(window.PORTFOLIO);
+    return;
+  }
+
+  fetch("content/portfolio.json")
+    .then(function (response) {
+      if (!response.ok) throw new Error("portfolio");
+      return response.json();
     })
+    .then(show)
     .catch(function () {
       grid.textContent = "Portfolio nie zostało wczytane.";
     });

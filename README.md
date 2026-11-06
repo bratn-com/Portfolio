@@ -2,6 +2,8 @@
 
 Wizualna kopia [bratn.com](https://www.bratn.com/): strona główna, about, contact i portfolio. Projekty nie są wpisane w HTML. Czyta je `content/portfolio.json`.
 
+Żeby przeklikać stronę, rozpakuj branch i otwórz `index.html` w przeglądarce. Serwer nie jest potrzebny.
+
 ## Dodawanie i aktualizacja
 
 Z katalogu repozytorium:
