@@ -480,6 +480,7 @@ a { color: inherit; }
 .portfolio-page .card {
   min-height: 0;
   overflow: hidden;
+  justify-content: space-between;
 }
 
 .card-visual {
@@ -490,8 +491,11 @@ a { color: inherit; }
   animation: card-in 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
 }
 
+/* Cap screenshot height so titles get more room (Figma-scale hero shots, not full-viewport) */
 .portfolio-page .card-visual {
-  flex: 1 1 0;
+  flex: 0 0 min(240px, 28vh);
+  height: min(240px, 28vh);
+  max-height: min(240px, 28vh);
   min-height: 0;
 }
 
