@@ -257,7 +257,7 @@ a { color: inherit; }
 .shape-work { left: 33.34%; top: 0.19%; width: 30.51%; height: 99.45%; z-index: 2; }
 .shape-portfolio { left: 59.52%; top: 31.9%; width: 40.48%; height: 68.12%; z-index: 1; }
 
-/* FLIP: polygon → full-width purple panel (about/contact) — see js/shape-nav-transition.js */
+/* Morph overlay: triangle → rectangle (about/contact) — see js/shape-nav-transition.js */
 .shape-nav-flip-overlay {
   position: fixed;
   inset: 0;
@@ -265,11 +265,13 @@ a { color: inherit; }
   pointer-events: none;
 }
 
-.shape-nav-flip {
+.shape-nav-morph-svg {
   position: absolute;
-  transform-origin: 0 0;
-  will-change: transform;
-  transition: transform 0.52s cubic-bezier(0, 0, 0, 1);
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .foot {
@@ -682,7 +684,6 @@ a { color: inherit; }
   .gem-links a,
   .tabs a,
   .pager .arrow { transition: none; }
-  .shape-nav-flip { transition: none; }
   .home .hint,
   .land-rise,
   .card-visual { animation: none; }
