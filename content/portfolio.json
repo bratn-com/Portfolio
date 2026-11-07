@@ -95,7 +95,8 @@
       "title": "Sysdyne\nIllustrations",
       "label": "Motion",
       "color": "#e5642c",
-      "image": "images/sysdyne-illustrations.png"
+      "image": "images/sysdyne-illustrations.png",
+      "mediaVersion": "20251107h"
     }
   ]
 }
