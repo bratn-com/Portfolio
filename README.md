@@ -64,10 +64,10 @@ Plik trafia do `content/images/`. Usunięcie projektu zostawia plik na dysku.
 Nazwa pliku musi zawierać `skew`, wtedy karta nie dokłada drugiego 3D.
 
 ```bash
-python3 scripts/skew_cover.py content/images/dynamite.jpg \
-  -o content/images/dynamite-skew.png
+python3 scripts/skew_cover.py content/images/zrzut.jpg \
+  -o content/images/projekt-skew.png
 ```
 
-Potem ustaw `image` w `content/portfolio.json` i `content/portfolio.js`.
+Karta Dynamite używa gotowego mockupu `content/images/Sysdyne-NewOrder-skew.png` (źródło: `content/images/Sysdyne-NewOrder.png`). Potem ustaw `image` w `content/portfolio.json` i `content/portfolio.js`.
 
 **GitHub Pages:** `https://bratn-com.github.io/Portfolio/` — po pushu twarde odświeżenie (Ctrl+Shift+R).
