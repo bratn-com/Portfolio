@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """
-Flat screenshot -> portfolio „skew” mockup (PNG on solid color + soft shadow).
+Flat screenshot -> portfolio „skew” mockup (PNG on solid project color).
 
-Projekcja zbliżona do CSS: perspective(...) rotateX(...) rotateZ(...), pinhole
-u = cx + f * x / z, v = cy + f * y / z (płaszczyzna tekstury z = 0, potem obrót
-i przesunięcie). Mapowanie PIL PERSPECTIVE (odwrotna homografia).
+Perspektywa zbliżona do kart referencyjnych (duży mockup, rotateX/Y/Z,
+wyśrodkowany, dół przy dolnej krawędzi pasma wizualnego). Wejście = płaski
+zrzut (bez wcześniejszego skew).
 
-Wymaga: Pillow, NumPy.
+Requires: Pillow, NumPy.
 
-Przykład:
-  python3 scripts/skew_cover.py content/images/Sysdyne-NewOrder.png \\
-    -o content/images/dynamite-skew.png --bg "#ec413a" --shadow
+Example:
+  python3 scripts/skew_cover.py content/images/dynamite.jpg \\
+    -o content/images/dynamite-skew.png --bg "#ec413a"
 """
 
 from __future__ import annotations
@@ -78,7 +78,6 @@ def translate(tx: float, ty: float, tz: float) -> NDArray[np.float64]:
 def homography_from_four_points(
     src: NDArray[np.float64], dst: NDArray[np.float64]
 ) -> NDArray[np.float64]:
-    """DLT: src, dst shape (4,2) -> 3x3 H with dst ~ H @ src_hom."""
     a_rows = []
     for i in range(4):
         x, y = src[i, 0], src[i, 1]
@@ -93,50 +92,7 @@ def homography_from_four_points(
     return h
 
 
-def project_corners(
-    sw: int,
-    sh: int,
-    cx: float,
-    cy: float,
-    focal: float,
-    rot_x_rad: float,
-    rot_y_rad: float,
-    rot_z_rad: float,
-    tz: float,
-) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
-    """Cztery rogi tekstury (TL,TR,BR,BL) w pikselach wyjściowych."""
-    # CSS: perspective * rotateX * rotateZ * rotateY (na wektorze z lewej w CSS;
-    # tutaj składamy macierze tak, by P' = M @ P w kolumnach).
-    rw = rot_x(rot_x_rad) @ rot_z(rot_z_rad) @ rot_y(rot_y_rad)
-    t_model = translate(cx, cy, tz)
-    m = t_model @ rw @ translate(-sw / 2, -sh / 2, 0)
-
-    corners_local = np.array(
-        [
-            [0, 0, 0, 1],
-            [sw - 1, 0, 0, 1],
-            [sw - 1, sh - 1, 0, 1],
-            [0, sh - 1, 0, 1],
-        ],
-        dtype=np.float64,
-    )
-    out = np.zeros((4, 2), dtype=np.float64)
-    for i in range(4):
-        q = m @ corners_local[i]
-        x, y, z = float(q[0]), float(q[1]), float(q[2])
-        if abs(z) < 1e-6:
-            raise RuntimeError("Punkt na płaszczyźnie ogniskowej — zwiększ |translate-z|.")
-        out[i, 0] = cx + focal * x / z
-        out[i, 1] = cy + focal * y / z
-
-    src = np.array(
-        [[0, 0], [sw - 1, 0], [sw - 1, sh - 1], [0, sh - 1]], dtype=np.float64
-    )
-    return src, out
-
-
 def pil_perspective_coeffs(h_fwd: NDArray[np.float64]) -> tuple[float, ...]:
-    """PIL oczekuje współczynników odwrotnej homografii (wyjście -> wejście), h33 = 1."""
     h_inv = np.linalg.inv(h_fwd)
     h_inv = h_inv / h_inv[2, 2]
     return (
@@ -151,36 +107,117 @@ def pil_perspective_coeffs(h_fwd: NDArray[np.float64]) -> tuple[float, ...]:
     )
 
 
+def project_quad(
+    sw: int,
+    sh: int,
+    focal: float,
+    rot_x_rad: float,
+    rot_y_rad: float,
+    rot_z_rad: float,
+    tz: float,
+) -> NDArray[np.float64]:
+    """4 rogi w przestrzeni rzutu (bez przesunięcia do pikseli karty)."""
+    # Kamera w (0,0,0); płaszczyzna z=0, potem obrót, potem odsunięcie w Z.
+    rw = rot_x(rot_x_rad) @ rot_z(rot_z_rad) @ rot_y(rot_y_rad)
+    m = translate(0, 0, tz) @ rw @ translate(-sw / 2, -sh / 2, 0)
+
+    corners_local = np.array(
+        [
+            [0, 0, 0, 1],
+            [sw - 1, 0, 0, 1],
+            [sw - 1, sh - 1, 0, 1],
+            [0, sh - 1, 0, 1],
+        ],
+        dtype=np.float64,
+    )
+    out = np.zeros((4, 2), dtype=np.float64)
+    for i in range(4):
+        q = m @ corners_local[i]
+        x, y, z = float(q[0]), float(q[1]), float(q[2])
+        depth = -z
+        if depth < 1e-3:
+            raise RuntimeError(
+                "Płaszczyzna za blisko kamery — zwiększ --translate-z (bardziej ujemne)."
+            )
+        out[i, 0] = focal * x / depth
+        out[i, 1] = focal * y / depth
+    return out
+
+
+def fit_quad_to_canvas(
+    pts: NDArray[np.float64],
+    out_w: int,
+    out_h: int,
+    margin: float,
+    fill: float,
+    bottom_frac: float,
+) -> NDArray[np.float64]:
+    """Skala + wyrównanie: środek X, dół mockupu przy bottom_frac wysokości."""
+    minx, miny = pts.min(axis=0)
+    maxx, maxy = pts.max(axis=0)
+    w, h = maxx - minx, maxy - miny
+    if w < 1e-6 or h < 1e-6:
+        raise RuntimeError("Zdegenerowany czworokąt po projekcji — zmień kąty lub translate-z.")
+    cx_box = (minx + maxx) / 2
+    cy_box = (miny + maxy) / 2
+    centered = pts - np.array([cx_box, cy_box])
+
+    inner_w = out_w * (1 - 2 * margin)
+    inner_h = out_h * (1 - 2 * margin)
+    scale = min(inner_w * fill / w, inner_h * fill / h)
+    scaled = centered * scale
+
+    minx, miny = scaled.min(axis=0)
+    maxx, maxy = scaled.max(axis=0)
+    dx = out_w / 2 - (minx + maxx) / 2
+    dy = out_h * bottom_frac - maxy
+    return scaled + np.array([dx, dy])
+
+
+def trim_near_white(im: Image.Image, threshold: int = 250) -> Image.Image:
+    """Obetnij jednolite jasne marginesy (typowy zrzut na białym)."""
+    arr = np.asarray(im.convert("RGB"))
+    mask = np.any(arr < threshold, axis=2)
+    if not mask.any():
+        return im
+    ys, xs = np.where(mask)
+    pad = 2
+    left = max(0, int(xs.min()) - pad)
+    top = max(0, int(ys.min()) - pad)
+    right = min(im.width, int(xs.max()) + pad + 1)
+    bottom = min(im.height, int(ys.max()) + pad + 1)
+    return im.crop((left, top, right, bottom))
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description="Zrzut ekranu -> mockup skew (PNG).")
-    p.add_argument("input", type=Path, help="PNG/JPG wejściowy")
+    p.add_argument("input", type=Path, help="PNG/JPG wejściowy (płaski zrzut)")
     p.add_argument("-o", "--output", type=Path, required=True, help="Ścieżka wyjścia PNG")
-    p.add_argument(
-        "--bg",
-        default="#202020",
-        help='Kolor tła (np. "#ec413a" dopasowany do --color projektu)',
-    )
-    p.add_argument("--width", type=int, default=1600, help="Szerokość wyjścia (px)")
-    p.add_argument("--height", type=int, default=1000, help="Wysokość wyjścia (px)")
+    p.add_argument("--bg", default="#202020", help='Kolor tła, np. "#ec413a"')
+    p.add_argument("--width", type=int, default=1200, help="Szerokość wyjścia (px)")
+    p.add_argument("--height", type=int, default=900, help="Wysokość wyjścia (px)")
     p.add_argument(
         "--focal",
         type=float,
         default=None,
-        help='Długość perspektywy jak w CSS perspective() (px); domyślnie 520',
+        help="Perspektywa jak CSS perspective() (px); domyślnie 520",
     )
-    p.add_argument("--rot-x", type=float, default=8.0, help="rotateX (stopnie)")
-    p.add_argument("--rot-y", type=float, default=0.0, help="rotateY (stopnie)")
+    p.add_argument("--rot-x", type=float, default=10.0, help="rotateX (stopnie)")
+    p.add_argument("--rot-y", type=float, default=-9.0, help="rotateY (stopnie)")
     p.add_argument("--rot-z", type=float, default=-6.0, help="rotateZ (stopnie)")
+    p.add_argument("--translate-z", type=float, default=-1700.0, help="Odsunięcie płaszczyzny w Z")
+    p.add_argument("--margin", type=float, default=0.06, help="Margines karty (0–0.45)")
+    p.add_argument("--fill", type=float, default=0.92, help="Jak duży mockup w pasie (0.5–1)")
     p.add_argument(
-        "--translate-z",
+        "--bottom",
         type=float,
-        default=-900.0,
-        help="Położenie Z środka płaszczyzny przed projekcją (ujemne = „przed kamerą”)",
+        default=0.88,
+        help="Pozycja dolnej krawędzi mockupu (frakcja wysokości karty)",
     )
-    p.add_argument("--margin", type=float, default=0.12, help="Margines (0–0.45)")
-    p.add_argument("--shadow", action="store_true", help="Lekki drop shadow")
-    p.add_argument("--shadow-offset", type=float, default=18.0, help="Cień: przesunięcie w dół (px)")
-    p.add_argument("--shadow-blur", type=int, default=28, help="Cień: Gaussian blur (radius PIL)")
+    p.add_argument("--no-trim", action="store_true", help="Nie obcinaj białych marginesów")
+    p.add_argument("--shadow", action="store_true", help="Lekki drop shadow (CSS i tak daje cień)")
+    p.add_argument("--shadow-offset", type=float, default=14.0)
+    p.add_argument("--shadow-blur", type=int, default=22)
     args = p.parse_args()
 
     if not args.input.is_file():
@@ -189,28 +226,32 @@ def main() -> None:
 
     focal = args.focal if args.focal is not None else 520.0
     margin = max(0.0, min(0.45, args.margin))
-    inner_w = args.width * (1 - 2 * margin)
-    inner_h = args.height * (1 - 2 * margin)
-    oy = args.height * margin
+    fill = max(0.5, min(1.0, args.fill))
+    bottom_frac = max(0.55, min(0.95, args.bottom))
 
     im = Image.open(args.input).convert("RGBA")
-    sw0, sh0 = im.size
+    if not args.no_trim:
+        im = trim_near_white(im)
 
-    scale = min(inner_w / sw0, inner_h / sh0)
-    nw = max(1, int(round(sw0 * scale)))
-    nh = max(1, int(round(sh0 * scale)))
+    sw0, sh0 = im.size
+    inner_w = args.width * (1 - 2 * margin)
+    inner_h = args.height * (1 - 2 * margin)
+    # Wejście możliwie duże przed warp — skalę dopasuje fit_quad.
+    scale_in = min(inner_w * fill * 1.05 / sw0, inner_h * fill * 1.05 / sh0)
+    nw = max(1, int(round(sw0 * scale_in)))
+    nh = max(1, int(round(sh0 * scale_in)))
     resized = im.resize((nw, nh), Image.Resampling.LANCZOS)
     sw, sh = resized.size
-
-    cx_img = args.width / 2
-    cy_band = inner_h / 2 + oy + nh * 0.02
 
     rx = math.radians(args.rot_x)
     ry = math.radians(args.rot_y)
     rz = math.radians(args.rot_z)
 
-    src_pts, dst_pts = project_corners(
-        sw, sh, cx_img, cy_band, focal, rx, ry, rz, args.translate_z
+    proj = project_quad(sw, sh, focal, rx, ry, rz, args.translate_z)
+    dst_pts = fit_quad_to_canvas(proj, args.width, args.height, margin, fill, bottom_frac)
+
+    src_pts = np.array(
+        [[0, 0], [sw - 1, 0], [sw - 1, sh - 1], [0, sh - 1]], dtype=np.float64
     )
     h_fwd = homography_from_four_points(src_pts, dst_pts)
     coeffs = pil_perspective_coeffs(h_fwd)
@@ -224,7 +265,6 @@ def main() -> None:
     )
 
     warped = np.asarray(warped_rgba).astype(np.float64) / 255.0
-
     bg = parse_hex_color(args.bg)
     canvas = np.zeros((args.height, args.width, 4), dtype=np.float64)
     canvas[:, :, 0] = bg[0] / 255.0
@@ -234,14 +274,14 @@ def main() -> None:
 
     if args.shadow:
         shadow_rgb = np.concatenate(
-            [np.zeros((args.height, args.width, 3)), warped[:, :, 3:4] * 0.45],
+            [np.zeros((args.height, args.width, 3)), warped[:, :, 3:4] * 0.4],
             axis=2,
         )
         shadow_pil = Image.fromarray(
             np.clip(shadow_rgb * 255, 0, 255).astype(np.uint8), "RGBA"
         )
         shadow_pil = shadow_pil.filter(ImageFilter.GaussianBlur(radius=args.shadow_blur))
-        ox_s, oy_s = int(args.shadow_offset * 0.25), int(args.shadow_offset)
+        ox_s, oy_s = int(args.shadow_offset * 0.2), int(args.shadow_offset)
         shadow_shift = Image.new("RGBA", (args.width, args.height), (0, 0, 0, 0))
         shadow_shift.paste(shadow_pil, (ox_s, oy_s))
         sc = np.asarray(shadow_shift).astype(np.float64) / 255.0
@@ -253,7 +293,7 @@ def main() -> None:
     out_im = Image.fromarray(np.clip(canvas * 255, 0, 255).astype(np.uint8), "RGBA")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     out_im.save(args.output, "PNG")
-    print(f"Zapisano {args.output}")
+    print(f"Zapisano {args.output} ({args.width}x{args.height})")
 
 
 if __name__ == "__main__":

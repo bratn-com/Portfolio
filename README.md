@@ -61,11 +61,14 @@ Plik trafia do `content/images/`. Usunięcie projektu zostawia plik na dysku.
 
 Dla kart na stronie portfolio zapis obrazka z `skew` w nazwie dostaje klasę `card-visual-skew` i **bez** dodatkowego CSS-owego 3D (żeby nie dublować przechyłu). Generator:
 
+Wejście musi być **płaski** zrzut (nie wcześniejszy mockup). Kolor tła = `color` projektu.
+
 ```bash
 python3 scripts/skew_cover.py content/images/Twój-zrzut.png \
   -o content/images/projekt-skew.png \
-  --bg "#ec413a" \
-  --shadow
+  --bg "#ec413a"
 ```
+
+Domyślnie: perspektywa 520px, `rotateX` ~10°, `rotateY` ~−9°, `rotateZ` −6°; mockup skalowany do ~92% pasma i osadzony przy dolnej krawędzi (jak referencja Sysdyne / Concrete-GO).
 
 `--bg` ustaw na `color` projektu z `content/portfolio.json`. Potem ustaw `image` na wygenerowany plik w `content/portfolio.json` **i** w `content/portfolio.js` (`window.PORTFOLIO` musi być zgodny z JSON — przy edycji przez `portfolio.mjs add/update` plik `.js` jest generowany automatycznie).
