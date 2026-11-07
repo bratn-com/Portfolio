@@ -71,4 +71,8 @@ python3 scripts/skew_cover.py content/images/Twój-zrzut.png \
 
 Domyślnie: perspektywa 520px, `rotateX` ~10°, `rotateY` ~−9°, `rotateZ` −6°; mockup skalowany do ~92% pasma i osadzony przy dolnej krawędzi (jak referencja Sysdyne / Concrete-GO).
 
+Na stronie portfolio **większość kart** (w tym Dynamite) używa zwykłego zrzutu **`.jpg` + CSS 3D** (`site.css`), bo tak wygląda jak Alior / Transimeksa. Gotowy PNG ze `skew` w nazwie ma sens dopiero gdy mockup wypełnia kartę jak referencja — wtedy włącza się klasa `card-visual-skew` (bez drugiego 3D w CSS).
+
+**GitHub Pages:** deploy leci z pushy na `main` lub `cursor/portfolio-site-a410` (workflow `pages.yml`). Adres: `https://bratn-com.github.io/Portfolio/`. Po deployu zrób twarde odświeżenie (Ctrl+Shift+R).
+
 `--bg` ustaw na `color` projektu z `content/portfolio.json`. Potem ustaw `image` na wygenerowany plik w `content/portfolio.json` **i** w `content/portfolio.js` (`window.PORTFOLIO` musi być zgodny z JSON — przy edycji przez `portfolio.mjs add/update` plik `.js` jest generowany automatycznie).
