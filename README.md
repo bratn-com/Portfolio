@@ -64,14 +64,16 @@ Dla kart na stronie portfolio zapis obrazka z `skew` w nazwie dostaje klasę `ca
 Wejście musi być **płaski** zrzut (nie wcześniejszy mockup). Kolor tła = `color` projektu.
 
 ```bash
-python3 scripts/skew_cover.py content/images/Twój-zrzut.png \
-  -o content/images/projekt-skew.png \
-  --bg "#ec413a"
+python3 scripts/skew_cover.py content/images/Sysdyne-NewOrder.png \
+  -o content/images/dynamite-skew-cover.png \
+  --preset portfolio
 ```
+
+(`--preset portfolio` = kąty jak w `site.css`; domyślne tło **transparentne** — kolor karty widać spod spodu.)
 
 Domyślnie: perspektywa 520px, `rotateX` ~10°, `rotateY` ~−9°, `rotateZ` −6°; mockup skalowany do ~92% pasma i osadzony przy dolnej krawędzi (jak referencja Sysdyne / Concrete-GO).
 
-Na stronie portfolio **większość kart** (w tym Dynamite) używa zwykłego zrzutu **`.jpg` + CSS 3D** (`site.css`), bo tak wygląda jak Alior / Transimeksa. Gotowy PNG ze `skew` w nazwie ma sens dopiero gdy mockup wypełnia kartę jak referencja — wtedy włącza się klasa `card-visual-skew` (bez drugiego 3D w CSS).
+**Dynamite:** `Sysdyne-NewOrder.png` (płaski zrzut) → `dynamite-skew-cover.png` (`--preset portfolio`). Pozostałe karty: `.jpg` + CSS 3D. PNG ze `skew` w nazwie = klasa `card-visual-skew` (bez podwójnego 3D w CSS, ten sam rozmiar 118% co mockupy na żywo).
 
 **GitHub Pages:** deploy leci z pushy na `main` lub `cursor/portfolio-site-a410` (workflow `pages.yml`). Adres: `https://bratn-com.github.io/Portfolio/`. Po deployu zrób twarde odświeżenie (Ctrl+Shift+R).
 

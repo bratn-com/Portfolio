@@ -9,8 +9,8 @@ zrzut (bez wcześniejszego skew).
 Requires: Pillow, NumPy.
 
 Example:
-  python3 scripts/skew_cover.py content/images/dynamite.jpg \\
-    -o content/images/dynamite-skew.png --bg "#ec413a"
+  python3 scripts/skew_cover.py content/images/Sysdyne-NewOrder.png \\
+    -o content/images/dynamite-skew-cover.png --preset portfolio
 """
 
 from __future__ import annotations
@@ -193,7 +193,17 @@ def main() -> None:
     p = argparse.ArgumentParser(description="Zrzut ekranu -> mockup skew (PNG).")
     p.add_argument("input", type=Path, help="PNG/JPG wejściowy (płaski zrzut)")
     p.add_argument("-o", "--output", type=Path, required=True, help="Ścieżka wyjścia PNG")
-    p.add_argument("--bg", default="#202020", help='Kolor tła, np. "#ec413a"')
+    p.add_argument(
+        "--bg",
+        default="transparent",
+        help='Kolor tła lub "transparent" (karta portfolio ma własny color)',
+    )
+    p.add_argument(
+        "--preset",
+        choices=["portfolio", "custom"],
+        default="portfolio",
+        help="portfolio = kąty jak site.css (perspective 520, rotateX/Z)",
+    )
     p.add_argument("--width", type=int, default=1200, help="Szerokość wyjścia (px)")
     p.add_argument("--height", type=int, default=900, help="Wysokość wyjścia (px)")
     p.add_argument(
@@ -202,16 +212,16 @@ def main() -> None:
         default=None,
         help="Perspektywa jak CSS perspective() (px); domyślnie 520",
     )
-    p.add_argument("--rot-x", type=float, default=10.0, help="rotateX (stopnie)")
-    p.add_argument("--rot-y", type=float, default=-9.0, help="rotateY (stopnie)")
+    p.add_argument("--rot-x", type=float, default=8.0, help="rotateX (stopnie)")
+    p.add_argument("--rot-y", type=float, default=-5.0, help="rotateY (stopnie)")
     p.add_argument("--rot-z", type=float, default=-6.0, help="rotateZ (stopnie)")
-    p.add_argument("--translate-z", type=float, default=-1700.0, help="Odsunięcie płaszczyzny w Z")
-    p.add_argument("--margin", type=float, default=0.06, help="Margines karty (0–0.45)")
-    p.add_argument("--fill", type=float, default=0.92, help="Jak duży mockup w pasie (0.5–1)")
+    p.add_argument("--translate-z", type=float, default=-2200.0, help="Odsunięcie płaszczyzny w Z")
+    p.add_argument("--margin", type=float, default=0.04, help="Margines karty (0–0.45)")
+    p.add_argument("--fill", type=float, default=1.12, help="Jak duży mockup w pasie (0.5–1.25)")
     p.add_argument(
         "--bottom",
         type=float,
-        default=0.88,
+        default=0.9,
         help="Pozycja dolnej krawędzi mockupu (frakcja wysokości karty)",
     )
     p.add_argument("--no-trim", action="store_true", help="Nie obcinaj białych marginesów")
@@ -226,8 +236,22 @@ def main() -> None:
 
     focal = args.focal if args.focal is not None else 520.0
     margin = max(0.0, min(0.45, args.margin))
-    fill = max(0.5, min(1.0, args.fill))
+    fill = max(0.5, min(1.25, args.fill))
     bottom_frac = max(0.55, min(0.95, args.bottom))
+
+    if args.preset == "portfolio":
+        args.rot_x = 8.0
+        args.rot_y = -5.0
+        args.rot_z = -6.0
+        args.translate_z = -2200.0
+        args.fill = 1.12
+        args.bottom = 0.9
+        args.margin = 0.04
+        if args.focal is None:
+            focal = 520.0
+        fill = args.fill
+        margin = args.margin
+        bottom_frac = args.bottom
 
     im = Image.open(args.input).convert("RGBA")
     if not args.no_trim:
@@ -237,7 +261,7 @@ def main() -> None:
     inner_w = args.width * (1 - 2 * margin)
     inner_h = args.height * (1 - 2 * margin)
     # Wejście możliwie duże przed warp — skalę dopasuje fit_quad.
-    scale_in = min(inner_w * fill * 1.05 / sw0, inner_h * fill * 1.05 / sh0)
+    scale_in = min(inner_w * fill * 1.15 / sw0, inner_h * fill * 1.15 / sh0)
     nw = max(1, int(round(sw0 * scale_in)))
     nh = max(1, int(round(sh0 * scale_in)))
     resized = im.resize((nw, nh), Image.Resampling.LANCZOS)
@@ -265,14 +289,18 @@ def main() -> None:
     )
 
     warped = np.asarray(warped_rgba).astype(np.float64) / 255.0
-    bg = parse_hex_color(args.bg)
-    canvas = np.zeros((args.height, args.width, 4), dtype=np.float64)
-    canvas[:, :, 0] = bg[0] / 255.0
-    canvas[:, :, 1] = bg[1] / 255.0
-    canvas[:, :, 2] = bg[2] / 255.0
-    canvas[:, :, 3] = bg[3] / 255.0
+    transparent_bg = args.bg.strip().lower() in {"transparent", "none", "clear"}
+    if transparent_bg:
+        canvas = warped
+    else:
+        bg = parse_hex_color(args.bg)
+        canvas = np.zeros((args.height, args.width, 4), dtype=np.float64)
+        canvas[:, :, 0] = bg[0] / 255.0
+        canvas[:, :, 1] = bg[1] / 255.0
+        canvas[:, :, 2] = bg[2] / 255.0
+        canvas[:, :, 3] = bg[3] / 255.0
 
-    if args.shadow:
+    if args.shadow and not transparent_bg:
         shadow_rgb = np.concatenate(
             [np.zeros((args.height, args.width, 3)), warped[:, :, 3:4] * 0.4],
             axis=2,
@@ -287,8 +315,9 @@ def main() -> None:
         sc = np.asarray(shadow_shift).astype(np.float64) / 255.0
         canvas = canvas * (1 - sc[:, :, 3:4]) + sc
 
-    a = warped[:, :, 3:4]
-    canvas = canvas * (1 - a) + warped
+    if not transparent_bg:
+        a = warped[:, :, 3:4]
+        canvas = canvas * (1 - a) + warped
 
     out_im = Image.fromarray(np.clip(canvas * 255, 0, 255).astype(np.uint8), "RGBA")
     args.output.parent.mkdir(parents=True, exist_ok=True)
