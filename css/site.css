@@ -594,18 +594,10 @@ a { color: inherit; }
   transform: perspective(520px) rotateX(8deg) rotateZ(-6deg) translateY(-4%) scale(1.06);
 }
 
-/* Motion: jak mockup — ilustracje w górnej części, tytuł przy dole karty */
-.portfolio-page[data-category="motion"] .card {
-  grid-template-rows: minmax(0, 1fr) auto;
-}
-
-.portfolio-page[data-category="motion"] .card-copy {
-  grid-row: 2;
-}
-
+/* Motion: płaskie ilustracje wyśrodkowane, bez perspektywy */
 .portfolio-page[data-category="motion"] .card-visual {
-  padding: 5% 0 0;
-  place-items: start center;
+  padding: 10% 14% 0;
+  place-items: center center;
 }
 
 .portfolio-page[data-category="motion"] .card-visual img,
@@ -615,7 +607,7 @@ a { color: inherit; }
   height: auto;
   max-height: 100%;
   object-fit: contain;
-  object-position: center top;
+  object-position: center center;
   transform: none;
   transform-origin: center center;
 }
