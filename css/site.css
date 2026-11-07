@@ -594,6 +594,29 @@ a { color: inherit; }
   transform: perspective(520px) rotateX(8deg) rotateZ(-6deg) translateY(-4%) scale(1.06);
 }
 
+/* Motion: płaskie ilustracje wyśrodkowane, bez perspektywy */
+.portfolio-page[data-category="motion"] .card-visual {
+  padding: 10% 14% 0;
+  place-items: center center;
+}
+
+.portfolio-page[data-category="motion"] .card-visual img,
+.portfolio-page[data-category="motion"] .card-visual video {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  transform: none;
+  transform-origin: center center;
+}
+
+.portfolio-page[data-category="motion"] .card:hover .card-visual img,
+.portfolio-page[data-category="motion"] .card:hover .card-visual video {
+  transform: scale(1.04);
+}
+
 .card-copy {
   padding: 0 40px 24px;
 }

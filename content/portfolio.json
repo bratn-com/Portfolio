@@ -88,6 +88,14 @@
       "label": "Mobile App",
       "color": "#f07228",
       "image": "images/bahs.jpg"
+    },
+    {
+      "id": "sysdyne-illustrations",
+      "category": "motion",
+      "title": "Sysdyne\nIllustrations",
+      "label": "Motion",
+      "color": "#e5642c",
+      "image": "images/sysdyne-illustrations.png"
     }
   ]
 }

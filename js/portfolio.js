@@ -9,6 +9,9 @@
   if (["desktop", "mobile", "motion"].indexOf(category) === -1) category = "desktop";
   var requested = Number(params.get("page") || "1");
 
+  var pageRoot = document.querySelector(".portfolio-page");
+  if (pageRoot) pageRoot.dataset.category = category;
+
   document.querySelectorAll("[data-category]").forEach(function (link) {
     if (link.getAttribute("data-category") === category) link.setAttribute("aria-current", "true");
     else link.removeAttribute("aria-current");
