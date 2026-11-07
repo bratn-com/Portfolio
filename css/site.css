@@ -527,6 +527,13 @@ a { color: inherit; }
   overflow: visible;
 }
 
+.portfolio-page .card-visual:has(.card-visual-skew) {
+  padding-left: 0;
+  padding-right: 0;
+  overflow: hidden;
+  place-items: start stretch;
+}
+
 .card-visual img,
 .card-visual video {
   width: 100%;
@@ -558,17 +565,18 @@ a { color: inherit; }
   align-self: stretch;
 }
 
-/* PNG z scripts/skew_cover.py — perspektywa już w pikselach, bez drugiego 3D i bez cienia */
+/* PNG z gotowym skosem — pełna szerokość karty, bez bocznego marginesu i bez cienia */
 .portfolio-page .card-visual img.card-visual-skew,
 .portfolio-page .card-visual video.card-visual-skew {
-  width: 118%;
+  width: 100%;
   max-width: none;
   height: auto;
-  max-height: 92%;
+  max-height: none;
   object-fit: contain;
-  object-position: center bottom;
+  object-position: center top;
+  justify-self: stretch;
   transform: none;
-  transform-origin: center bottom;
+  transform-origin: center top;
   box-shadow: none;
 }
 
