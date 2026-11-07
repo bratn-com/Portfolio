@@ -594,22 +594,22 @@ a { color: inherit; }
   transform: perspective(520px) rotateX(8deg) rotateZ(-6deg) translateY(-4%) scale(1.06);
 }
 
-/* Motion: płaskie ilustracje wyśrodkowane, bez perspektywy */
+/* Motion: przezroczyste ilustracje na kolorze karty, jak referencyjny mockup */
 .portfolio-page[data-category="motion"] .card-visual {
-  padding: 10% 14% 0;
-  place-items: center center;
+  padding: 3% 16% 0;
+  place-items: start center;
 }
 
 .portfolio-page[data-category="motion"] .card-visual img,
 .portfolio-page[data-category="motion"] .card-visual video {
-  width: 100%;
-  max-width: 100%;
+  width: 68%;
+  max-width: 68%;
   height: auto;
-  max-height: 100%;
+  max-height: 78%;
   object-fit: contain;
-  object-position: center center;
+  object-position: center top;
   transform: none;
-  transform-origin: center center;
+  transform-origin: center top;
 }
 
 .portfolio-page[data-category="motion"] .card:hover .card-visual img,
