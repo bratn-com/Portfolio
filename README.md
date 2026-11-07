@@ -57,24 +57,17 @@ Kategorie: `desktop`, `mobile`, `motion`. `\n` w tytule łamie linię tak jak na
 
 Plik trafia do `content/images/`. Usunięcie projektu zostawia plik na dysku.
 
-### Mockup „skew” z zrzutu ekranu (PNG na tle koloru projektu)
+### Mockup „skew” z płaskiego zrzutu
 
-Dla kart na stronie portfolio zapis obrazka z `skew` w nazwie dostaje klasę `card-visual-skew` i **bez** dodatkowego CSS-owego 3D (żeby nie dublować przechyłu). Generator:
+`scripts/skew_cover.py` robi perspektywę jak CSS karty (`perspective` 520, `rotateX` 8°, `rotateZ` −6°, origin na dole) i **przycina PNG do mockupu**. Tło zostaje przezroczyste — kolor jest na karcie. Bez cienia.
 
-Wejście musi być **płaski** zrzut (nie wcześniejszy mockup). Kolor tła = `color` projektu.
+Nazwa pliku musi zawierać `skew`, wtedy karta nie dokłada drugiego 3D.
 
 ```bash
-python3 scripts/skew_cover.py content/images/Sysdyne-NewOrder.png \
-  -o content/images/dynamite-skew-cover.png \
-  --preset portfolio
+python3 scripts/skew_cover.py content/images/dynamite.jpg \
+  -o content/images/dynamite-skew.png
 ```
 
-(`--preset portfolio` = kąty jak w `site.css`; domyślne tło **transparentne** — kolor karty widać spod spodu.)
+Potem ustaw `image` w `content/portfolio.json` i `content/portfolio.js`.
 
-Domyślnie: perspektywa 520px, `rotateX` ~10°, `rotateY` ~−9°, `rotateZ` −6°; mockup skalowany do ~92% pasma i osadzony przy dolnej krawędzi (jak referencja Sysdyne / Concrete-GO).
-
-**Dynamite:** `Sysdyne-NewOrder.png` (płaski zrzut) → `dynamite-skew-cover.png` (`--preset portfolio`). Pozostałe karty: `.jpg` + CSS 3D. PNG ze `skew` w nazwie = klasa `card-visual-skew` (bez podwójnego 3D w CSS, ten sam rozmiar 118% co mockupy na żywo).
-
-**GitHub Pages:** deploy leci z pushy na `main` lub `cursor/portfolio-site-a410` (workflow `pages.yml`). Adres: `https://bratn-com.github.io/Portfolio/`. Po deployu zrób twarde odświeżenie (Ctrl+Shift+R).
-
-`--bg` ustaw na `color` projektu z `content/portfolio.json`. Potem ustaw `image` na wygenerowany plik w `content/portfolio.json` **i** w `content/portfolio.js` (`window.PORTFOLIO` musi być zgodny z JSON — przy edycji przez `portfolio.mjs add/update` plik `.js` jest generowany automatycznie).
+**GitHub Pages:** `https://bratn-com.github.io/Portfolio/` — po pushu twarde odświeżenie (Ctrl+Shift+R).
