@@ -56,7 +56,8 @@
       return;
     }
     var image = document.createElement("img");
-    image.src = url;
+    var bust = project.mediaVersion ? "?v=" + encodeURIComponent(project.mediaVersion) : "";
+    image.src = url + bust;
     image.alt = "";
     if (m.base.toLowerCase().indexOf("skew") !== -1) {
       image.className = "card-visual-skew";

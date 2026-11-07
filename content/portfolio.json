@@ -22,7 +22,8 @@
       "title": "Dynamite\nStudio",
       "label": "Desktop website",
       "color": "#ec413a",
-      "image": "images/dynamite-skew.png"
+      "image": "images/dynamite-cover-skew.png",
+      "mediaVersion": "20251107"
     },
     {
       "id": "alior",
