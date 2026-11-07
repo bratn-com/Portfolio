@@ -1,0 +1,730 @@
+:root {
+  --bg: #181818;
+  --muted: #8c8c8c;
+  --purple: #4d1b8f;
+  --pad: 40px;
+  --font: "Manrope", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  min-height: 100dvh;
+  background: var(--bg);
+  color: #fff;
+  font-family: var(--font);
+  font-weight: 500;
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.shell.shell-viewport {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.portfolio-page > .bar {
+  flex-shrink: 0;
+}
+
+.portfolio-page .work {
+  /* Two-row layout: cards take all remaining height; pager is never painted on top of cards */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-content: stretch;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  /* Figma portfolio-desktop: 32px under the header row, 32px above the pager, 40px under the pager */
+  padding-top: 32px;
+  padding-bottom: 40px;
+}
+
+.portfolio-page .card-copy h2 {
+  min-height: 0;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 33px;
+  padding: 40px var(--pad) 0;
+}
+
+.name {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 33px;
+  text-decoration: none;
+  letter-spacing: 0;
+}
+
+.role {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  overflow: visible;
+}
+
+.close svg {
+  display: block;
+  width: 32px;
+  height: 32px;
+  overflow: visible;
+}
+
+/*
+ * Close (Figma component 58:1679): hover is Close2 — X becomes a “+” via 45° rotation
+ * around the icon center (equivalent to each diagonal’s own rotate in Figma). Click runs
+ * Smart Animate back to default then NAVIGATE “/”; we animate back for 300ms when the
+ * control was hovered (close.js).
+ */
+.close-mark {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0, 0, 0, 1);
+}
+
+.close:hover .close-mark { transform: rotate(45deg); }
+
+.close.close--leaving .close-mark,
+.close.close--leaving:hover .close-mark {
+  transform: rotate(0deg);
+  transition: transform 0.3s cubic-bezier(0, 0, 0, 1);
+}
+
+.home { position: relative; height: 100dvh; min-height: 640px; }
+
+.home .bar {
+  position: absolute;
+  top: 4%;
+  left: 0;
+  right: 0;
+  padding-top: 0;
+}
+
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6vh var(--pad) 4vh;
+  min-height: 0;
+}
+
+.home .stage { display: block; padding: 0; flex: none; }
+
+.hint {
+  position: relative;
+  width: 143px;
+  height: 143px;
+  display: grid;
+  place-items: center;
+  margin-top: 4vh;
+}
+
+.home .hint {
+  position: absolute;
+  top: 23.4%;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+}
+
+/* Let hero polygons draw past their layout boxes / SVG viewBox when magnet-deformed */
+.home,
+.home .stage,
+.home .land,
+.home .land-rise,
+.home .shape {
+  overflow: visible;
+}
+
+.hint .follow {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.hint img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hint p {
+  position: relative;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19px;
+  text-align: center;
+}
+
+.land {
+  position: relative;
+  width: min(1198px, 100%);
+  aspect-ratio: 1198 / 210.66;
+  margin-top: auto;
+}
+
+.home .land {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  width: min(1198px, calc(100% - 80px));
+  margin: 0;
+  transform: translateX(-50%);
+}
+
+.land-rise { position: absolute; inset: 0; }
+
+.shape {
+  position: absolute;
+  display: block;
+}
+
+.shape-about,
+.shape-portfolio {
+  transition: opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.shape-work { transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1); }
+
+.shape:hover { opacity: 0.9; }
+
+.shape-about { cursor: url("../assets/ui/cursor-about.png") 0 0, pointer; }
+.shape-work,
+.say { cursor: url("../assets/ui/cursor-contact.png") 0 0, pointer; }
+.shape-portfolio { cursor: url("../assets/ui/cursor-portfolio.png") 0 0, pointer; }
+
+.shape img,
+.shape .shape-magnet-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.shape-about { left: 0; top: 0; width: 47.01%; height: 67.22%; z-index: 1; }
+.shape-work { left: 33.34%; top: 0.19%; width: 30.51%; height: 99.45%; z-index: 2; }
+.shape-portfolio { left: 59.52%; top: 31.9%; width: 40.48%; height: 68.12%; z-index: 1; }
+
+/* Morph overlay: triangle → rectangle (about/contact) — see js/shape-nav-transition.js */
+.shape-nav-flip-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+.shape-nav-morph-svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px var(--pad) 40px;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+.home .foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-bottom: 36px;
+}
+
+.foot a { display: block; width: 22px; height: 21px; }
+.foot img { display: block; width: 22px; height: 21px; }
+
+.panel-wrap {
+  flex: 1;
+  display: flex;
+  padding: 32px var(--pad) 32px;
+  min-height: 0;
+}
+
+.panel {
+  position: relative;
+  flex: 1;
+  background: var(--purple);
+  min-height: 618px;
+}
+
+.side-arrow {
+  position: absolute;
+  top: 50%;
+  width: 89px;
+  height: 33px;
+  transform: translateY(-50%);
+}
+
+.side-arrow.left { left: 45px; }
+.side-arrow.right { right: 45px; }
+.side-arrow img { width: 89px; height: 33px; display: block; }
+.side-arrow.right img { transform: scaleX(-1); }
+.side-arrow { transition: transform 0.3s cubic-bezier(0, 0, 0, 1); }
+.side-arrow.left:hover { transform: translateY(-50%) translateX(-18px); }
+.side-arrow.right:hover { transform: translateY(-50%) translateX(21px); }
+
+.about-grid {
+  width: min(716px, calc(100% - 220px));
+  margin: 123px auto 0;
+  display: grid;
+  grid-template-columns: 305px minmax(0, 1fr);
+  column-gap: 11px;
+  align-items: start;
+}
+
+.about-grid h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 37px;
+}
+
+.bio {
+  margin-top: 60px;
+  max-width: 275px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16.5px;
+}
+
+.bio p { margin: 0 0 16px; }
+.bio p:last-child { margin-bottom: 0; }
+
+.where {
+  margin: 0 0 0 30px;
+  font-size: 28px;
+  font-weight: 200;
+  line-height: 37px;
+}
+
+.say {
+  position: relative;
+  display: block;
+  width: 165px;
+  height: 191px;
+  margin: 70px 0 0 30px;
+  text-decoration: none;
+  transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.say:hover { opacity: 0.9; }
+
+.say img { width: 165px; height: 191px; display: block; }
+
+.say span {
+  position: absolute;
+  left: 50px;
+  top: 36px;
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 41px;
+}
+
+.contact-panel { container-type: size; }
+
+.contact-panel h1 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 16%;
+  margin: 0;
+  text-align: center;
+  font-size: min(188px, 14.7vw);
+  font-weight: 600;
+  line-height: 0.63;
+  letter-spacing: 0;
+}
+
+.gem {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: min(532px, 86%);
+  aspect-ratio: 532 / 256;
+  transform: translateX(-50%);
+}
+
+.gem img.plate {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.gem-links {
+  position: absolute;
+  left: 50%;
+  top: 40.2%;
+  width: 23.7%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gem-links a {
+  display: block;
+  transition: opacity 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.gem-links a:hover { opacity: 0.8; }
+.gem-links .behance { width: 30.2%; }
+.gem-links .behance img { width: 100%; height: auto; display: block; }
+.gem-links .linkedin { width: 25.4%; }
+.gem-links .linkedin img { width: 100%; height: auto; display: block; }
+
+.email {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 82%;
+  font-size: min(40px, 5vw);
+  font-weight: 200;
+  line-height: 1.42;
+  text-align: center;
+  text-decoration: none;
+}
+
+.work {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 32px 0 24px;
+}
+
+.portfolio-bar .tabs { margin-inline: auto; }
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 63px;
+}
+
+.tabs a {
+  color: var(--muted);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 25px;
+  text-decoration: none;
+  transition: color 0.3s cubic-bezier(0, 0, 0, 1);
+}
+
+.tabs a:hover { color: #dbdbdb; }
+.tabs a[aria-current="true"],
+.tabs a[aria-current="true"]:hover { color: #fff; }
+
+.grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+  margin: 0 var(--pad);
+  min-height: 0;
+}
+
+/* One viewport-tall row: cards shrink to free space so the pager never paints over card copy */
+.portfolio-page .grid {
+  flex: none;
+  grid-row: 1;
+  align-self: stretch;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  grid-template-rows: minmax(0, 1fr);
+  align-content: stretch;
+}
+
+.card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.portfolio-page .card {
+  min-height: 0;
+  overflow: hidden;
+  /* Reference layout: ~top half = mockup, middle = air, bottom quarter = titles */
+  display: grid;
+  grid-template-rows: minmax(0, 0.55fr) minmax(0, 1fr) auto;
+  align-content: stretch;
+}
+
+.card-visual {
+  flex: 1 1 auto;
+  min-height: 8rem;
+  overflow: hidden;
+  /* Entrance animation lives here so img transform is free for hover zoom */
+  animation: card-in 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19) both;
+}
+
+.portfolio-page .card-visual {
+  grid-row: 1;
+  min-height: 0;
+  align-self: stretch;
+  display: grid;
+  place-items: start center;
+  padding: 6% 8% 0;
+  overflow: visible;
+}
+
+.card-visual img,
+.card-visual video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transform-origin: center center;
+  /* Figma portfolio cards: hover scale 1.1, OUT_CUBIC 300ms */
+  transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+/* Mockup band: slight 3D tilt like reference; keep bottom of UI in frame */
+.portfolio-page .card-visual img,
+.portfolio-page .card-visual video {
+  width: 118%;
+  max-width: none;
+  height: auto;
+  max-height: 92%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform: perspective(520px) rotateX(8deg) rotateZ(-6deg) translateY(-4%);
+  transform-origin: center bottom;
+}
+
+.portfolio-page .card-copy {
+  grid-row: 3;
+  padding: 0 32px 28px;
+  align-self: stretch;
+}
+
+/* PNG z scripts/skew_cover.py — perspektywa już w pikselach, bez drugiego 3D i bez cienia */
+.portfolio-page .card-visual img.card-visual-skew,
+.portfolio-page .card-visual video.card-visual-skew {
+  width: 118%;
+  max-width: none;
+  height: auto;
+  max-height: 92%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform: none;
+  transform-origin: center bottom;
+  box-shadow: none;
+}
+
+.portfolio-page .card:hover .card-visual img.card-visual-skew,
+.portfolio-page .card:hover .card-visual video.card-visual-skew {
+  transform: scale(1.04);
+}
+
+.card-visual video {
+  pointer-events: none;
+}
+
+.portfolio-page .card:hover .card-visual img,
+.portfolio-page .card:hover .card-visual video {
+  transform: perspective(520px) rotateX(8deg) rotateZ(-6deg) translateY(-4%) scale(1.06);
+}
+
+.card-copy {
+  padding: 0 40px 24px;
+}
+
+.card-copy h2 {
+  margin: 0 0 23px;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 37px;
+  min-height: 111px;
+  white-space: pre-line;
+}
+
+.card-copy p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+.pager {
+  display: grid;
+  grid-template-columns: 89px 1fr 89px;
+  align-items: center;
+  min-height: 39px;
+  margin: 12px var(--pad) 0;
+}
+
+.portfolio-page .pager {
+  grid-row: 2;
+  align-self: end;
+  margin: 32px var(--pad) 0;
+  flex: none;
+  position: relative;
+  z-index: 1;
+  background: var(--bg);
+}
+
+.pager .arrow { width: 89px; height: 33px; }
+.pager .arrow { transition: transform 0.3s cubic-bezier(0, 0, 0, 1); }
+.pager .arrow:hover { transform: translateX(-18px); }
+.pager .arrow img { width: 89px; height: 33px; display: block; }
+.pager .right { justify-self: end; }
+.pager .right:hover { transform: translateX(21px); }
+.pager .right img { transform: scaleX(-1); }
+.pager .arrow[aria-disabled="true"] { pointer-events: none; }
+
+.count {
+  justify-self: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #5a5a5a;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.count:empty { visibility: hidden; }
+
+@media (max-width: 1100px) {
+  .bar.home-bar { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .about-grid {
+    width: min(100% - 8rem, 716px);
+    grid-template-columns: 1fr;
+    margin-top: 64px;
+  }
+  .where, .say { margin-left: 0; }
+  .contact-panel h1 { font-size: min(148px, 16vw); top: 12%; }
+  .email { font-size: min(40px, 4.5vw); }
+  .home .hint { top: 18%; }
+  .home .land { top: 62%; width: min(721px, calc(100% - 48px)); }
+}
+
+@media (max-width: 800px) {
+  :root { --pad: 24px; }
+  .bar { padding-top: 28px; }
+  .portfolio-bar { flex-wrap: wrap; }
+  .portfolio-bar .close { margin-left: auto; }
+  .portfolio-bar .tabs {
+    order: 3;
+    flex-basis: 100%;
+    margin: 12px 0 0;
+    gap: 28px;
+  }
+  .panel { min-height: 0; }
+  .side-arrow { display: none; }
+  .about-grid { width: calc(100% - 48px); margin-top: 48px; }
+  .card-copy { padding: 0 24px 20px; }
+  .card-copy h2 { font-size: 26px; line-height: 32px; min-height: 96px; }
+  .foot { padding-bottom: 24px; }
+}
+
+@media (max-width: 720px) {
+  .grid { grid-template-columns: 1fr; }
+  .card-visual { min-height: 220px; }
+  .say { width: 140px; height: 162px; }
+  .say img { width: 140px; height: 162px; }
+  .say span { font-size: 32px; line-height: 34px; left: 40px; top: 28px; }
+}
+
+.home .hint { animation: hint-in 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) both; }
+.land-rise { animation: land-rise 0.9s cubic-bezier(0.16, 1.25, 0.3, 1) both; }
+
+@keyframes hint-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes land-rise {
+  from { opacity: 0; transform: translateY(150px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateX(-150px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shape,
+  .close .close-mark,
+  .close.close--leaving .close-mark,
+  .side-arrow,
+  .say,
+  .gem-links a,
+  .tabs a,
+  .pager .arrow { transition: none; }
+  .home .hint,
+  .land-rise,
+  .card-visual { animation: none; }
+  .card-visual img,
+  .card-visual video { transition: none; }
+  .portfolio-page .card:hover .card-visual img,
+  .portfolio-page .card:hover .card-visual video { transform: none; }
+  .portfolio-page .card-visual img,
+  .portfolio-page .card-visual video {
+    transform: none;
+  }
+}
