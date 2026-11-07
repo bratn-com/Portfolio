@@ -80,6 +80,7 @@
       slice.forEach(function (project) {
         var card = document.createElement("article");
         card.className = "card";
+        card.dataset.projectId = project.id;
         card.style.background = project.color;
         var visual = document.createElement("div");
         visual.className = "card-visual";

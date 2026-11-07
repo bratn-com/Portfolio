@@ -37,10 +37,10 @@
       "id": "utilimarc",
       "category": "desktop",
       "title": "Utilimarc\nTelematics",
-      "label": "Desktop Dashboard",
+      "label": "SaaS Dashboard",
       "color": "#566167",
       "image": "images/utilimarc-skew.png",
-      "mediaVersion": "20251108f"
+      "mediaVersion": "20251108g"
     },
     {
       "id": "hello",
