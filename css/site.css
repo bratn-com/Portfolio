@@ -640,6 +640,35 @@ a { color: inherit; }
   white-space: pre-line;
 }
 
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-label {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+.card-year {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 2px 14px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--card-accent, currentColor);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0.01em;
+}
+
 .card-copy p {
   margin: 0;
   font-size: 16px;

@@ -29,9 +29,11 @@
       "id": "alior",
       "category": "desktop",
       "title": "Alior\nSync\nBanking",
-      "label": "Desktop website",
+      "label": "Landing Page",
+      "year": "2014",
       "color": "#fe9400",
-      "image": "images/alior.jpg"
+      "image": "images/alior-skew.png",
+      "mediaVersion": "20251109a"
     },
     {
       "id": "utilimarc",

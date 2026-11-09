@@ -82,6 +82,7 @@
         card.className = "card";
         card.dataset.projectId = project.id;
         card.style.background = project.color;
+        card.style.setProperty("--card-accent", project.color);
         var visual = document.createElement("div");
         visual.className = "card-visual";
         appendVisual(visual, project);
@@ -89,10 +90,20 @@
         copy.className = "card-copy";
         var title = document.createElement("h2");
         title.textContent = project.title;
+        var meta = document.createElement("div");
+        meta.className = "card-meta";
         var label = document.createElement("p");
+        label.className = "card-label";
         label.textContent = project.label;
+        meta.appendChild(label);
+        if (project.year) {
+          var year = document.createElement("span");
+          year.className = "card-year";
+          year.textContent = project.year;
+          meta.appendChild(year);
+        }
         copy.appendChild(title);
-        copy.appendChild(label);
+        copy.appendChild(meta);
         card.appendChild(visual);
         card.appendChild(copy);
         grid.appendChild(card);

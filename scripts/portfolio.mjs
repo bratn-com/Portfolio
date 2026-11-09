@@ -130,14 +130,16 @@ if (cmd === "list") {
   if (!id) fail("Nie da się zrobić id z tytułu. Podaj --id.");
   if (data.projects.some((project) => project.id === id)) fail(`Projekt „${id}” już jest. Użyj update.`);
   const image = copyMedia(id, mediaSource);
-  data.projects.push({
+  const entry = {
     id,
     category,
     title,
     label: opts.label,
     color,
     image,
-  });
+  };
+  if (opts.year) entry.year = String(opts.year);
+  data.projects.push(entry);
   save(data);
   console.log(`Dodano ${id}.`);
 } else if (cmd === "update") {
@@ -149,6 +151,8 @@ if (cmd === "list") {
   if (opts.title) project.title = titleOf(opts.title);
   if (opts.label) project.label = opts.label;
   if (opts.color) project.color = requireColor(opts.color);
+  if (opts.year) project.year = String(opts.year);
+  if (opts.year === "") delete project.year;
   const mediaSource = opts.media || opts.image;
   if (mediaSource) project.image = copyMedia(id, mediaSource);
   save(data);
