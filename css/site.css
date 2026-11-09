@@ -503,14 +503,14 @@ a { color: inherit; }
 .portfolio-page .card {
   min-height: 0;
   overflow: hidden;
-}
-
-.portfolio-page .card:has(.card-visual-skew) {
-  overflow: visible;
   /* Reference layout: ~top half = mockup, middle = air, bottom quarter = titles */
   display: grid;
   grid-template-rows: minmax(0, 0.55fr) minmax(0, 1fr) auto;
   align-content: stretch;
+}
+
+.portfolio-page .card:has(.card-visual-skew) {
+  overflow: visible;
 }
 
 .card-visual {
