@@ -113,18 +113,28 @@
       setArrow(next, page + 1, page < pages);
   }
 
-  if (window.PORTFOLIO) {
-    show(window.PORTFOLIO);
-    return;
+  function portfolioCacheVersion() {
+    var script = document.querySelector('script[src*="content/portfolio.js"]');
+    if (!script) return "";
+    var match = script.getAttribute("src").match(/[?&]v=([^&]+)/);
+    return match ? match[1] : "";
   }
 
-  fetch("content/portfolio.json")
+  var dataUrl = "content/portfolio.json";
+  var bust = portfolioCacheVersion();
+  if (bust) dataUrl += "?v=" + encodeURIComponent(bust);
+
+  fetch(dataUrl)
     .then(function (response) {
       if (!response.ok) throw new Error("portfolio");
       return response.json();
     })
     .then(show)
     .catch(function () {
+      if (window.PORTFOLIO) {
+        show(window.PORTFOLIO);
+        return;
+      }
       grid.textContent = "Portfolio nie zostało wczytane.";
     });
 })();
