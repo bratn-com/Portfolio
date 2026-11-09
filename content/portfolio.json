@@ -32,8 +32,9 @@
       "label": "Landing Page",
       "year": "2014",
       "color": "#fe9400",
-      "image": "images/alior-skew.png",
-      "mediaVersion": "20251109c"
+      "cover": "baked",
+      "image": "images/alior.png",
+      "mediaVersion": "20251109d"
     },
     {
       "id": "utilimarc",

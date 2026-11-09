@@ -62,7 +62,7 @@
     var bust = project.mediaVersion ? "?v=" + encodeURIComponent(project.mediaVersion) : "";
     image.src = url + bust;
     image.alt = "";
-    if (m.base.toLowerCase().indexOf("skew") !== -1) {
+    if (project.cover === "baked" || m.base.toLowerCase().indexOf("skew") !== -1) {
       image.className = "card-visual-skew";
     }
     visual.appendChild(image);

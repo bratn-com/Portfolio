@@ -57,17 +57,10 @@ Kategorie: `desktop`, `mobile`, `motion`. `\n` w tytule łamie linię tak jak na
 
 Plik trafia do `content/images/`. Usunięcie projektu zostawia plik na dysku.
 
-### Mockup „skew” z płaskiego zrzutu
+### Gotowy cover (mockup z Figmy)
 
-`scripts/skew_cover.py` robi perspektywę jak CSS karty (`perspective` 520, `rotateX` 8°, `rotateZ` −6°, origin na dole) i **przycina PNG do mockupu**. Tło zostaje przezroczyste — kolor jest na karcie. Bez cienia.
+Cover wrzucasz jako **png/jpg** do `content/images/` (perspektywa już na grafice). W `content/portfolio.json` ustaw `"cover": "baked"` — karta **nie** dokłada CSS 3D (ta sama logika co stare pliki z `skew` w nazwie).
 
-Nazwa pliku musi zawierać `skew`, wtedy karta nie dokłada drugiego 3D.
-
-```bash
-python3 scripts/skew_cover.py content/images/zrzut.jpg \
-  -o content/images/projekt-skew.png
-```
-
-Karta Dynamite używa gotowego mockupu `content/images/Sysdyne-NewOrder-skew.png` (źródło: `content/images/Sysdyne-NewOrder.png`). Potem ustaw `image` w `content/portfolio.json` i `content/portfolio.js`.
+Opcjonalnie: `"year": "2014"` — pastylka z datą obok labela.
 
 **GitHub Pages:** `https://bratn-com.github.io/Portfolio/` — po pushu twarde odświeżenie (Ctrl+Shift+R).

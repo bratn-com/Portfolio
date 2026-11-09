@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """
+DEPRECATED — nie używamy tego generatora. Gotowe mockupy wgrywaj jako PNG/JPG
+i ustaw `"cover": "baked"` w content/portfolio.json.
+
+---
 Płaski zrzut -> ciasno wykadrowany PNG z perspektywą karty portfolio.
 
 Ten sam zestaw co CSS kart bez klasy skew:
