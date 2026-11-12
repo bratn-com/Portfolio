@@ -23,14 +23,15 @@
       "mediaVersion": "20251112b"
     },
     {
-      "id": "dynamite",
+      "id": "sysdyne",
       "category": "desktop",
-      "title": "Dynamite\nStudio",
-      "label": "Desktop website",
-      "color": "#ec413a",
+      "title": "Sysdyne\nTechnologies",
+      "label": "SaaS Dashboard",
+      "year": "2022/26",
+      "color": "#e8612d",
       "cover": "baked",
-      "image": "images/Sysdyne-NewOrder-skew.png",
-      "mediaVersion": "20251112b"
+      "image": "images/covers/sysdyne.png",
+      "mediaVersion": "20251112c"
     },
     {
       "id": "alior",
