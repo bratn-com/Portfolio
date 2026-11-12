@@ -59,8 +59,6 @@ Plik trafia do `content/images/`. Usunięcie projektu zostawia plik na dysku.
 
 ### Gotowy cover (mockup z Figmy)
 
-Cover wrzucasz jako **png/jpg** do `content/images/` (perspektywa już na grafice). W `content/portfolio.json` ustaw `"cover": "baked"` — karta **nie** dokłada CSS 3D (ta sama logika co stare pliki z `skew` w nazwie).
-
-Opcjonalnie: `"year": "2014"` — pastylka z datą obok labela.
+Pliki w **`content/images/covers/<id>.png`** — pełny kadr z mockupem (bez dolnego bloku tytułu w PNG; tytuł, label i pastylka roku są w HTML). W JSON: `"cover": "baked"`, `"image": "images/covers/<id>.png"`, opcjonalnie `"year": "2014"`. Bez skryptu skew i bez CSS 3D na karcie.
 
 **GitHub Pages:** `https://bratn-com.github.io/Portfolio/` — po pushu twarde odświeżenie (Ctrl+Shift+R).

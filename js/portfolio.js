@@ -63,7 +63,7 @@
     image.src = url + bust;
     image.alt = "";
     if (project.cover === "baked" || m.base.toLowerCase().indexOf("skew") !== -1) {
-      image.className = "card-visual-skew";
+      image.className = "card-cover";
     }
     visual.appendChild(image);
   }
