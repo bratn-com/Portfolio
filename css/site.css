@@ -509,7 +509,7 @@ a { color: inherit; }
 }
 
 .portfolio-page .card:has(.card-cover) {
-  /* Tytuł na dole, mockup na całej wysokości karty (pod tekstem) */
+  /* Górny pas = cały mockup, dolny = tytuł. Obraz nie wchodzi pod tekst. */
   grid-template-rows: minmax(0, 1fr) auto;
 }
 
@@ -532,12 +532,10 @@ a { color: inherit; }
 }
 
 .portfolio-page .card-visual:has(.card-cover) {
-  grid-row: 1 / -1;
+  grid-row: 1;
+  position: relative;
   padding: 0;
   overflow: hidden;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
   min-height: 0;
   z-index: 0;
 }
@@ -575,30 +573,30 @@ a { color: inherit; }
   z-index: 2;
 }
 
-/* Gotowy cover z Figmy — kotwica prawy-góra, większy kadr (marginesy w PNG) */
+/* Cover: cały PNG w pasie nad tytułem (contain), bez powiększenia które ucina dół */
 .portfolio-page .card:has(.card-cover) {
   overflow: hidden;
 }
 
 .portfolio-page .card-visual img.card-cover,
 .portfolio-page .card-visual video.card-cover {
-  flex: 0 0 auto;
+  position: absolute;
+  inset: 0;
   display: block;
-  height: auto;
-  width: 158%;
+  width: 100%;
+  height: 100%;
   max-width: none;
-  max-height: 112%;
   object-fit: contain;
-  object-position: right top;
+  object-position: center top;
   transform: none !important;
-  transform-origin: right top;
+  transform-origin: center top;
   box-shadow: none;
 }
 
 .portfolio-page .card:hover .card-visual img.card-cover,
 .portfolio-page .card:hover .card-visual video.card-cover {
-  transform: scale(1.04) !important;
-  transform-origin: right top;
+  transform: scale(1.03) !important;
+  transform-origin: center top;
 }
 
 .card-visual video {
@@ -763,12 +761,13 @@ a { color: inherit; }
   .say img { width: 140px; height: 162px; }
   .say span { font-size: 32px; line-height: 34px; left: 40px; top: 28px; }
 
-  /* Portfolio mobilne: tekst po lewej, duży mockup po prawej (jak bratn.com) */
+  /* Mobile: karty na pełną szerokość, cały cover (jak miniatura), strona się przewija */
   .portfolio-page .grid {
     margin-inline: 0;
     height: auto;
     overflow: visible;
     align-content: start;
+    grid-template-rows: none;
   }
 
   .portfolio-page .work {
@@ -776,85 +775,53 @@ a { color: inherit; }
     min-height: 0;
   }
 
-  .portfolio-page .card {
-    grid-template-rows: auto;
-    min-height: clamp(148px, 42vw, 220px);
-  }
-
   .portfolio-page .card:has(.card-cover) {
     display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    min-height: clamp(148px, 42vw, 220px);
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .portfolio-page .card:has(.card-cover) .card-visual {
+    position: relative;
+    flex: none;
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    padding: 0;
   }
 
   .portfolio-page .card:has(.card-cover) .card-copy {
-    order: -1;
-    flex: 0 0 46%;
-    max-width: 46%;
-    align-self: center;
-    padding: 18px 20px 20px;
-    grid-row: auto;
+    flex: none;
+    max-width: none;
+    align-self: stretch;
+    padding: 4px 20px 22px;
   }
 
   .portfolio-page .card:has(.card-cover) .card-copy h2 {
-    margin: 0 0 8px;
-    font-size: clamp(22px, 5.8vw, 28px);
+    margin: 0 0 10px;
+    font-size: clamp(26px, 7vw, 32px);
     line-height: 1.15;
     min-height: 0;
   }
 
-  .portfolio-page .card:has(.card-cover) .card-meta {
-    gap: 8px;
-  }
-
-  .portfolio-page .card:has(.card-cover) .card-label,
-  .portfolio-page .card:has(.card-cover) .card-year {
-    font-size: 14px;
-    line-height: 18px;
-  }
-
-  .portfolio-page .card:has(.card-cover) .card-year {
-    min-height: 24px;
-    padding: 2px 10px;
-  }
-
-  .portfolio-page .card:has(.card-cover) .card-visual {
-    flex: 1 1 54%;
-    min-width: 0;
-    grid-row: auto;
-    align-items: center;
-    justify-content: flex-end;
-    overflow: hidden;
-  }
-
   .portfolio-page .card-visual img.card-cover,
   .portfolio-page .card-visual video.card-cover {
-    width: auto;
-    height: 138%;
-    max-width: none;
+    position: static;
+    inset: auto;
+    width: 100%;
+    height: auto;
     max-height: none;
     object-fit: contain;
-    object-position: right center;
-    transform-origin: right center;
+    object-position: center top;
+    transform-origin: center top;
   }
 
   .portfolio-page .card:hover .card-visual img.card-cover,
   .portfolio-page .card:hover .card-visual video.card-cover {
-    transform: scale(1.03) !important;
-    transform-origin: right center;
-  }
-
-  .portfolio-page[data-category="motion"] .card-visual:has(.card-cover) {
-    padding: 0;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  .portfolio-page[data-category="motion"] .card-visual img.card-cover {
-    width: auto;
-    height: 120%;
-    object-position: right center;
+    transform: none !important;
   }
 
   .portfolio-page .card-visual:not(:has(.card-cover)) {
