@@ -890,21 +890,14 @@ a { color: inherit; }
 }
 
 .case-frame {
-  width: min(1280px, 100%);
-  margin: 0 auto;
-}
-
-.case-frame img {
-  display: block;
   width: 100%;
-  height: auto;
 }
 
 .case .case-close {
   position: fixed;
   z-index: 2;
-  top: 32px;
-  right: max(20px, calc((100% - 1280px) / 2 - 72px));
+  top: 20px;
+  right: 20px;
   width: 48px;
   height: 48px;
   border: 0;
@@ -913,6 +906,13 @@ a { color: inherit; }
   background: #181818;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22), 0 10px 28px rgba(0, 0, 0, 0.35);
   cursor: pointer;
+}
+
+.study-loading {
+  margin: 0;
+  padding: 28vh 24px;
+  text-align: center;
+  color: #fff;
 }
 
 @media (max-width: 800px) {

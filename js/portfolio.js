@@ -69,7 +69,7 @@
   }
 
   var caseEl = document.getElementById("case");
-  var caseImage = document.getElementById("case-image");
+  var caseFrame = document.getElementById("case-frame");
   var caseTitle = document.getElementById("case-title");
   var caseClose = document.getElementById("case-close");
   var shell = document.querySelector(".shell");
@@ -119,10 +119,23 @@
     if (caseTitle) caseTitle.textContent = title;
     var bust = project.mediaVersion ? "?v=" + encodeURIComponent(project.mediaVersion) : "";
     var src = "content/" + project.caseStudy + bust;
-    if (caseImage.getAttribute("src") !== src) {
-      caseImage.src = src;
+    if (caseFrame && caseFrame.dataset.src !== src) {
+      caseFrame.dataset.src = src;
+      caseFrame.innerHTML = "<p class=\"study-loading\">Loading case study…</p>";
+      fetch(src)
+        .then(function (response) {
+          if (!response.ok) throw new Error("case");
+          return response.text();
+        })
+        .then(function (html) {
+          if (caseFrame.dataset.src !== src) return;
+          caseFrame.innerHTML = html;
+        })
+        .catch(function () {
+          if (caseFrame.dataset.src !== src) return;
+          caseFrame.textContent = "Case study could not be loaded.";
+        });
     }
-    caseImage.alt = title + " case study";
     if (caseEl.hidden) {
       returnFocus = document.activeElement;
       caseEl.hidden = false;
