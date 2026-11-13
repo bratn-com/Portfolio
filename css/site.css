@@ -832,7 +832,7 @@ a { color: inherit; }
 
   .portfolio-page .pager {
     position: static;
-    margin: 8px var(--pad) 28px;
+    margin: 64px var(--pad) 36px;
   }
 }
 
