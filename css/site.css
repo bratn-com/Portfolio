@@ -509,7 +509,7 @@ a { color: inherit; }
 }
 
 .portfolio-page .card:has(.card-cover) {
-  /* Tytuł zostaje na dole karty. Grafika wypełnia szerokość i jest przycinana tylko w pionie. */
+  /* Tytuł zostaje na dole karty. Grafika skaluje się w całości w polu nad nim. */
   overflow: hidden;
   min-height: 0;
   grid-template-rows: minmax(0, 1fr) auto;
@@ -576,27 +576,26 @@ a { color: inherit; }
   z-index: 2;
 }
 
-/* Pełna szerokość kolumny. Nadmiar wysokości chowa się w karcie, tytuł zostaje na ekranie. */
+/* Cały plik w polu nad tytułem: skaluje się proporcjonalnie, dół nie jest ucinany. */
 .portfolio-page .card-visual img.card-cover,
 .portfolio-page .card-visual video.card-cover {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: none;
   max-height: none;
-  object-fit: fill;
+  object-fit: contain;
   object-position: center top;
   transform: none;
-  transform-origin: center top;
+  transform-origin: center center;
   box-shadow: none;
 }
 
 .portfolio-page .card:hover .card-visual img.card-cover,
 .portfolio-page .card:hover .card-visual video.card-cover {
-  transform: scale(1.06);
+  transform: scale(1.04);
 }
 
 .card-visual video {
