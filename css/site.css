@@ -752,6 +752,85 @@ a { color: inherit; }
   .card-copy { padding: 0 24px 20px; }
   .card-copy h2 { font-size: 26px; line-height: 32px; min-height: 96px; }
   .foot { padding-bottom: 24px; }
+
+  /* Telefon i wąski tablet: jedna kolumna, cała grafika, tytuł pod spodem, strona się przewija. */
+  .shell.shell-viewport.portfolio-page {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .portfolio-page .work {
+    display: block;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    flex: none;
+  }
+
+  .portfolio-page .grid {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    margin-inline: 0;
+    overflow: visible;
+  }
+
+  .portfolio-page .card,
+  .portfolio-page .card:has(.card-cover) {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    height: auto;
+    min-height: min-content;
+    overflow: visible;
+  }
+
+  .portfolio-page .card-visual,
+  .portfolio-page .card-visual:has(.card-cover),
+  .portfolio-page .card:has(.card-cover) .card-visual {
+    position: static;
+    display: block;
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .portfolio-page .card-visual img.card-cover,
+  .portfolio-page .card-visual video.card-cover {
+    position: static;
+    inset: auto;
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+    object-position: center top;
+    transform: none;
+  }
+
+  .portfolio-page .card-copy,
+  .portfolio-page .card:has(.card-cover) .card-copy {
+    position: static;
+    flex: none;
+    padding: 8px 20px 28px;
+  }
+
+  .portfolio-page .card:has(.card-cover) .card-copy h2 {
+    margin: 0 0 10px;
+    min-height: 0;
+    font-size: clamp(26px, 7vw, 32px);
+    line-height: 1.15;
+  }
+
+  .portfolio-page .pager {
+    position: static;
+    margin: 8px var(--pad) 28px;
+  }
 }
 
 @media (max-width: 720px) {
@@ -759,70 +838,6 @@ a { color: inherit; }
   .say { width: 140px; height: 162px; }
   .say img { width: 140px; height: 162px; }
   .say span { font-size: 32px; line-height: 34px; left: 40px; top: 28px; }
-
-  /* Mobile: karty na pełną szerokość, cały cover (jak miniatura), strona się przewija */
-  .portfolio-page .grid {
-    margin-inline: 0;
-    height: auto;
-    overflow: visible;
-    align-content: start;
-    grid-template-rows: none;
-  }
-
-  .portfolio-page .work {
-    overflow: auto;
-    min-height: 0;
-  }
-
-  .portfolio-page .card:has(.card-cover) {
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    min-height: 0;
-    overflow: visible;
-  }
-
-  .portfolio-page .card:has(.card-cover) .card-visual {
-    position: relative;
-    flex: none;
-    display: block;
-    width: 100%;
-    height: auto;
-    overflow: visible;
-    padding: 0;
-  }
-
-  .portfolio-page .card:has(.card-cover) .card-copy {
-    flex: none;
-    max-width: none;
-    align-self: stretch;
-    padding: 4px 20px 22px;
-  }
-
-  .portfolio-page .card:has(.card-cover) .card-copy h2 {
-    margin: 0 0 10px;
-    font-size: clamp(26px, 7vw, 32px);
-    line-height: 1.15;
-    min-height: 0;
-  }
-
-  .portfolio-page .card-visual img.card-cover,
-  .portfolio-page .card-visual video.card-cover {
-    position: static;
-    inset: auto;
-    width: 100%;
-    height: auto;
-    max-height: none;
-    object-fit: contain;
-    object-position: center top;
-    transform-origin: center top;
-  }
-
-  .portfolio-page .card:hover .card-visual img.card-cover,
-  .portfolio-page .card:hover .card-visual video.card-cover {
-    transform: scale(1.04);
-    transform-origin: center top;
-  }
 
   .portfolio-page .card-visual:not(:has(.card-cover)) {
     min-height: 200px;
