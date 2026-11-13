@@ -816,7 +816,10 @@ a { color: inherit; }
   .portfolio-page .card-copy,
   .portfolio-page .card:has(.card-cover) .card-copy {
     position: static;
+    align-self: stretch;
+    text-align: left;
     flex: none;
+    width: 100%;
     padding: 8px 20px 28px;
   }
 
