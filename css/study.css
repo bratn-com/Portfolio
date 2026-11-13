@@ -273,25 +273,48 @@
 
 .study-batch .ticks li { border-top-color: rgba(255, 255, 255, 0.14); }
 
+.ecosystem {
+  grid-template-columns: minmax(0, 1.25fr) minmax(240px, 0.75fr);
+  align-items: end;
+  column-gap: 64px;
+}
+.ecosystem .eyebrow { grid-column: 1; margin-bottom: 28px; }
+.ecosystem h2 { grid-column: 1; }
+.ecosystem .prose {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  max-width: 38ch;
+  color: #6f6b64;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 .products {
   list-style: none;
-  margin: 48px 0 0;
+  margin: 72px 0 0;
   padding: 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid #cfcbc4;
 }
 
 .products li {
   display: grid;
-  grid-template-columns: 42px minmax(140px, 0.9fr) minmax(120px, 0.7fr) minmax(0, 1.5fr);
-  gap: 12px 18px;
-  align-items: baseline;
-  padding: 22px 0;
-  border-bottom: 1px solid var(--line);
+  grid-template-columns: 0.45fr 1.5fr 1.18fr 2.45fr;
+  gap: 8px 20px;
+  align-items: center;
+  min-height: 144px;
+  padding: 28px 0;
+  border-bottom: 1px solid #cfcbc4;
 }
 
-.products b { font-size: 22px; letter-spacing: -0.03em; }
-.products span { color: var(--muted); font-size: 13px; font-weight: 700; }
-.products p { font-size: 16px; line-height: 1.45; color: #3f3c38; }
+.products .num {
+  color: #171614;
+  font-size: 15px;
+  font-weight: 500;
+}
+.products b { font-size: 30px; font-weight: 700; letter-spacing: -0.03em; }
+.products .who { color: #171614; font-size: 16px; font-weight: 500; }
+.products p { font-size: 16px; line-height: 1.45; color: #6f6b64; }
 
 .systems {
   display: grid;
@@ -621,6 +644,7 @@
   .problem-top,
   .goal { grid-template-columns: 1fr; }
   .problem-side { grid-column: 1; grid-row: auto; }
+  .ecosystem .prose { grid-column: 1; grid-row: auto; max-width: none; }
   .split,
   .systems,
   .panels,
@@ -635,7 +659,8 @@
   }
   .systems { gap: 12px; }
   .system-link { writing-mode: horizontal-tb; text-align: center; padding: 4px 0; }
-  .products li { grid-template-columns: 36px 1fr; }
+  .products li { grid-template-columns: 36px 1fr; min-height: 0; align-items: start; }
+  .products .who,
   .products p { grid-column: 2; }
   .facts { grid-template-columns: 1fr 1fr; }
   .facts div { padding-bottom: 16px; }
