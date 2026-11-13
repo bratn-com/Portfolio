@@ -830,9 +830,11 @@ a { color: inherit; }
     line-height: 1.15;
   }
 
-  .portfolio-page .pager {
+  .portfolio-page[data-category="desktop"] .pager,
+  .portfolio-page[data-category="mobile"] .pager,
+  .portfolio-page[data-category="motion"] .pager {
     position: static;
-    margin: 64px var(--pad) 36px;
+    margin: 48px var(--pad) 36px;
   }
 }
 
