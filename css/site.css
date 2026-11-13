@@ -576,7 +576,7 @@ a { color: inherit; }
   z-index: 2;
 }
 
-/* Cały plik w polu nad tytułem: skaluje się proporcjonalnie, dół nie jest ucinany. */
+/* Pełna szerokość kolumny. Dół grafiki siedzi nad tytułem, ucinana jest tylko góra. */
 .portfolio-page .card-visual img.card-cover,
 .portfolio-page .card-visual video.card-cover {
   position: absolute;
@@ -586,10 +586,10 @@ a { color: inherit; }
   height: 100%;
   max-width: none;
   max-height: none;
-  object-fit: contain;
-  object-position: center top;
+  object-fit: cover;
+  object-position: center bottom;
   transform: none;
-  transform-origin: center center;
+  transform-origin: center bottom;
   box-shadow: none;
 }
 
