@@ -503,10 +503,14 @@ a { color: inherit; }
 .portfolio-page .card {
   min-height: 0;
   overflow: hidden;
-  /* Reference layout: ~top half = mockup, middle = air, bottom quarter = titles */
   display: grid;
-  grid-template-rows: minmax(0, 0.55fr) minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) auto;
   align-content: stretch;
+}
+
+.portfolio-page .card:has(.card-cover) {
+  /* Tytuł na dole, mockup na całej wysokości karty (pod tekstem) */
+  grid-template-rows: minmax(0, 1fr) auto;
 }
 
 .card-visual {
@@ -528,12 +532,12 @@ a { color: inherit; }
 }
 
 .portfolio-page .card-visual:has(.card-cover) {
-  grid-row: 1 / 3;
+  grid-row: 1 / -1;
   padding: 0;
   overflow: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-end;
   min-height: 0;
   z-index: 0;
 }
@@ -564,14 +568,14 @@ a { color: inherit; }
 }
 
 .portfolio-page .card-copy {
-  grid-row: 3;
+  grid-row: -1;
   padding: 0 32px 28px;
-  align-self: stretch;
+  align-self: end;
   position: relative;
   z-index: 2;
 }
 
-/* Gotowy cover z Figmy — bez CSS 3D; całość mockupu widoczna (contain) */
+/* Gotowy cover z Figmy — kotwica prawy-góra, większy kadr (marginesy w PNG) */
 .portfolio-page .card:has(.card-cover) {
   overflow: hidden;
 }
@@ -580,20 +584,21 @@ a { color: inherit; }
 .portfolio-page .card-visual video.card-cover {
   flex: 0 0 auto;
   display: block;
-  width: auto;
   height: auto;
-  max-width: 100%;
-  max-height: 100%;
+  width: 158%;
+  max-width: none;
+  max-height: 112%;
   object-fit: contain;
-  object-position: center center;
+  object-position: right top;
   transform: none !important;
-  transform-origin: center center;
+  transform-origin: right top;
   box-shadow: none;
 }
 
 .portfolio-page .card:hover .card-visual img.card-cover,
 .portfolio-page .card:hover .card-visual video.card-cover {
-  transform: scale(1.02) !important;
+  transform: scale(1.04) !important;
+  transform-origin: right top;
 }
 
 .card-visual video {
@@ -754,10 +759,107 @@ a { color: inherit; }
 
 @media (max-width: 720px) {
   .grid { grid-template-columns: 1fr; }
-  .card-visual { min-height: 220px; }
   .say { width: 140px; height: 162px; }
   .say img { width: 140px; height: 162px; }
   .say span { font-size: 32px; line-height: 34px; left: 40px; top: 28px; }
+
+  /* Portfolio mobilne: tekst po lewej, duży mockup po prawej (jak bratn.com) */
+  .portfolio-page .grid {
+    margin-inline: 0;
+    height: auto;
+    overflow: visible;
+    align-content: start;
+  }
+
+  .portfolio-page .work {
+    overflow: auto;
+    min-height: 0;
+  }
+
+  .portfolio-page .card {
+    grid-template-rows: auto;
+    min-height: clamp(148px, 42vw, 220px);
+  }
+
+  .portfolio-page .card:has(.card-cover) {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: clamp(148px, 42vw, 220px);
+  }
+
+  .portfolio-page .card:has(.card-cover) .card-copy {
+    order: -1;
+    flex: 0 0 46%;
+    max-width: 46%;
+    align-self: center;
+    padding: 18px 20px 20px;
+    grid-row: auto;
+  }
+
+  .portfolio-page .card:has(.card-cover) .card-copy h2 {
+    margin: 0 0 8px;
+    font-size: clamp(22px, 5.8vw, 28px);
+    line-height: 1.15;
+    min-height: 0;
+  }
+
+  .portfolio-page .card:has(.card-cover) .card-meta {
+    gap: 8px;
+  }
+
+  .portfolio-page .card:has(.card-cover) .card-label,
+  .portfolio-page .card:has(.card-cover) .card-year {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .portfolio-page .card:has(.card-cover) .card-year {
+    min-height: 24px;
+    padding: 2px 10px;
+  }
+
+  .portfolio-page .card:has(.card-cover) .card-visual {
+    flex: 1 1 54%;
+    min-width: 0;
+    grid-row: auto;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .portfolio-page .card-visual img.card-cover,
+  .portfolio-page .card-visual video.card-cover {
+    width: auto;
+    height: 138%;
+    max-width: none;
+    max-height: none;
+    object-fit: contain;
+    object-position: right center;
+    transform-origin: right center;
+  }
+
+  .portfolio-page .card:hover .card-visual img.card-cover,
+  .portfolio-page .card:hover .card-visual video.card-cover {
+    transform: scale(1.03) !important;
+    transform-origin: right center;
+  }
+
+  .portfolio-page[data-category="motion"] .card-visual:has(.card-cover) {
+    padding: 0;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .portfolio-page[data-category="motion"] .card-visual img.card-cover {
+    width: auto;
+    height: 120%;
+    object-position: right center;
+  }
+
+  .portfolio-page .card-visual:not(:has(.card-cover)) {
+    min-height: 200px;
+  }
 }
 
 .home .hint { animation: hint-in 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) both; }
