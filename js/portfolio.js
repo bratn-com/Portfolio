@@ -68,8 +68,140 @@
     visual.appendChild(image);
   }
 
+  var caseEl = document.getElementById("case");
+  var caseImage = document.getElementById("case-image");
+  var caseTitle = document.getElementById("case-title");
+  var caseClose = document.getElementById("case-close");
+  var shell = document.querySelector(".shell");
+  var catalog = [];
+  var returnFocus = null;
+  var scrollY = 0;
+  var pushedCase = false;
+
+  function caseHref(id) {
+    var next = new URLSearchParams(window.location.search);
+    if (id) next.set("case", id);
+    else next.delete("case");
+    var query = next.toString();
+    return "portfolio.html" + (query ? "?" + query : "");
+  }
+
+  function projectById(id) {
+    for (var i = 0; i < catalog.length; i++) {
+      if (catalog[i].id === id) return catalog[i];
+    }
+    return null;
+  }
+
+  function lockScroll() {
+    scrollY = window.scrollY || 0;
+    document.documentElement.classList.add("case-open");
+    document.body.style.position = "fixed";
+    document.body.style.top = "-" + scrollY + "px";
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+  }
+
+  function unlockScroll() {
+    document.documentElement.classList.remove("case-open");
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    window.scrollTo(0, scrollY);
+  }
+
+  function openCase(project, fromHistory) {
+    if (!project || !project.caseStudy || !caseEl) return;
+    var title = String(project.title || "Case study").replace(/\n/g, " ");
+    if (caseTitle) caseTitle.textContent = title;
+    var bust = project.mediaVersion ? "?v=" + encodeURIComponent(project.mediaVersion) : "";
+    var src = "content/" + project.caseStudy + bust;
+    if (caseImage.getAttribute("src") !== src) {
+      caseImage.src = src;
+    }
+    caseImage.alt = title + " case study";
+    if (caseEl.hidden) {
+      returnFocus = document.activeElement;
+      caseEl.hidden = false;
+      if (shell) shell.setAttribute("inert", "");
+      lockScroll();
+      caseEl.scrollTop = 0;
+      caseEl.focus();
+    }
+    if (!fromHistory) {
+      history.pushState({ caseId: project.id }, "", caseHref(project.id));
+      pushedCase = true;
+    }
+  }
+
+  function closeCase(fromHistory) {
+    if (!caseEl || caseEl.hidden) return;
+    caseEl.hidden = true;
+    if (shell) shell.removeAttribute("inert");
+    unlockScroll();
+    if (returnFocus && typeof returnFocus.focus === "function") returnFocus.focus();
+    returnFocus = null;
+    if (fromHistory) {
+      pushedCase = false;
+      return;
+    }
+    if (pushedCase) {
+      pushedCase = false;
+      history.back();
+      return;
+    }
+    if (new URLSearchParams(window.location.search).get("case")) {
+      history.replaceState(null, "", caseHref(""));
+    }
+  }
+
+  function trapCaseTab(event) {
+    var focusable = caseEl.querySelectorAll("button, a[href]");
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
+  if (caseClose) {
+    caseClose.addEventListener("click", function () {
+      closeCase(false);
+    });
+  }
+
+  document.addEventListener("keydown", function (event) {
+    if (!caseEl || caseEl.hidden) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeCase(false);
+    } else if (event.key === "Tab") {
+      trapCaseTab(event);
+    }
+    event.stopPropagation();
+  }, true);
+
+  window.addEventListener("popstate", function () {
+    var id = new URLSearchParams(window.location.search).get("case");
+    if (!id) {
+      closeCase(true);
+      return;
+    }
+    var project = projectById(id);
+    if (project && project.caseStudy) openCase(project, true);
+  });
+
   function show(data) {
-      var projects = (data.projects || []).filter(function (project) {
+      catalog = data.projects || [];
+      var projects = catalog.filter(function (project) {
         return project.category === category;
       });
       var pages = Math.max(1, Math.ceil(projects.length / pageSize));
@@ -106,11 +238,34 @@
         copy.appendChild(meta);
         card.appendChild(visual);
         card.appendChild(copy);
+        if (project.caseStudy) {
+          card.classList.add("card-case");
+          card.tabIndex = 0;
+          card.setAttribute("role", "button");
+          card.setAttribute(
+            "aria-label",
+            "Open " + project.title.replace(/\n/g, " ") + " case study"
+          );
+          card.addEventListener("click", function () {
+            openCase(project, false);
+          });
+          card.addEventListener("keydown", function (event) {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            event.preventDefault();
+            openCase(project, false);
+          });
+        }
         grid.appendChild(card);
       });
       count.textContent = projects.length ? page + "/" + pages : "";
       setArrow(prev, page - 1, page > 1);
       setArrow(next, page + 1, page < pages);
+      var caseId = params.get("case");
+      if (caseId) {
+        var opened = projectById(caseId);
+        if (opened && opened.caseStudy) openCase(opened, true);
+        else closeCase(true);
+      }
   }
 
   function portfolioCacheVersion() {

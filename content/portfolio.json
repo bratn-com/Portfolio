@@ -31,7 +31,8 @@
       "color": "#e8612d",
       "cover": "baked",
       "image": "images/covers/sysdyne.png",
-      "mediaVersion": "20251113c"
+      "caseStudy": "images/case-studies/sysdyne.jpg",
+      "mediaVersion": "20251113d"
     },
     {
       "id": "alior",

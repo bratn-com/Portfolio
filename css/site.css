@@ -508,6 +508,15 @@ a { color: inherit; }
   align-content: stretch;
 }
 
+.portfolio-page .card-case {
+  cursor: pointer;
+}
+
+.portfolio-page .card-case:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -6px;
+}
+
 .portfolio-page .card:has(.card-cover) {
   /* Tytuł zostaje na dole karty. Grafika skaluje się w całości w polu nad nim. */
   overflow: hidden;
@@ -865,6 +874,51 @@ a { color: inherit; }
 @keyframes card-in {
   from { opacity: 0; transform: translateX(-150px); }
   to { opacity: 1; transform: none; }
+}
+
+.case {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--bg);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.case[hidden] {
+  display: none !important;
+}
+
+.case-frame {
+  width: min(1280px, 100%);
+  margin: 0 auto;
+}
+
+.case-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.case .case-close {
+  position: fixed;
+  z-index: 2;
+  top: 32px;
+  right: max(20px, calc((100% - 1280px) / 2 - 72px));
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  background: #181818;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22), 0 10px 28px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .case .case-close {
+    top: 16px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

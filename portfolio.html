@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/site.css?v=20251113l" />
+    <link rel="stylesheet" href="css/site.css?v=20251113m" />
   </head>
   <body>
     <div class="shell shell-viewport portfolio-page">
@@ -54,8 +54,22 @@
         </nav>
       </div>
     </div>
-    <script src="content/portfolio.js?v=20251113c"></script>
-    <script src="js/portfolio.js?v=20251113c"></script>
+    <div class="case" id="case" role="dialog" aria-modal="true" aria-labelledby="case-title" tabindex="-1" hidden>
+      <h2 class="sr" id="case-title">Case study</h2>
+      <button class="close case-close" id="case-close" type="button" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <g class="close-mark">
+            <path vector-effect="non-scaling-stroke" stroke="#fff" stroke-width="1" stroke-linecap="butt" d="M1 31 31 1" />
+            <path vector-effect="non-scaling-stroke" stroke="#fff" stroke-width="1" stroke-linecap="butt" d="M31 31 1 1" />
+          </g>
+        </svg>
+      </button>
+      <div class="case-frame">
+        <img id="case-image" alt="" width="1280" height="22740" decoding="async" />
+      </div>
+    </div>
+    <script src="content/portfolio.js?v=20251113d"></script>
+    <script src="js/portfolio.js?v=20251113d"></script>
     <script src="js/keyboard.js?v=20251108m"></script>
     <script src="js/close.js"></script>
   </body>
