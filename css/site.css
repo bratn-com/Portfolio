@@ -54,12 +54,14 @@ a { color: inherit; }
 }
 
 .portfolio-page .work {
-  /* Karty mają wysokość grafiki. Jak nie mieszczą się w oknie, przewijasz — nic nie jest ucinane. */
-  display: flex;
-  flex-direction: column;
+  /* Jedno okno: karty wypełniają wysokość, pager zostaje pod spodem, strona się nie przewija. */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-content: stretch;
   flex: 1 1 0;
   min-height: 0;
-  overflow: auto;
+  overflow: hidden;
   /* Figma portfolio-desktop: 32px under the header row, 32px above the pager, 40px under the pager */
   padding-top: 32px;
   padding-bottom: 40px;
@@ -481,13 +483,14 @@ a { color: inherit; }
 
 /* One viewport-tall row: cards shrink to free space so the pager never paints over card copy */
 .portfolio-page .grid {
-  flex: 1 0 auto;
+  flex: none;
+  grid-row: 1;
   align-self: stretch;
-  height: auto;
+  height: 100%;
   min-height: 0;
-  overflow: visible;
-  grid-template-rows: auto;
-  align-content: start;
+  overflow: hidden;
+  grid-template-rows: minmax(0, 1fr);
+  align-content: stretch;
 }
 
 .card {
@@ -506,11 +509,10 @@ a { color: inherit; }
 }
 
 .portfolio-page .card:has(.card-cover) {
-  /* Szerokość kolumny = szerokość grafiki. Wysokość wynika z pliku, nic nie jest ucinane w bok. */
-  height: auto;
-  align-self: start;
-  overflow: visible;
-  grid-template-rows: auto auto;
+  /* Tytuł zostaje na dole karty. Grafika wypełnia szerokość i jest przycinana tylko w pionie. */
+  overflow: hidden;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr) auto;
 }
 
 .card-visual {
@@ -533,11 +535,10 @@ a { color: inherit; }
 
 .portfolio-page .card-visual:has(.card-cover) {
   grid-row: 1;
-  position: static;
+  position: relative;
   display: block;
   padding: 0;
-  overflow: visible;
-  height: auto;
+  overflow: hidden;
   min-height: 0;
   z-index: 0;
 }
@@ -575,26 +576,27 @@ a { color: inherit; }
   z-index: 2;
 }
 
-/* Cover: 100% szerokości kolumny, wysokość z proporcji pliku — bez cropu w poziomie */
+/* Pełna szerokość kolumny. Nadmiar wysokości chowa się w karcie, tytuł zostaje na ekranie. */
 .portfolio-page .card-visual img.card-cover,
 .portfolio-page .card-visual video.card-cover {
-  position: static;
-  inset: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
   display: block;
   width: 100%;
   height: auto;
-  max-width: 100%;
+  max-width: none;
   max-height: none;
-  object-fit: contain;
+  object-fit: fill;
   object-position: center top;
-  transform: none !important;
-  transform-origin: center center;
+  transform: none;
+  transform-origin: center top;
   box-shadow: none;
 }
 
 .portfolio-page .card:hover .card-visual img.card-cover,
 .portfolio-page .card:hover .card-visual video.card-cover {
-  transform: none !important;
+  transform: scale(1.06);
 }
 
 .card-visual video {
@@ -687,8 +689,8 @@ a { color: inherit; }
 }
 
 .portfolio-page .pager {
-  flex: none;
-  align-self: stretch;
+  grid-row: 2;
+  align-self: end;
   margin: 32px var(--pad) 0;
   flex: none;
   position: relative;
@@ -819,7 +821,8 @@ a { color: inherit; }
 
   .portfolio-page .card:hover .card-visual img.card-cover,
   .portfolio-page .card:hover .card-visual video.card-cover {
-    transform: none !important;
+    transform: scale(1.04);
+    transform-origin: center top;
   }
 
   .portfolio-page .card-visual:not(:has(.card-cover)) {
@@ -860,7 +863,9 @@ a { color: inherit; }
   .card-visual img,
   .card-visual video { transition: none; }
   .portfolio-page .card:hover .card-visual img,
-  .portfolio-page .card:hover .card-visual video { transform: none; }
+  .portfolio-page .card:hover .card-visual video,
+  .portfolio-page .card:hover .card-visual img.card-cover,
+  .portfolio-page .card:hover .card-visual video.card-cover { transform: none; }
   .portfolio-page .card-visual img,
   .portfolio-page .card-visual video {
     transform: none;
