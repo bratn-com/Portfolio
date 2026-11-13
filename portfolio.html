@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio — Jarek Nowakowski</title>
+    <meta name="theme-color" content="#181818" />
+    <link rel="icon" href="favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/site.css?v=20251113p" />
+    <link rel="stylesheet" href="css/study.css?v=20251113u" />
+  </head>
+  <body>
+    <div class="shell shell-viewport portfolio-page">
+      <header class="bar portfolio-bar">
+        <a class="name" href="index.html">Jarek Nowakowski</a>
+        <nav class="tabs" aria-label="Portfolio">
+          <a href="portfolio.html?category=desktop" data-category="desktop">desktop</a>
+          <a href="portfolio.html?category=mobile" data-category="mobile">mobile</a>
+          <a href="portfolio.html?category=motion" data-category="motion">motion</a>
+        </nav>
+        <a class="close" href="index.html" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <g class="close-mark">
+              <path
+                vector-effect="non-scaling-stroke"
+                stroke="#fff"
+                stroke-width="1"
+                stroke-linecap="butt"
+                d="M1 31 31 1"
+              />
+              <path
+                vector-effect="non-scaling-stroke"
+                stroke="#fff"
+                stroke-width="1"
+                stroke-linecap="butt"
+                d="M31 31 1 1"
+              />
+            </g>
+          </svg>
+        </a>
+      </header>
+      <div class="work">
+        <div id="grid" class="grid"></div>
+        <nav class="pager" aria-label="Pages">
+          <a class="arrow" id="prev" href="portfolio.html" aria-label="Previous page">
+            <img src="assets/ui/arrow-left.svg" alt="" />
+          </a>
+          <span class="count" id="count"></span>
+          <a class="arrow right" id="next" href="portfolio.html" aria-label="Next page">
+            <img src="assets/ui/arrow-right.svg" alt="" />
+          </a>
+        </nav>
+      </div>
+    </div>
+    <div class="case" id="case" role="dialog" aria-modal="true" aria-labelledby="case-title" tabindex="-1" hidden>
+      <h2 class="sr" id="case-title">Case study</h2>
+      <button class="close case-close" id="case-close" type="button" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <g class="close-mark">
+            <path vector-effect="non-scaling-stroke" stroke="#fff" stroke-width="1" stroke-linecap="butt" d="M1 31 31 1" />
+            <path vector-effect="non-scaling-stroke" stroke="#fff" stroke-width="1" stroke-linecap="butt" d="M31 31 1 1" />
+          </g>
+        </svg>
+      </button>
+      <div class="case-frame" id="case-frame"></div>
+    </div>
+    <script src="content/portfolio.js?v=20251113e"></script>
+    <script src="js/portfolio.js?v=20251113e"></script>
+    <script src="js/keyboard.js?v=20251108m"></script>
+    <script src="js/close.js"></script>
+  </body>
+</html>
