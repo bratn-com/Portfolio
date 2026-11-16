@@ -607,11 +607,11 @@ a { color: inherit; }
   transform: scale(1.04);
 }
 
-/* Sekcja mobile: cały kadr zostaje w polu karty, bez powiększania na tytuł i sąsiadów. */
+/* Sekcja mobile: grafika wypełnia cały cover, bez pustych pasów po bokach. */
 .portfolio-page[data-category="mobile"] .card-visual img.card-cover,
 .portfolio-page[data-category="mobile"] .card-visual video.card-cover {
-  object-fit: contain;
-  object-position: center bottom;
+  object-fit: cover;
+  object-position: center center;
 }
 
 .portfolio-page[data-category="mobile"] .card:hover .card-visual img.card-cover,
