@@ -241,7 +241,7 @@
         label.className = "card-label";
         label.textContent = project.label;
         meta.appendChild(label);
-        if (project.caseStudy) {
+        if (project.caseStudy || project.arrow) {
           var arrow = document.createElement("span");
           arrow.className = "card-arrow";
           arrow.setAttribute("aria-hidden", "true");

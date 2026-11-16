@@ -131,6 +131,7 @@
       "color": "#e5642c",
       "cover": "baked",
       "image": "images/covers/sysdyne-illustrations.png",
+      "arrow": true,
       "mediaVersion": "20251113c"
     }
   ]
