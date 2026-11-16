@@ -120,6 +120,7 @@
     var bust = project.mediaVersion ? "?v=" + encodeURIComponent(project.mediaVersion) : "";
     var src = "content/" + project.caseStudy + bust;
     if (caseFrame && caseFrame.dataset.src !== src) {
+      if (window.SysdyneBay) window.SysdyneBay.destroy();
       caseFrame.dataset.src = src;
       caseFrame.innerHTML = "<p class=\"study-loading\">Loading case study…</p>";
       fetch(src)
@@ -130,11 +131,14 @@
         .then(function (html) {
           if (caseFrame.dataset.src !== src) return;
           caseFrame.innerHTML = html;
+          if (window.SysdyneBay) window.SysdyneBay.mount(caseFrame);
         })
         .catch(function () {
           if (caseFrame.dataset.src !== src) return;
           caseFrame.textContent = "Case study could not be loaded.";
         });
+    } else if (window.SysdyneBay) {
+      window.SysdyneBay.mount(caseFrame);
     }
     if (caseEl.hidden) {
       returnFocus = document.activeElement;
@@ -152,6 +156,7 @@
 
   function closeCase(fromHistory) {
     if (!caseEl || caseEl.hidden) return;
+    if (window.SysdyneBay) window.SysdyneBay.destroy();
     caseEl.hidden = true;
     if (shell) shell.removeAttribute("inert");
     unlockScroll();

@@ -131,8 +131,9 @@
       "color": "#e5642c",
       "cover": "baked",
       "image": "images/covers/sysdyne-illustrations.png",
+      "caseStudy": "illustrations/stage.html",
       "arrow": true,
-      "mediaVersion": "20261116a"
+      "mediaVersion": "20261116d"
     }
   ]
 }
