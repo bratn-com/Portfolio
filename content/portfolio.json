@@ -1,28 +1,6 @@
 {
   "projects": [
     {
-      "id": "transimeksa",
-      "category": "desktop",
-      "title": "Transimeksa\nLogistic\nSolutions",
-      "label": "Product Page",
-      "year": "2014",
-      "color": "#0f5d4f",
-      "cover": "baked",
-      "image": "images/covers/transimeksa.png",
-      "mediaVersion": "20251113c"
-    },
-    {
-      "id": "irshad",
-      "category": "desktop",
-      "title": "Irshad\nPetroleum",
-      "label": "Product Page",
-      "year": "2014",
-      "color": "#1f4e88",
-      "cover": "baked",
-      "image": "images/covers/irshad.png",
-      "mediaVersion": "20251113c"
-    },
-    {
       "id": "sysdyne",
       "category": "desktop",
       "title": "Sysdyne\nTechnologies",
@@ -35,14 +13,14 @@
       "mediaVersion": "20251113e"
     },
     {
-      "id": "alior",
+      "id": "hello",
       "category": "desktop",
-      "title": "Alior\nSync\nBanking",
-      "label": "Landing Page",
-      "year": "2014",
-      "color": "#fe9400",
+      "title": "Hello",
+      "label": "HCP Dashboard",
+      "year": "2019",
+      "color": "#b62b88",
       "cover": "baked",
-      "image": "images/covers/alior.png",
+      "image": "images/covers/hello.png",
       "mediaVersion": "20251113c"
     },
     {
@@ -57,17 +35,6 @@
       "mediaVersion": "20251113c"
     },
     {
-      "id": "hello",
-      "category": "desktop",
-      "title": "Hello",
-      "label": "HCP Dashboard",
-      "year": "2019",
-      "color": "#b62b88",
-      "cover": "baked",
-      "image": "images/covers/hello.png",
-      "mediaVersion": "20251113c"
-    },
-    {
       "id": "tallinder",
       "category": "desktop",
       "title": "Tallinder",
@@ -79,14 +46,36 @@
       "mediaVersion": "20251113c"
     },
     {
-      "id": "oticon",
-      "category": "mobile",
-      "title": "Oticon\nRemoteCare",
-      "label": "Mobile App",
-      "year": "2019",
-      "color": "#c2a88d",
+      "id": "alior",
+      "category": "desktop",
+      "title": "Alior\nSync\nBanking",
+      "label": "Landing Page",
+      "year": "2014",
+      "color": "#fe9400",
       "cover": "baked",
-      "image": "images/covers/oticon.png",
+      "image": "images/covers/alior.png",
+      "mediaVersion": "20251113c"
+    },
+    {
+      "id": "irshad",
+      "category": "desktop",
+      "title": "Irshad\nPetroleum",
+      "label": "Product Page",
+      "year": "2014",
+      "color": "#1f4e88",
+      "cover": "baked",
+      "image": "images/covers/irshad.png",
+      "mediaVersion": "20251113c"
+    },
+    {
+      "id": "transimeksa",
+      "category": "desktop",
+      "title": "Transimeksa\nLogistic\nSolutions",
+      "label": "Product Page",
+      "year": "2014",
+      "color": "#0f5d4f",
+      "cover": "baked",
+      "image": "images/covers/transimeksa.png",
       "mediaVersion": "20251113c"
     },
     {
@@ -101,14 +90,14 @@
       "mediaVersion": "20251113c"
     },
     {
-      "id": "hearing-fitness",
+      "id": "oticon",
       "category": "mobile",
-      "title": "Hearing\nFitness",
-      "label": "Tablet App",
-      "year": "2016",
-      "color": "#1e2428",
+      "title": "Oticon\nRemoteCare",
+      "label": "Mobile App",
+      "year": "2019",
+      "color": "#c2a88d",
       "cover": "baked",
-      "image": "images/covers/hearing-fitness.png",
+      "image": "images/covers/oticon.png",
       "mediaVersion": "20251113c"
     },
     {
@@ -120,6 +109,17 @@
       "color": "#f07228",
       "cover": "baked",
       "image": "images/covers/bahs.png",
+      "mediaVersion": "20251113c"
+    },
+    {
+      "id": "hearing-fitness",
+      "category": "mobile",
+      "title": "Hearing\nFitness",
+      "label": "Tablet App",
+      "year": "2016",
+      "color": "#1e2428",
+      "cover": "baked",
+      "image": "images/covers/hearing-fitness.png",
       "mediaVersion": "20251113c"
     },
     {

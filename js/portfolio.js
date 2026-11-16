@@ -93,6 +93,27 @@
     return null;
   }
 
+  function yearValue(year) {
+    if (!year) return 0;
+    var parts = String(year).match(/\d{2,4}/g);
+    if (!parts || !parts.length) return 0;
+    var max = 0;
+    parts.forEach(function (part) {
+      var n = parseInt(part, 10);
+      if (part.length === 2) n = n < 50 ? 2000 + n : 1900 + n;
+      if (n > max) max = n;
+    });
+    return max;
+  }
+
+  function sortByYear(projects) {
+    return projects.slice().sort(function (a, b) {
+      var delta = yearValue(b.year) - yearValue(a.year);
+      if (delta) return delta;
+      return String(a.title).localeCompare(String(b.title));
+    });
+  }
+
   function lockScroll() {
     scrollY = window.scrollY || 0;
     document.documentElement.classList.add("case-open");
@@ -219,9 +240,9 @@
 
   function show(data) {
       catalog = data.projects || [];
-      var projects = catalog.filter(function (project) {
+      var projects = sortByYear(catalog.filter(function (project) {
         return project.category === category;
-      });
+      }));
       var pages = Math.max(1, Math.ceil(projects.length / pageSize));
       var page = Math.min(Math.max(1, requested || 1), pages);
       var slice = projects.slice((page - 1) * pageSize, page * pageSize);
