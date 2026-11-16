@@ -213,8 +213,9 @@
 .study-dark .prose,
 .study-dark .lede { color: #d4d0ca; }
 .study-dark .eyebrow { color: #a39e97; }
-.study-batch { background: #231514; color: #fff; }
-.study-batch .prose { color: #e4d8d4; }
+.study-batch { background: #231513; color: #fff; }
+.study-batch .prose { color: #998f8a; }
+.study-batch .eyebrow { color: #f4f0ea; }
 .study-peach { background: var(--peach); }
 .study-orange { background: var(--orange); color: #171614; }
 .study-orange .prose { color: #171614; }
@@ -825,6 +826,51 @@
   padding-top: 0;
   border-top: 0;
 }
+
+.batch-top {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  column-gap: 40px;
+  align-items: start;
+}
+.batch-top h2 {
+  font-size: clamp(44px, 4.8vw, 68px);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+}
+.batch-top figure { margin-top: 36px; }
+.batch-top .prose {
+  max-width: 354px;
+  margin-top: 28px;
+  font-size: 17px;
+  line-height: 1.45;
+}
+.study-batch .ticks li { color: #fff; }
+.batch-dispatch {
+  width: min(860px, 78%);
+  margin: 56px auto 0;
+  background: #1e1c1d;
+}
+.batch-dispatch figcaption { padding: 22px 28px 4px; }
+.batch-dispatch figcaption strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.batch-dispatch figcaption p {
+  margin: 0;
+  color: #b7b0aa;
+  font-size: 15px;
+  line-height: 1.4;
+  opacity: 1;
+}
+.study-batch .principle { border-top-color: rgba(255, 255, 255, 0.16); }
+.study-batch .principle .eyebrow { color: var(--orange); }
+.study-batch .principle p:last-child { color: #fff; }
 .drv-top {
   display: grid;
   grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
@@ -1018,6 +1064,10 @@
   .dgo-top, .dgo-shots, .principle { grid-template-columns: 1fr; }
   .drv-top, .drv-shots { grid-template-columns: 1fr; }
   .mob-head, .mob-pair { grid-template-columns: 1fr; }
+  .batch-top { grid-template-columns: 1fr; }
+  .batch-top figure { margin-top: 28px; }
+  .batch-top h2 { font-size: clamp(40px, 12vw, 60px); }
+  .batch-dispatch { width: 100%; }
   .mob-head .prose { grid-column: 1; grid-row: auto; max-width: none; }
   .mob-head h2 { font-size: clamp(40px, 11vw, 60px); }
   .drv-top h2 { font-size: clamp(40px, 12vw, 60px); }
