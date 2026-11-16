@@ -241,6 +241,13 @@
         label.className = "card-label";
         label.textContent = project.label;
         meta.appendChild(label);
+        if (project.caseStudy) {
+          var arrow = document.createElement("span");
+          arrow.className = "card-arrow";
+          arrow.setAttribute("aria-hidden", "true");
+          arrow.innerHTML = '<svg viewBox="0 0 34 18" fill="none"><path d="M1 14.2H15.2c2.4 0 3.8-1.1 5.4-3.4L26.4 3.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M20.2 3.2H26.8V9.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+          meta.appendChild(arrow);
+        }
         if (project.year) {
           var year = document.createElement("span");
           year.className = "card-year";
