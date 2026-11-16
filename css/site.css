@@ -608,6 +608,22 @@ a { color: inherit; }
 }
 
 /* Sekcja mobile: grafika wypełnia cały cover, bez pustych pasów po bokach. */
+/* Desktop: pokaż cały mockup w polu nad tytułem — cover ucinał ~70% kadru. */
+.portfolio-page[data-category="desktop"] .card-visual img.card-cover,
+.portfolio-page[data-category="desktop"] .card-visual video.card-cover {
+  object-fit: contain;
+  object-position: center top;
+}
+
+.portfolio-page[data-category="desktop"] .card-copy h2 {
+  min-height: 0;
+  margin-bottom: 16px;
+}
+
+.portfolio-page[data-category="desktop"] .card-copy {
+  padding-bottom: 22px;
+}
+
 .portfolio-page[data-category="mobile"] .card-visual img.card-cover,
 .portfolio-page[data-category="mobile"] .card-visual video.card-cover {
   object-fit: cover;
