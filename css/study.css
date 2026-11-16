@@ -767,6 +767,64 @@
 .study-drv { background: #ffb39e; }
 .study-drv .eyebrow { color: #171614; }
 .study-drv .principle .eyebrow { color: var(--orange); }
+
+.study-mob { background: #efede7; }
+.study-mob .eyebrow { color: #171614; }
+.study-mob .principle .eyebrow { color: var(--orange); }
+.mob-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  column-gap: 40px;
+  align-items: end;
+}
+.mob-head .eyebrow { grid-column: 1; margin-bottom: 28px; }
+.mob-head h2 {
+  grid-column: 1;
+  font-size: clamp(46px, 5.2vw, 72px);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+}
+.mob-head .prose {
+  grid-column: 2;
+  grid-row: 2;
+  max-width: 380px;
+  color: #6d6962;
+  font-size: 16px;
+  line-height: 1.45;
+}
+.mob-block {
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(23, 22, 20, 0.16);
+}
+.mob-block .eyebrow { margin: 0 0 12px; color: var(--orange); }
+.mob-block h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+.mob-block p {
+  max-width: 62em;
+  margin: 12px 0 22px;
+  color: #6d6962;
+  font-size: 16px;
+  line-height: 1.45;
+}
+.mob-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px 72px;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(23, 22, 20, 0.16);
+}
+.mob-pair .mob-block {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
 .drv-top {
   display: grid;
   grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
@@ -959,6 +1017,9 @@
   .cgo-head, .cgo-shots, .approach { grid-template-columns: 1fr; }
   .dgo-top, .dgo-shots, .principle { grid-template-columns: 1fr; }
   .drv-top, .drv-shots { grid-template-columns: 1fr; }
+  .mob-head, .mob-pair { grid-template-columns: 1fr; }
+  .mob-head .prose { grid-column: 1; grid-row: auto; max-width: none; }
+  .mob-head h2 { font-size: clamp(40px, 11vw, 60px); }
   .drv-top h2 { font-size: clamp(40px, 12vw, 60px); }
   .drv-kicker { flex-direction: column; align-items: flex-start; gap: 10px; }
   .drv-kicker p:last-child { text-align: left; }
