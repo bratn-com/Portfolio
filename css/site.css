@@ -651,6 +651,12 @@ a { color: inherit; }
   transform: scale(1.04);
 }
 
+.portfolio-page[data-category="motion"] .card-visual img.card-cover,
+.portfolio-page[data-category="motion"] .card-visual video.card-cover {
+  object-fit: contain;
+  object-position: center center;
+}
+
 .card-copy {
   padding: 0 40px 24px;
 }
