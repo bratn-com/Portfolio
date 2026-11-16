@@ -5,6 +5,8 @@
 
 .case:has(.bay) .case-close {
   border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .bay {
