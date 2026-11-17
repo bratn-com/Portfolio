@@ -588,18 +588,18 @@ a { color: inherit; }
   z-index: 2;
 }
 
-/* Pełna szerokość kolumny. Dół grafiki siedzi nad tytułem, ucinana jest tylko góra. */
+/* Pełna szerokość kolumny, dół nad tytułem. Wyższa grafika jest ucinana tylko od góry. */
 .portfolio-page .card-visual img.card-cover,
 .portfolio-page .card-visual video.card-cover {
   position: absolute;
-  inset: 0;
+  left: 0;
+  bottom: 0;
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   max-width: none;
   max-height: none;
-  object-fit: cover;
-  object-position: center bottom;
+  object-fit: fill;
   transform: none;
   transform-origin: center bottom;
   box-shadow: none;
@@ -610,27 +610,14 @@ a { color: inherit; }
   transform: scale(1.04);
 }
 
-/* Sekcja mobile: grafika wypełnia cały cover, bez pustych pasów po bokach. */
-/* Desktop: pokaż cały mockup w polu nad tytułem — cover ucinał ~70% kadru. */
-.portfolio-page[data-category="desktop"] .card-visual img.card-cover,
-.portfolio-page[data-category="desktop"] .card-visual video.card-cover {
-  object-fit: contain;
-  object-position: center top;
-}
-
-.portfolio-page[data-category="desktop"] .card-copy h2 {
+.portfolio-page[data-category="desktop"] .card-copy h2,
+.portfolio-page[data-category="mobile"] .card-copy h2 {
   min-height: 0;
   margin-bottom: 16px;
 }
 
 .portfolio-page[data-category="desktop"] .card-copy {
   padding-bottom: 22px;
-}
-
-.portfolio-page[data-category="mobile"] .card-visual img.card-cover,
-.portfolio-page[data-category="mobile"] .card-visual video.card-cover {
-  object-fit: cover;
-  object-position: center center;
 }
 
 .portfolio-page[data-category="mobile"] .card:hover .card-visual img.card-cover,
