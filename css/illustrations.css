@@ -3,6 +3,10 @@
   background: #373636;
 }
 
+.case:has(.bay-oticon) {
+  background: #0a0a0a;
+}
+
 .case:has(.bay) .case-close {
   border-radius: 0;
   background: transparent;
@@ -30,6 +34,15 @@
   height: 44px;
   width: auto;
   margin: 0 0 32px;
+}
+
+.bay-oticon {
+  background: #0a0a0a;
+}
+
+.ill-logo-oticon {
+  height: 34px;
+  margin-bottom: 28px;
 }
 
 .ill-intro h2 {

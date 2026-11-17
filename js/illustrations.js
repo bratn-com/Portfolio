@@ -1,6 +1,10 @@
 (function () {
-  var VERSION = "20261116f";
-  var MACHINES = [
+  var VERSIONS = {
+    illustrations: "20261116f",
+    remotecare: "20261117b"
+  };
+
+  var ILLUSTRATIONS = [
     { file: "04-auger.html", title: "Auger — screw", w: 1152, h: 354 },
     { file: "11-truck-drum.html", title: "Truck — drum", w: 1085, h: 445 },
     { file: "06-aggbin-discharge.html", title: "AggBin — discharge", w: 373, h: 490 },
@@ -18,12 +22,56 @@
     { file: "14-pump-chemical-level.html", title: "Pump — chemical level", w: 350, h: 813, center: true }
   ];
 
+  var REMOTECARE = [
+    { file: "user.html", title: "User", w: 293, h: 302 },
+    { file: "remote-visit.html", title: "Remote visit", w: 293, h: 302 },
+    { file: "step1.html", title: "Step 1", w: 293, h: 302 },
+    { file: "step2.html", title: "Step 2", w: 293, h: 302 },
+    { file: "step3.html", title: "Step 3", w: 293, h: 302 },
+    { file: "you-are-ready.html", title: "You are ready", w: 293, h: 302 },
+    { file: "email-sent.html", title: "Email sent", w: 293, h: 302 },
+    { file: "info.html", title: "Info", w: 229, h: 229 },
+    { file: "offline.html", title: "Offline", w: 293, h: 302 }
+  ];
+
+  var SETS = {
+    illustrations: {
+      attr: "data-illustrations",
+      folder: "illustrations",
+      bare: true,
+      items: ILLUSTRATIONS
+    },
+    remotecare: {
+      attr: "data-remotecare",
+      folder: "remotecare",
+      bare: false,
+      items: REMOTECARE
+    }
+  };
+
   var root = null;
+  var active = null;
   var live = false;
   var observer = null;
 
-  function machineSrc(machine) {
-    return "content/illustrations/" + machine.file + "?bare=1&bg=0&v=" + VERSION;
+  function detect(scope) {
+    if (!scope) return null;
+    for (var key in SETS) {
+      if (!Object.prototype.hasOwnProperty.call(SETS, key)) continue;
+      var cfg = SETS[key];
+      var el = scope.querySelector("[" + cfg.attr + "]");
+      if (el) return { el: el, key: key, cfg: cfg };
+    }
+    return null;
+  }
+
+  function clipSrc(cfg, clip) {
+    var version = VERSIONS[active] || "";
+    var url = "content/" + cfg.folder + "/" + clip.file;
+    var query = cfg.bare ? "?bare=1&bg=0" : "?";
+    if (query === "?") query += "v=" + version;
+    else query += "&v=" + version;
+    return url + query;
   }
 
   function limits() {
@@ -32,13 +80,14 @@
   }
 
   function layout() {
-    if (!root) return;
+    if (!root || !active) return;
     var box = limits();
+    var cfg = SETS[active];
     var frames = root.querySelectorAll(".ill-machine iframe");
-    MACHINES.forEach(function (machine, i) {
+    cfg.items.forEach(function (clip, i) {
       var frame = frames[i];
       if (!frame) return;
-      var ratio = machine.w / machine.h;
+      var ratio = clip.w / clip.h;
       var width = box.maxW;
       var height = width / ratio;
       if (height > box.maxH) {
@@ -66,19 +115,21 @@
     });
   }
 
-  function build() {
+  function build(cfg) {
     var grid = root.querySelector("[data-ill-grid]");
-    MACHINES.forEach(function (machine) {
+    grid.textContent = "";
+    cfg.items.forEach(function (clip) {
       var figure = document.createElement("figure");
-      figure.className = "ill-machine" + (machine.center ? " is-center" : "");
+      figure.className = "ill-machine" + (clip.center ? " is-center" : "");
       var frame = document.createElement("iframe");
-      frame.title = machine.title;
+      frame.title = clip.title;
       frame.setAttribute("scrolling", "no");
-      frame.dataset.src = machineSrc(machine);
+      frame.dataset.src = clipSrc(cfg, clip);
       figure.appendChild(frame);
       grid.appendChild(figure);
     });
     root.dataset.built = "1";
+    root.dataset.bay = active;
   }
 
   function destroy() {
@@ -87,16 +138,21 @@
     if (observer) observer.disconnect();
     observer = null;
     root = null;
+    active = null;
   }
 
   function mount(scope) {
-    var next = scope && scope.querySelector("[data-illustrations]");
-    if (!next) return;
-    if (live && root === next && next.isConnected) return;
+    var found = detect(scope);
+    if (!found) return;
+    if (live && root === found.el && found.el.isConnected && active === found.key) {
+      layout();
+      return;
+    }
     destroy();
-    root = next;
+    root = found.el;
+    active = found.key;
     live = true;
-    if (root.dataset.built !== "1") build();
+    if (root.dataset.built !== "1" || root.dataset.bay !== active) build(found.cfg);
     watch();
     layout();
     window.addEventListener("resize", layout);

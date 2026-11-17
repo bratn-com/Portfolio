@@ -144,8 +144,9 @@
       "color": "#b62b88",
       "cover": "baked",
       "image": "images/covers/oticon-remotecare-motion.png",
+      "caseStudy": "remotecare/stage.html",
       "arrow": true,
-      "mediaVersion": "20261117a"
+      "mediaVersion": "20261117b"
     }
   ]
 }
