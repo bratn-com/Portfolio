@@ -134,6 +134,18 @@
       "caseStudy": "illustrations/stage.html",
       "arrow": true,
       "mediaVersion": "20261116f"
+    },
+    {
+      "id": "oticon-remotecare-motion",
+      "category": "motion",
+      "title": "Oticon\nRemoteCare",
+      "label": "Motion",
+      "year": "2020",
+      "color": "#b62b88",
+      "cover": "baked",
+      "image": "images/covers/oticon-remotecare-motion.png",
+      "arrow": true,
+      "mediaVersion": "20261117a"
     }
   ]
 }
