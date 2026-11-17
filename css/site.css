@@ -486,6 +486,8 @@ a { color: inherit; }
   flex: none;
   grid-row: 1;
   align-self: stretch;
+  width: 100%;
+  margin-inline: 0;
   height: 100%;
   min-height: 0;
   overflow: hidden;
