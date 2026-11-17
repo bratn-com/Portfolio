@@ -659,8 +659,12 @@ a { color: inherit; }
 
 .portfolio-page[data-category="motion"] .card-visual img.card-cover,
 .portfolio-page[data-category="motion"] .card-visual video.card-cover {
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   object-position: center center;
+  transform-origin: center center;
 }
 
 .card-copy {
