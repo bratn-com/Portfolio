@@ -1,7 +1,7 @@
 (function () {
   var VERSIONS = {
     illustrations: "20261116f",
-    remotecare: "20261118d"
+    remotecare: "20261118e"
   };
 
   var ILLUSTRATIONS = [
