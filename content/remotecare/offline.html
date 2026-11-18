@@ -87,6 +87,11 @@ return lottie;
         if (cs.display === 'none' || cs.visibility === 'hidden') return false;
         var fillOn = cs.fill && cs.fill !== 'none' && parseFloat(cs.fillOpacity || '1') > 0.05;
         var strokeOn = cs.stroke && cs.stroke !== 'none' && parseFloat(cs.strokeOpacity || '1') > 0.05 && parseFloat(cs.strokeWidth || '0') > 0;
+        if (fillOn && !strokeOn) {
+          var parts = String(cs.fill).replace(/rgba?\(|\)/g, '').split(',');
+          var r = parseFloat(parts[0]), g = parseFloat(parts[1]), b = parseFloat(parts[2]);
+          if (r < 30 && g < 30 && b < 30) fillOn = false;
+        }
         return fillOn || strokeOn;
       }
       function rootBox(node) {
@@ -120,11 +125,13 @@ return lottie;
           maxX = Math.max(maxX, b.x + b.w);
           maxY = Math.max(maxY, b.y + b.h);
         }
-        if (hit) frames.push({ x: minX, y: minY, w: maxX - minX, h: maxY - minY });
+        if (hit) frames.push({ f: f, x: minX, y: minY, w: maxX - minX, h: maxY - minY });
       }
       if (frames.length) {
-        frames.sort(function (a, b) { return (b.w * b.h) - (a.w * a.h); });
-        var main = frames[0];
+        var late = frames.filter(function (b) { return b.f >= total * 0.45; });
+        var pool = late.length ? late : frames;
+        pool.sort(function (a, b) { return (b.w * b.h) - (a.w * a.h); });
+        var main = pool[0];
         var minX = main.x, minY = main.y, maxX = main.x + main.w, maxY = main.y + main.h;
         var slackX = main.w * 0.35, slackY = main.h * 0.35;
         frames.forEach(function (b) {

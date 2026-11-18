@@ -1,7 +1,7 @@
 (function () {
   var VERSIONS = {
     illustrations: "20261116f",
-    remotecare: "20261118c"
+    remotecare: "20261118d"
   };
 
   var ILLUSTRATIONS = [
@@ -29,7 +29,6 @@
     { file: "step3.html", title: "Step 3", w: 300, h: 300 },
     { file: "you-are-ready.html", title: "You are ready", w: 300, h: 300 },
     { file: "email-sent.html", title: "Email sent", w: 300, h: 300 },
-    { file: "info.html", title: "Info", w: 300, h: 300 },
     { file: "offline.html", title: "Offline", w: 300, h: 300 }
   ];
 
