@@ -1,7 +1,7 @@
 (function () {
   var VERSIONS = {
     illustrations: "20261116f",
-    remotecare: "20261118b"
+    remotecare: "20261118c"
   };
 
   var ILLUSTRATIONS = [
@@ -23,15 +23,14 @@
   ];
 
   var REMOTECARE = [
-    { file: "user.html", title: "User", w: 293, h: 302 },
-    { file: "remote-visit.html", title: "Remote visit", w: 293, h: 302 },
-    { file: "step1.html", title: "Step 1", w: 293, h: 302 },
-    { file: "step2.html", title: "Step 2", w: 293, h: 302 },
-    { file: "step3.html", title: "Step 3", w: 293, h: 302 },
-    { file: "you-are-ready.html", title: "You are ready", w: 293, h: 302 },
-    { file: "email-sent.html", title: "Email sent", w: 293, h: 302 },
-    { file: "info.html", title: "Info", w: 229, h: 229 },
-    { file: "offline.html", title: "Offline", w: 293, h: 302 }
+    { file: "remote-visit.html", title: "Remote visit", w: 300, h: 300 },
+    { file: "step1.html", title: "Step 1", w: 300, h: 300 },
+    { file: "step2.html", title: "Step 2", w: 300, h: 300 },
+    { file: "step3.html", title: "Step 3", w: 300, h: 300 },
+    { file: "you-are-ready.html", title: "You are ready", w: 300, h: 300 },
+    { file: "email-sent.html", title: "Email sent", w: 300, h: 300 },
+    { file: "info.html", title: "Info", w: 300, h: 300 },
+    { file: "offline.html", title: "Offline", w: 300, h: 300 }
   ];
 
   var SETS = {
@@ -75,8 +74,11 @@
   }
 
   function limits() {
-    if (window.matchMedia("(max-width: 800px)").matches) return { maxW: 220, maxH: 160 };
-    return { maxW: 280, maxH: 210 };
+    var narrow = window.matchMedia("(max-width: 800px)").matches;
+    if (active === "remotecare") {
+      return narrow ? { maxW: 300, maxH: 280 } : { maxW: 420, maxH: 360 };
+    }
+    return narrow ? { maxW: 220, maxH: 160 } : { maxW: 280, maxH: 210 };
   }
 
   function layout() {

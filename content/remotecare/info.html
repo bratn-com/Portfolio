@@ -65,6 +65,87 @@ return lottie;
     var anim;
 
     anim = lottie.loadAnimation(params);
+    anim.addEventListener('DOMLoaded', function () {
+      var svg = document.querySelector('#lottie svg');
+      if (!svg) return;
+      var total = Math.max(1, anim.totalFrames || 1);
+      var step = Math.max(1, Math.round(total / 24));
+      var compW = svg.viewBox.baseVal.width || 293;
+      var compH = svg.viewBox.baseVal.height || 302;
+      function hiddenBox(node) {
+        var el = node;
+        while (el && el !== svg) {
+          var tag = (el.tagName || '').toLowerCase();
+          if (tag === 'mask' || tag === 'clippath' || tag === 'defs') return true;
+          el = el.parentNode;
+        }
+        return false;
+      }
+      function painted(node) {
+        if (hiddenBox(node)) return false;
+        var cs = getComputedStyle(node);
+        if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+        var fillOn = cs.fill && cs.fill !== 'none' && parseFloat(cs.fillOpacity || '1') > 0.05;
+        var strokeOn = cs.stroke && cs.stroke !== 'none' && parseFloat(cs.strokeOpacity || '1') > 0.05 && parseFloat(cs.strokeWidth || '0') > 0;
+        return fillOn || strokeOn;
+      }
+      function rootBox(node) {
+        var nb = node.getBoundingClientRect();
+        var sb = svg.getBoundingClientRect();
+        if (nb.width < 0.5 || nb.height < 0.5 || sb.width < 1 || sb.height < 1) return null;
+        var vb = svg.viewBox.baseVal;
+        var sx = vb.width / sb.width;
+        var sy = vb.height / sb.height;
+        var box = {
+          x: vb.x + (nb.left - sb.left) * sx,
+          y: vb.y + (nb.top - sb.top) * sy,
+          w: nb.width * sx,
+          h: nb.height * sy
+        };
+        if (box.w > compW * 1.15 || box.h > compH * 1.15) return null;
+        return box;
+      }
+      var frames = [];
+      for (var f = 0; f < total; f += step) {
+        anim.goToAndStop(f, true);
+        var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity, hit = false;
+        var nodes = svg.querySelectorAll('path, ellipse, rect, circle, polygon, polyline');
+        for (var i = 0; i < nodes.length; i++) {
+          if (!painted(nodes[i])) continue;
+          var b = rootBox(nodes[i]);
+          if (!b) continue;
+          hit = true;
+          minX = Math.min(minX, b.x);
+          minY = Math.min(minY, b.y);
+          maxX = Math.max(maxX, b.x + b.w);
+          maxY = Math.max(maxY, b.y + b.h);
+        }
+        if (hit) frames.push({ x: minX, y: minY, w: maxX - minX, h: maxY - minY });
+      }
+      if (frames.length) {
+        frames.sort(function (a, b) { return (b.w * b.h) - (a.w * a.h); });
+        var main = frames[0];
+        var minX = main.x, minY = main.y, maxX = main.x + main.w, maxY = main.y + main.h;
+        var slackX = main.w * 0.35, slackY = main.h * 0.35;
+        frames.forEach(function (b) {
+          var cx = b.x + b.w / 2, cy = b.y + b.h / 2;
+          if (cx < minX - slackX || cx > maxX + slackX || cy < minY - slackY || cy > maxY + slackY) return;
+          minX = Math.min(minX, b.x);
+          minY = Math.min(minY, b.y);
+          maxX = Math.max(maxX, b.x + b.w);
+          maxY = Math.max(maxY, b.y + b.h);
+        });
+        var span = Math.max(maxX - minX, maxY - minY, 1);
+        var pad = Math.max(4, span * 0.08);
+        svg.setAttribute('viewBox', (minX - pad) + ' ' + (minY - pad) + ' ' + (maxX - minX + pad * 2) + ' ' + (maxY - minY + pad * 2));
+        svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+      }
+      anim.play();
+    });
 
 </script>
 </body>
