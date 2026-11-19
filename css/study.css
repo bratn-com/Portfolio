@@ -202,11 +202,25 @@
 
 .overview {
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: start;
 }
-.overview .eyebrow { grid-column: 1; margin-bottom: 28px; }
-.overview h2 { grid-column: 1; max-width: 6.5em; }
-.overview .prose { grid-column: 2; grid-row: 2; }
-.overview .prose p + p { margin-top: 18px; }
+.overview h2 {
+  grid-column: 1;
+  grid-row: 1;
+  max-width: 6.5em;
+}
+.overview .prose {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  max-width: 42ch;
+}
+.overview .prose p + p {
+  margin-top: 18px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--muted);
+}
 
 .study-section { padding: 88px 0; }
 .study-dark { background: #171614; color: #fff; }
