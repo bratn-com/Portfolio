@@ -876,7 +876,17 @@
   column-gap: 48px;
   align-items: start;
 }
+.dgo-lead { align-self: start; }
+.dgo-product-idx {
+  margin: 0 0 20px;
+  color: #8a847c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 .dgo-top h2 {
+  margin: 0;
   font-size: clamp(42px, 4.7vw, 64px);
   line-height: 0.9;
   letter-spacing: -0.045em;
@@ -886,7 +896,8 @@
   margin-top: 40px;
   color: #6d6962;
   font-size: 17px;
-  line-height: 1.45;
+  font-weight: 500;
+  line-height: 1.5;
 }
 .study-dgo .ticks { margin-top: 44px; }
 .study-dgo .ticks li {
@@ -895,12 +906,68 @@
   padding: 18px 0 18px 22px;
 }
 .study-dgo .ticks li:last-child { border-bottom: 1px solid rgba(23, 22, 20, 0.18); }
+.dgo-block {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+.dgo-cap { width: 100%; margin: 0 0 18px; text-align: left; }
+.dgo-idx {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.dgo-cap p {
+  margin: 0;
+  max-width: 42ch;
+  color: #171614;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.study-dgo .dgo-block .study-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: top;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
 .dgo-shots {
   display: grid;
   grid-template-columns: 1.42fr 1fr;
   gap: 28px;
   margin-top: 72px;
   align-items: start;
+}
+.study-dgo .principle {
+  display: grid;
+  grid-template-columns: minmax(140px, 22%) minmax(0, 1fr);
+  gap: 12px 28px;
+  align-items: start;
+}
+.study-dgo .principle-label {
+  margin: 0;
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.study-dgo .principle-statement {
+  margin: 0;
+  color: #171614;
+  font-size: clamp(28px, 3.2vw, 48px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
 }
 .principle {
   margin-top: 88px;
@@ -1312,6 +1379,8 @@
   .cgo-lead, .cgo-copy { grid-column: 1; grid-row: auto; }
   .cgo-cap p { max-width: none; }
   .dgo-top, .dgo-shots, .principle { grid-template-columns: 1fr; }
+  .study-dgo .principle { grid-template-columns: 1fr; }
+  .dgo-cap p { max-width: none; }
   .drv-top, .drv-shots { grid-template-columns: 1fr; }
   .mob-head, .mob-pair { grid-template-columns: 1fr; }
   .batch-top { grid-template-columns: 1fr; }
