@@ -1,0 +1,112 @@
+.case:has(.bay) {
+  overflow: auto;
+  background: #373636;
+}
+
+.case:has(.bay-oticon) {
+  background: #0a0a0a;
+}
+
+.case:has(.bay) .case-close {
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.bay {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+  gap: 56px 72px;
+  align-items: start;
+  padding: 40px 88px 96px 56px;
+  background: #373636;
+  color: #fff;
+}
+
+.ill-intro h2,
+.ill-intro p {
+  margin: 0;
+}
+
+.ill-logo {
+  display: block;
+  height: 44px;
+  width: auto;
+  margin: 0 0 32px;
+}
+
+.bay-oticon {
+  background: #0a0a0a;
+}
+
+.ill-logo-oticon {
+  height: 30px;
+  margin-bottom: 28px;
+}
+
+.ill-intro h2 {
+  margin-bottom: 20px;
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.ill-intro p {
+  max-width: 36ch;
+  color: #c8c8c8;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.ill-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 96px 36px;
+  align-items: center;
+  justify-items: center;
+  padding-top: 12px;
+}
+
+.ill-machine {
+  margin: 0;
+}
+
+.ill-machine.is-center {
+  grid-column: 1 / -1;
+}
+
+.ill-machine iframe {
+  display: block;
+  border: 0;
+  background: transparent;
+  pointer-events: none;
+}
+
+@media (max-width: 800px) {
+  .bay {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 24px 20px 64px;
+  }
+
+  .ill-intro h2 {
+    font-size: 36px;
+  }
+
+  .ill-intro p {
+    max-width: 42ch;
+  }
+
+  .ill-grid {
+    grid-template-columns: 1fr;
+    gap: 64px;
+    padding-top: 0;
+  }
+
+  .ill-machine.is-center {
+    grid-column: auto;
+  }
+}
