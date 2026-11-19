@@ -934,9 +934,16 @@
   column-gap: 64px;
   align-items: start;
 }
-.problem-top .eyebrow { grid-column: 1; margin-bottom: 28px; }
-.problem-top h2 { grid-column: 1; max-width: 7em; }
-.problem-side { grid-column: 2; grid-row: 2; }
+.problem-top h2 {
+  grid-column: 1;
+  grid-row: 1;
+  max-width: 7em;
+}
+.problem-side {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+}
 .study-problem .prose { color: #b3ada5; font-size: 16px; line-height: 1.5; max-width: 38ch; }
 .study-problem .ticks { margin-top: 56px; }
 .study-problem .ticks li {
@@ -948,11 +955,23 @@
 .study-problem .ticks li:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.16); }
 
 .goal {
+  display: grid;
+  grid-template-columns: 18% minmax(0, 1fr);
+  gap: 12px 28px;
+  align-items: center;
   margin-top: 72px;
   padding-top: 40px;
   border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
-.goal p {
+.goal-label {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.goal-statement {
   margin: 0;
   max-width: 22em;
   font-size: clamp(28px, 2.7vw, 42px);
