@@ -724,11 +724,12 @@
 }
 .study-docs .doc-cap p {
   margin: 0;
-  max-width: 22ch;
+  max-width: none;
   font-size: 15px;
   line-height: 1.4;
   font-weight: 500;
   color: #171614;
+  white-space: nowrap;
 }
 .study-docs .study-shot {
   display: block;
@@ -1555,7 +1556,7 @@
   .study-docs .doc-block,
   .study-docs .doc-block:nth-child(-n + 3),
   .study-docs .doc-block:nth-child(n + 4) { grid-column: auto; }
-  .study-docs .doc-cap p { max-width: none; }
+  .study-docs .doc-cap p { max-width: none; white-space: normal; }
   .docs-head h2 { font-size: clamp(40px, 12vw, 64px); }
   .cgo-head, .cgo-shots, .approach { grid-template-columns: 1fr; }
   .cgo-lead, .cgo-copy { grid-column: 1; grid-row: auto; }
