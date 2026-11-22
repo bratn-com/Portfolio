@@ -356,6 +356,10 @@ a { color: inherit; }
   align-items: start;
 }
 
+.about-page .about-grid {
+  padding-bottom: 48px;
+}
+
 .about-grid h1 {
   margin: 0;
   font-size: 28px;
@@ -805,6 +809,9 @@ a { color: inherit; }
     grid-template-columns: 1fr;
     row-gap: 64px;
     margin-top: 64px;
+  }
+  .about-page .about-grid {
+    padding-bottom: 96px;
   }
   .where, .say { margin-left: 0; }
   .contact-panel h1 { font-size: min(148px, 16vw); top: 12%; }
