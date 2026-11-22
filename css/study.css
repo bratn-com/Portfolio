@@ -1012,6 +1012,9 @@
   font-weight: 500;
   line-height: 1.5;
 }
+.study-mob .mob-head + .mob-block {
+  margin-top: 80px;
+}
 .mob-block {
   margin: 48px 0 0;
   padding-top: 28px;
