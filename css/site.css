@@ -306,6 +306,31 @@ a { color: inherit; }
   min-height: 618px;
 }
 
+.about-page .shell {
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
+.about-page .bar,
+.about-page .foot {
+  flex-shrink: 0;
+}
+
+.about-page .panel-wrap {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.about-page .panel {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
 .side-arrow {
   position: absolute;
   top: 50%;
@@ -801,6 +826,7 @@ a { color: inherit; }
   .panel { min-height: 0; }
   .side-arrow { display: none; }
   .about-grid { width: calc(100% - 48px); margin-top: 48px; }
+  .about-page .panel { min-height: 0; }
   .card-copy { padding: 0 24px 20px; }
   .card-copy h2 { font-size: 26px; line-height: 32px; min-height: 96px; }
   .foot { padding-bottom: 24px; }
