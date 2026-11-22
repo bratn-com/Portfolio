@@ -318,9 +318,22 @@ a { color: inherit; }
 }
 
 .about-page .panel-wrap {
+  position: relative;
   flex: 1 1 0;
   min-height: 0;
   overflow: hidden;
+}
+
+.about-page .panel-wrap > .side-arrow {
+  z-index: 2;
+}
+
+.about-page .panel-wrap > .side-arrow.left {
+  left: calc(var(--pad) + 45px);
+}
+
+.about-page .panel-wrap > .side-arrow.right {
+  right: calc(var(--pad) + 45px);
 }
 
 .about-page .panel {
