@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Jarek Nowakowski — CV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Manrope, system-ui, sans-serif;
+        color: #1a1a1a;
+        background: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .page {
+        width: 210mm;
+        height: 297mm;
+        padding: 11mm 12mm 8mm;
+        display: grid;
+        grid-template-columns: 1fr 0.88fr;
+        column-gap: 10mm;
+        position: relative;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 28pt;
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+      }
+
+      .role {
+        margin: 4px 0 0;
+        font-size: 11pt;
+        font-weight: 500;
+        color: #9a9a9a;
+      }
+
+      .section-bar {
+        margin: 14px 0 10px;
+        padding: 5px 10px;
+        background: #e9e9e9;
+        font-size: 7.5pt;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        color: #fff;
+        text-transform: uppercase;
+      }
+
+      .job {
+        margin-bottom: 11px;
+      }
+
+      .job-title {
+        font-size: 9.5pt;
+        font-weight: 700;
+        line-height: 1.25;
+      }
+
+      .job-meta {
+        margin-top: 2px;
+        font-size: 8pt;
+        font-weight: 500;
+        color: #9a9a9a;
+        line-height: 1.35;
+      }
+
+      .job ul {
+        margin: 5px 0 0;
+        padding-left: 14px;
+        font-size: 7.4pt;
+        font-weight: 500;
+        color: #5a5a5a;
+        line-height: 1.32;
+      }
+
+      .job ul li {
+        margin-bottom: 2px;
+      }
+
+      .job.compact {
+        margin-bottom: 8px;
+      }
+
+      .edu p {
+        margin: 0;
+        font-size: 8.5pt;
+        font-weight: 600;
+        line-height: 1.35;
+      }
+
+      .edu .meta {
+        margin-top: 2px;
+        font-size: 8pt;
+        font-weight: 500;
+        color: #9a9a9a;
+      }
+
+      .edu .thesis {
+        margin-top: 6px;
+        font-size: 7.4pt;
+        font-weight: 500;
+        color: #5a5a5a;
+        line-height: 1.32;
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 6px;
+        align-items: start;
+        margin-bottom: 8px;
+      }
+
+      .photo {
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center 15%;
+        filter: grayscale(1) contrast(1.05);
+        display: block;
+      }
+
+      .bubble-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding-top: 4px;
+      }
+
+      .bubble {
+        flex: 1;
+        min-height: 72px;
+        border: 7px solid #4d1b8f;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 8px 18px;
+      }
+
+      .bubble::after {
+        content: "";
+        position: absolute;
+        left: 18%;
+        bottom: -16px;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 16px solid #4d1b8f;
+      }
+
+      .bubble span {
+        font-size: 17pt;
+        font-weight: 700;
+        color: #4d1b8f;
+        text-align: center;
+        line-height: 1.05;
+      }
+
+      .contact {
+        margin-top: 10px;
+        font-size: 8pt;
+        font-weight: 600;
+        line-height: 1.45;
+      }
+
+      .contact a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .dob {
+        margin-top: 10px;
+        font-size: 8pt;
+        font-weight: 600;
+      }
+
+      .summary {
+        margin-top: 8px;
+        font-size: 7.6pt;
+        font-weight: 500;
+        color: #3a3a3a;
+        line-height: 1.38;
+      }
+
+      .block-text {
+        margin: 0;
+        font-size: 7.6pt;
+        font-weight: 500;
+        color: #3a3a3a;
+        line-height: 1.38;
+      }
+
+      .links {
+        margin-top: auto;
+        padding-top: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .link-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 8pt;
+        font-weight: 600;
+      }
+
+      .link-row a {
+        color: #1a1a1a;
+        text-decoration: none;
+      }
+
+      .icon {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+      }
+
+      .gdpr {
+        position: absolute;
+        left: 12mm;
+        right: 12mm;
+        bottom: 5mm;
+        font-size: 5.7pt;
+        font-weight: 500;
+        color: #b0b0b0;
+        line-height: 1.35;
+        text-align: justify;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="left">
+        <h1>Jarek<br />Nowakowski</h1>
+        <p class="role">Senior UI/UX Designer</p>
+
+        <div class="section-bar">Work experience</div>
+
+        <article class="job">
+          <div class="job-title">Senior UI/UX Designer — Coldrun</div>
+          <div class="job-meta">10/2022 – Present · Warsaw, Poland</div>
+          <ul>
+            <li>End-to-end UI/UX for multi-application industrial SaaS (desktop and mobile) for a US client.</li>
+            <li>Shared design language and patterns across the product suite; close work with product and engineering.</li>
+            <li>Operator-facing workflows (dispatch, batch, field use) built for clarity and daily operational load.</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-title">Senior UI Designer — Demant Technology Center</div>
+          <div class="job-meta">4/2016 – 6/2022 · Warsaw, Poland</div>
+          <ul>
+            <li>Mobile apps for hearing-aid users and remote-care experiences in a regulated health context.</li>
+            <li>Patient-facing flows and long-term UI consistency across iterative product releases.</li>
+            <li>Collaboration with cross-functional teams in a global hearing-health product ecosystem.</li>
+          </ul>
+        </article>
+
+        <article class="job compact">
+          <div class="job-title">Senior Graphic Designer</div>
+          <div class="job-meta">Lemon Sky J. Walter Thompson Poland · 6/2015 – 12/2015 · Warsaw</div>
+        </article>
+
+        <article class="job compact">
+          <div class="job-title">Middleweight Digital Designer</div>
+          <div class="job-meta">Hugo &amp; Cat · 10/2013 – 1/2014 · London, UK</div>
+        </article>
+
+        <article class="job compact">
+          <div class="job-title">Regular Graphic Designer</div>
+          <div class="job-meta">ISOBAR Poland · 6/2009 – 12/2010 · Warsaw, Poland</div>
+        </article>
+
+        <div class="section-bar">Education</div>
+        <div class="edu">
+          <p>University of Warmia and Mazury</p>
+          <p class="meta">Faculty of Law and Public Administration · 10/2002 – 6/2007</p>
+          <p class="thesis">Master’s degree. Thesis: Protection of copyright laws in the Internet.</p>
+        </div>
+      </header>
+
+      <aside class="right">
+        <div class="hero">
+          <img class="photo" src="portrait.png" width="569" height="380" alt="" />
+          <div class="bubble-wrap">
+            <div class="bubble"><span>say<br />hi!</span></div>
+          </div>
+        </div>
+
+        <div class="contact">
+          <div>+48 696 053 868</div>
+          <div><a href="mailto:contact@bratn.com">contact@bratn.com</a></div>
+          <div>Warsaw, Poland</div>
+        </div>
+
+        <p class="dob">Date of birth: 14/8/1983</p>
+
+        <p class="summary">
+          17+ years in UI/UX. Recent focus: complex B2B SaaS for a US client (multi-app suites, shared design language,
+          operator workflows) and mobile product design in hearing health (Demant/Oticon, 2016–2022). Case studies and
+          portfolio: bratn.com
+        </p>
+
+        <div class="section-bar">Tools</div>
+        <p class="block-text">
+          Figma (primary), Sketch, Adobe XD · Adobe Photoshop, Illustrator · After Effects, Premiere (select motion
+          projects).
+        </p>
+
+        <div class="section-bar">Languages</div>
+        <p class="block-text">Polish (native), English (professional).</p>
+
+        <div class="section-bar">Soft skills</div>
+        <p class="block-text">
+          Comfortable in ambiguous, multi-stakeholder product work. Strong focus on consistency across large product
+          suites. Experience in regulated domains and interfaces built for daily operational use.
+        </p>
+
+        <div class="links">
+          <div class="link-row">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" fill="#4d1b8f" />
+              <path
+                fill="#fff"
+                d="M12 6.5a5.2 5.2 0 0 0-5.2 5.2c0 4.1 5.2 7.1 5.2 7.1s5.2-3 5.2-7.1A5.2 5.2 0 0 0 12 6.5zm0 2.8a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8z"
+              />
+            </svg>
+            <a href="https://www.bratn.com/">bratn.com</a>
+          </div>
+          <div class="link-row">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect width="24" height="24" rx="3" fill="#4d1b8f" />
+              <path
+                fill="#fff"
+                d="M7.2 9.4h2.6v9H7.2v-9zm1.3-4.2a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm3.4 4.2h2.5v1.2h.1c.4-.7 1.3-1.5 2.7-1.5 2.9 0 3.4 1.9 3.4 4.4v4.9h-2.7v-4.3c0-1-.4-1.7-1.5-1.7-1 0-1.6.7-1.8 1.4-.1.2-.1.5-.1.8v4.8h-2.7v-9z"
+              />
+            </svg>
+            <a href="https://www.linkedin.com/in/jarek-nowakowski/">linkedin.com/in/jarek-nowakowski</a>
+          </div>
+        </div>
+      </aside>
+
+      <p class="gdpr">
+        I hereby give my voluntary consent for my personal data contained in this offer to be processed for the purpose of
+        the recruitment process, in accordance with the Act on Personal Data Protection.
+      </p>
+    </div>
+  </body>
+</html>
